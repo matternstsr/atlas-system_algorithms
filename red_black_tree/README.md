@@ -30,25 +30,29 @@ gcc -o rb_tree rb_tree.c -Wall -Wextra
 #include "rb_trees.h"
 
 int main() {
+    /* Initialize the red-black tree to NULL */
     rb_tree_t *tree = NULL;
+    
+    /* Define an array of integers */
     int array[] = {10, 20, 30, 40, 50};
 
-    // Convert an array to a Red-Black Tree
+    /* Convert an array to a Red-Black Tree */
     tree = array_to_rb_tree(array, sizeof(array) / sizeof(array[0]));
 
-    // Insert a new value
+    /* Insert a new value into the tree */
     rb_tree_insert(&tree, 25);
 
-    // Remove a value
+    /* Remove a value from the tree */
     tree = rb_tree_remove(tree, 30);
 
-    // Check if the tree is valid
+    /* Check if the tree is valid and print the result */
     if (rb_tree_is_valid(tree)) {
         printf("The tree is valid.\n");
     }
 
-    return 0;
+    return 0; /* Exit the program */
 }
+
 ```
 
 
