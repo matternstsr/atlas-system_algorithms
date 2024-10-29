@@ -116,8 +116,6 @@ static void fix_insert(rb_tree_t **tree, rb_tree_t *node)
 	(*tree)->color = BLACK; /* Ensure the root is always black */
 }
 
-
-
 static rb_tree_t *bst_insert(rb_tree_t **tree, rb_tree_t *new_node)
 {
 	/* Initialize pointers for the parent and the current node */
@@ -138,7 +136,6 @@ static rb_tree_t *bst_insert(rb_tree_t **tree, rb_tree_t *new_node)
 			return NULL; /* Return NULL to indicate failure */
 		}
 	}
-
 	new_node->parent = parent; /* Set the parent of the new node */
 	if (!parent)
 		*tree = new_node; /* Tree was empty, new node is now the root */
