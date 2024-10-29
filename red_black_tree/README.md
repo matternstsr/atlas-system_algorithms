@@ -26,7 +26,8 @@ To compile the project, you can use `gcc`:
 gcc -o rb_tree rb_tree.c -Wall -Wextra
 ```
 
-```bash
+```c
+
 #include "rb_trees.h"
 
 int main() {
@@ -52,8 +53,8 @@ int main() {
 
     return 0; /* Exit the program */
 }
-
 ```
+
 
 
 Make sure to replace the file name with the actual name of the Red-Black Tree implementation file.
