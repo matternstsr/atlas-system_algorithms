@@ -28,7 +28,7 @@ rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value)
 	return new_node; /* Return the newly inserted node */
 }
 
-static void fix_insert(rb_tree_t **tree, rb_tree_t *node)
+void fix_insert(rb_tree_t **tree, rb_tree_t *node)
 {
 	/* Initialize pointers for parent and grandparent nodes */
 	rb_tree_t *parent = NULL;
@@ -116,7 +116,7 @@ static void fix_insert(rb_tree_t **tree, rb_tree_t *node)
 	(*tree)->color = BLACK; /* Ensure the root is always black */
 }
 
-static rb_tree_t *bst_insert(rb_tree_t **tree, rb_tree_t *new_node)
+rb_tree_t *bst_insert(rb_tree_t **tree, rb_tree_t *new_node)
 {
 	/* Initialize pointers for the parent and the current node */
 	rb_tree_t *parent = NULL;
