@@ -43,8 +43,8 @@ rb_tree_t *rb_tree_node(rb_tree_t *parent, int value, rb_color_t color);
 int rb_tree_is_valid(const rb_tree_t *tree);
 
 /* Helper functions */
-static int count_black_height(const rb_tree_t *tree);
-static int check_colors(const rb_tree_t *tree);
-static int check_bst(const rb_tree_t *tree, int min, int max);
+static count_black_height(const rb_tree_t *tree);
+static check_colors(const rb_tree_t *tree);
+static check_bst(const rb_tree_t *tree, int min, int max);
 
 #endif /* RB_TREES_H */

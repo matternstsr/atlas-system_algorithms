@@ -32,7 +32,7 @@ int rb_tree_is_valid(const rb_tree_t *tree)
 *
 * Return: 1 if the tree satisfies BST properties, 0 otherwise.
 */
-static int check_bst(const rb_tree_t *tree, int min, int max)
+static check_bst(const rb_tree_t *tree, int min, int max)
 {
 	/* If the current node is NULL, it's a valid subtree */
 	if (!tree)
@@ -53,7 +53,7 @@ static int check_bst(const rb_tree_t *tree, int min, int max)
 *
 * Return: 1 if color properties are valid, 0 otherwise.
 */
-static int check_colors(const rb_tree_t *tree)
+static check_colors(const rb_tree_t *tree)
 {
 	/* If the current node is NULL, it's a valid subtree */
 	if (!tree)
@@ -77,7 +77,7 @@ static int check_colors(const rb_tree_t *tree)
 *
 * Return: The black height if valid, -1 if the tree is invalid.
 */
-static int count_black_height(const rb_tree_t *tree)
+static count_black_height(const rb_tree_t *tree)
 {
 	/* If the current node is NULL, return 1 (counting as a black node) */
 	if (!tree)
