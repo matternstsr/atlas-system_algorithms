@@ -48,5 +48,7 @@ rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value);
 int count_black_height(const rb_tree_t *tree);
 int check_colors(const rb_tree_t *tree);
 int check_bst(const rb_tree_t *tree, int min, int max);
+static void fix_insert(rb_tree_t **tree, rb_tree_t *node);
+static rb_tree_t *bst_insert(rb_tree_t **tree, rb_tree_t *new_node);
 
 #endif /* RB_TREES_H */
