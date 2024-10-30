@@ -54,5 +54,8 @@ void fix_insert(rb_tree_t **tree, rb_tree_t *node);
 rb_tree_t *bst_insert(rb_tree_t **tree, rb_tree_t *new_node);
 rb_tree_t *bst_remove(rb_tree_t *root, int n);
 rb_tree_t *fix_remove(rb_tree_t *root, rb_tree_t *node);
+void transplant(rb_tree_t *u, rb_tree_t *v);
+rb_tree_t *right_rotate(rb_tree_t *root, rb_tree_t *y);
+rb_tree_t *left_rotate(rb_tree_t *root, rb_tree_t *x);
 
 #endif /* RB_TREES_H */
