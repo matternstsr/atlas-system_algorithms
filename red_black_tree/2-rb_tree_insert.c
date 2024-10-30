@@ -9,40 +9,40 @@
 */
 rb_tree_t *bst_insert(rb_tree_t **tree, rb_tree_t *new_node)
 {
-    rb_tree_t *parent = NULL;
-    rb_tree_t *current = *tree;
+	rb_tree_t *parent = NULL;
+	rb_tree_t *current = *tree;
 
-    while (current)
-    {
-        parent = current;
-        if (new_node->n < current->n)
-            current = current->left;
-        else if (new_node->n > current->n)
-            current = current->right;
-        else
-        {
-            /* Duplicate value found */
-            free(new_node); /* Free the new node */
-            return NULL; /* Return NULL to indicate failure */
-        }
-    }
+	while (current)
+	{
+		parent = current;
+		if (new_node->n < current->n)
+			current = current->left;
+		else if (new_node->n > current->n)
+			current = current->right;
+		else
+		{
+			/* Duplicate value found */
+			free(new_node); /* Free the new node */
+			return NULL; /* Return NULL to indicate failure */
+		}
+	}
 
-    new_node->parent = parent;
+	new_node->parent = parent;
 
-    if (!parent)
-    {
-        *tree = new_node; /* Tree was empty; new node is now the root */
-    }
-    else if (new_node->n < parent->n)
-    {
-        parent->left = new_node; /* Insert as left child */
-    }
-    else
-    {
-        parent->right = new_node; /* Insert as right child */
-    }
+	if (!parent)
+	{
+		*tree = new_node; /* Tree was empty; new node is now the root */
+	}
+	else if (new_node->n < parent->n)
+	{
+		parent->left = new_node; /* Insert as left child */
+	}
+	else
+	{
+		parent->right = new_node; /* Insert as right child */
+	}
 
-    return new_node; /* Return newly inserted node */
+	return new_node; /* Return newly inserted node */
 }
 
 
