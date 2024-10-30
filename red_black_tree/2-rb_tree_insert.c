@@ -1,6 +1,6 @@
 #include "rb_trees.h"
 
-/*
+/**
 * rb_tree_insert - Inserts a new value into red-black tree.
 * @tree: Double PTR to root of red-black tree.
 * @value: Value to be inserted into tree.
@@ -33,7 +33,7 @@ rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value)
 	return (new_node); /* Return newly inserted node */
 }
 
-/*
+/**
  * fix_insert - Fixes violations of red-black tree properties after insertion.
  * @tree: Double pointer to the root of the red-black tree.
  * @node: Pointer to the newly inserted node.
@@ -126,7 +126,7 @@ void fix_insert(rb_tree_t **tree, rb_tree_t *node)
 	(*tree)->color = BLACK; /* Ensure root is always black */
 }
 
-/*
+/**
  * bst_insert - Inserts a new node into the binary search tree.
  * @tree: Double pointer to the root of the tree.
  * @new_node: Pointer to the new node to be inserted.

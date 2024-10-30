@@ -1,6 +1,6 @@
 #include "rb_trees.h"
 
-/*
+/**
 * rb_tree_is_valid - Checks if a red-black tree is valid.
 * @tree: Pointer to the root of the red-black tree.
 *
@@ -24,7 +24,7 @@ int rb_tree_is_valid(const rb_tree_t *tree)
 	return check_colors(tree) && (count_black_height(tree) >= 0);
 }
 
-/*
+/**
 * check_bst - Check if red-black tree satisfies binary search tree properties.
 * @tree: Pointer to the root of the red-black tree.
 * @min: Minimum allowable value for the current node.
@@ -47,7 +47,7 @@ int check_bst(const rb_tree_t *tree, int min, int max)
 						check_bst(tree->right, tree->n, max);
 }
 
-/*
+/**
 * check_colors - Validates the color properties of the red-black tree.
 * @tree: Pointer to the root of the red-black tree.
 *
@@ -71,7 +71,7 @@ int check_colors(const rb_tree_t *tree)
 	return check_colors(tree->left) && check_colors(tree->right);
 }
 
-/*
+/**
 * count_black_height - Counts the black height of the red-black tree.
 * @tree: Pointer to the root of the red-black tree.
 *
