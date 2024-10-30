@@ -135,13 +135,14 @@ rb_tree_t *bst_insert(rb_tree_t **tree, rb_tree_t *new_node)
             current = current->right; /* Move to right child */
         else
         {
-            /* Value already exists */
+            /* Duplicate value found */
             free(new_node); /* Free the new node */
             return NULL; /* Return NULL to indicate failure */
         }
     }
 
-    new_node->parent = parent; /* Set parent of new node */
+    /* Set parent for the new node */
+    new_node->parent = parent; 
     
     if (!parent)
     {
@@ -158,4 +159,3 @@ rb_tree_t *bst_insert(rb_tree_t **tree, rb_tree_t *new_node)
 
     return new_node; /* Return newly inserted node */
 }
-
