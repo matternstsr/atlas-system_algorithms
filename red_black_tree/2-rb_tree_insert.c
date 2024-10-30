@@ -121,31 +121,41 @@ void fix_insert(rb_tree_t **tree, rb_tree_t *node)
 
 rb_tree_t *bst_insert(rb_tree_t **tree, rb_tree_t *new_node)
 {
-	/* Initialize PTRs for parent and current node */
-	rb_tree_t *parent = NULL;
-	rb_tree_t *current = *tree;
+    /* Initialize pointers for parent and current node */
+    rb_tree_t *parent = NULL;
+    rb_tree_t *current = *tree;
 
-	/* Traverse tree to find correct insertion point */
-	while (current)
-	{
-		parent = current; /* Keep track of parent */
-		if (new_node->n < current->n)
-			current = current->left; /* Move to left child */
-		else if (new_node->n > current->n)
-			current = current->right; /* Move to right child */
-		else
-		{
-			free(new_node); /* Value already exists, free new node */
-			return NULL; /* Return NULL to indicate failure */
-		}
-	}
-	new_node->parent = parent; /* Set parent of new node */
-	if (!parent)
-		*tree = new_node; /* Tree was empty, new node is now root */
-	else if (new_node->n < parent->n)
-		parent->left = new_node; /* Insert as left child */
-	else
-		parent->right = new_node; /* Insert as right child */
+    /* Traverse the tree to find the correct insertion point */
+    while (current)
+    {
+        parent = current; /* Keep track of the parent */
+        if (new_node->n < current->n)
+            current = current->left; /* Move to left child */
+        else if (new_node->n > current->n)
+            current = current->right; /* Move to right child */
+        else
+        {
+            /* Value already exists */
+            free(new_node); /* Free the new node */
+            return NULL; /* Return NULL to indicate failure */
+        }
+    }
 
-	return new_node; /* Return newly inserted node */
+    new_node->parent = parent; /* Set parent of new node */
+    
+    if (!parent)
+    {
+        *tree = new_node; /* Tree was empty; new node is now the root */
+    }
+    else if (new_node->n < parent->n)
+    {
+        parent->left = new_node; /* Insert as left child */
+    }
+    else
+    {
+        parent->right = new_node; /* Insert as right child */
+    }
+
+    return new_node; /* Return newly inserted node */
 }
+
