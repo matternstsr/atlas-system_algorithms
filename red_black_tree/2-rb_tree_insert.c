@@ -62,7 +62,7 @@ void fix_insert(rb_tree_t **tree, rb_tree_t *node)
 
 	/* Loop while node is not root and its parent is red */
 	while ((node != *tree) && (node->color == RED) && 
-		(node->parent && node->parent->color == RED)) Check for null parent
+		(node->parent && node->parent->color == RED)) /* Check for null parent */
 	{
 		parent = node->parent; /* Get parent of current node */
 		grandparent = parent->parent; /* Get grandparent of current node */
