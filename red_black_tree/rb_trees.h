@@ -52,7 +52,7 @@ int check_colors(const rb_tree_t *tree);
 int check_bst(const rb_tree_t *tree, int min, int max);
 void fix_insert(rb_tree_t **tree, rb_tree_t *node);
 rb_tree_t *bst_insert(rb_tree_t **tree, rb_tree_t *new_node);
-static rb_tree_t *bst_remove(rb_tree_t *root, int n);
-static rb_tree_t *fix_remove(rb_tree_t *root, rb_tree_t *node);
+rb_tree_t *bst_remove(rb_tree_t *root, int n);
+rb_tree_t *fix_remove(rb_tree_t *root, rb_tree_t *node);
 
 #endif /* RB_TREES_H */

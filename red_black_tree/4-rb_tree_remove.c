@@ -19,7 +19,7 @@ rb_tree_t *rb_tree_remove(rb_tree_t *root, int n)
 	return fix_remove(root, node);
 }
 
-static rb_tree_t *bst_remove(rb_tree_t *root, int n)
+rb_tree_t *bst_remove(rb_tree_t *root, int n)
 {
 	rb_tree_t *node = root;
 	rb_tree_t *temp = NULL;
@@ -74,7 +74,7 @@ static rb_tree_t *bst_remove(rb_tree_t *root, int n)
 	return child; /* Return new root */
 }
 
-static void transplant(rb_tree_t *u, rb_tree_t *v)
+void transplant(rb_tree_t *u, rb_tree_t *v)
 {
 	if (!u->parent)
 	{
@@ -94,7 +94,7 @@ static void transplant(rb_tree_t *u, rb_tree_t *v)
 		v->parent = u->parent;
 }
 
-static rb_tree_t *fix_remove(rb_tree_t *root, rb_tree_t *node)
+rb_tree_t *fix_remove(rb_tree_t *root, rb_tree_t *node)
 {
 	rb_tree_t *sibling;
 
@@ -194,7 +194,7 @@ static rb_tree_t *fix_remove(rb_tree_t *root, rb_tree_t *node)
 	return root;
 }
 
-static rb_tree_t *left_rotate(rb_tree_t *root, rb_tree_t *x)
+rb_tree_t *left_rotate(rb_tree_t *root, rb_tree_t *x)
 {
 	rb_tree_t *y = x->right;
 	x->right = y->left;
@@ -223,7 +223,7 @@ static rb_tree_t *left_rotate(rb_tree_t *root, rb_tree_t *x)
 	return root;
 }
 
-static rb_tree_t *right_rotate(rb_tree_t *root, rb_tree_t *y)
+rb_tree_t *right_rotate(rb_tree_t *root, rb_tree_t *y)
 {
 	rb_tree_t *x = y->left;
 	y->left = x->right;
