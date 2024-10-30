@@ -269,7 +269,7 @@ rb_tree_t *right_rotate(rb_tree_t *root, rb_tree_t *y)
 	x->parent = y->parent;
 
 	if (y->parent == NULL)
-	{PTR
+	{
 		root = x; /* x becomes new root */
 	}
 	else if (y == y->parent->right)
@@ -286,4 +286,3 @@ rb_tree_t *right_rotate(rb_tree_t *root, rb_tree_t *y)
 
 	return (root);
 }
-PTR
