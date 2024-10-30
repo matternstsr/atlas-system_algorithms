@@ -43,6 +43,7 @@ rb_tree_t *rb_tree_node(rb_tree_t *parent, int value, rb_color_t color);
 int rb_tree_is_valid(const rb_tree_t *tree);
 rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value);
 rb_tree_t *array_to_rb_tree(int *array, size_t size);
+rb_tree_t *rb_tree_remove(rb_tree_t *root, int n);
 
 
 /* Helper functions */
@@ -51,5 +52,7 @@ int check_colors(const rb_tree_t *tree);
 int check_bst(const rb_tree_t *tree, int min, int max);
 void fix_insert(rb_tree_t **tree, rb_tree_t *node);
 rb_tree_t *bst_insert(rb_tree_t **tree, rb_tree_t *new_node);
+static rb_tree_t *bst_remove(rb_tree_t *root, int n);
+static rb_tree_t *fix_remove(rb_tree_t *root, rb_tree_t *node);
 
 #endif /* RB_TREES_H */
