@@ -1,6 +1,6 @@
 #include "rb_trees.h"
 
-/* 
+/*
 * rb_tree_remove - Removes a value from red-black tree.
 * @root: PTR to root of red-black tree.
 * @n: Value to be removed from tree.
@@ -13,10 +13,10 @@ rb_tree_t *rb_tree_remove(rb_tree_t *root, int n)
 	rb_tree_t *node = bst_remove(root, n);
 
 	if (!node)
-		return root; /* Return root if node was not found */
+		return (root); /* Return root if node was not found */
 
 	/* Fix tree to maintain Red-Black properties after removal */
-	return fix_remove(root, node);
+	return (fix_remove)(root, node);
 }
 
 rb_tree_t *bst_remove(rb_tree_t *root, int n)
@@ -36,7 +36,7 @@ rb_tree_t *bst_remove(rb_tree_t *root, int n)
 	}
 
 	if (!node)
-		return NULL; /* Node not found */
+		return (NULL); /* Node not found */
 
 	/* Node has two children */
 	if (node->left && node->right)
@@ -57,7 +57,7 @@ rb_tree_t *bst_remove(rb_tree_t *root, int n)
 	{
 		/* Node is a leaf */
 		if (node->color == BLACK)
-			return node; /* Need to fix double black */
+			return (node); /* Need to fix double black */
 	}
 	else
 	{
@@ -71,7 +71,7 @@ rb_tree_t *bst_remove(rb_tree_t *root, int n)
 
 	/* Free node after fixing tree */
 	free(node);
-	return child; /* Return new root */
+	return (child); /* Return new root */
 }
 
 void transplant(rb_tree_t *u, rb_tree_t *v)
@@ -191,7 +191,7 @@ rb_tree_t *fix_remove(rb_tree_t *root, rb_tree_t *node)
 	}
 
 	node->color = BLACK; /* Ensure root is always black */
-	return root;
+	return (root);
 }
 
 rb_tree_t *left_rotate(rb_tree_t *root, rb_tree_t *x)
@@ -220,7 +220,7 @@ rb_tree_t *left_rotate(rb_tree_t *root, rb_tree_t *x)
 	y->left = x;
 	x->parent = y;
 
-	return root;
+	return (root);
 }
 
 rb_tree_t *right_rotate(rb_tree_t *root, rb_tree_t *y)
@@ -249,5 +249,5 @@ rb_tree_t *right_rotate(rb_tree_t *root, rb_tree_t *y)
 	x->right = y;
 	y->parent = x;
 
-	return root;
+	return (root);
 }

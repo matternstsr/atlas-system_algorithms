@@ -1,6 +1,6 @@
 #include "rb_trees.h"
 
-/* 
+/*
 * rb_tree_insert - Inserts a new value into red-black tree.
 * @tree: Double PTR to root of red-black tree.
 * @value: Value to be inserted into tree.
@@ -12,25 +12,25 @@ rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value)
 	/* Create a new red-black tree node with given value */
 	rb_tree_t *new_node = rb_tree_node(NULL, value, RED);
 	if (!new_node) /* Check if new node was created successfully */
-		return NULL; /* Return NULL if allocation fails */
+		return (NULL); /* Return NULL if allocation fails */
 
 	/* If tree is empty, make new node root */
 	if (!*tree)
 	{
 		new_node->color = BLACK; /* Set root node's color to black */
 		*tree = new_node; /* Set tree to new node */
-		return new_node; /* Return new node */
+		return (new_node); /* Return new node */
 	}
 
 	/* Insert new node into appropriate position in tree */
 	if (!bst_insert(tree, new_node)) {
 		free(new_node); /* Free new node if insertion failed */
-		return NULL; /* Return NULL to indicate failure */
+		return (NULL); /* Return NULL to indicate failure */
 	}
 
 	/* Fix any violations of red-black tree properties after insertion */
 	fix_insert(tree, new_node);
-	return new_node; /* Return newly inserted node */
+	return (new_node); /* Return newly inserted node */
 }
 
 void fix_insert(rb_tree_t **tree, rb_tree_t *node)
@@ -137,7 +137,7 @@ rb_tree_t *bst_insert(rb_tree_t **tree, rb_tree_t *new_node)
         {
             /* Duplicate value found */
             free(new_node); /* Free the new node */
-            return NULL; /* Return NULL to indicate failure */
+            return (NULL); /* Return NULL to indicate failure */
         }
     }
 
@@ -157,5 +157,5 @@ rb_tree_t *bst_insert(rb_tree_t **tree, rb_tree_t *new_node)
         parent->right = new_node; /* Insert as right child */
     }
 
-    return new_node; /* Return newly inserted node */
+    return (new_node); /* Return newly inserted node */
 }

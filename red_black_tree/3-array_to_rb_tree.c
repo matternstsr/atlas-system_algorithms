@@ -1,6 +1,6 @@
 #include "rb_trees.h"
 
-/* 
+/*
 * array_to_rb_tree - Converts an array into a red-black tree.
 * @array: PTR to array of integers.
 * @size: Number of elements in array.
@@ -19,5 +19,5 @@ rb_tree_t *array_to_rb_tree(int *array, size_t size)
 	}
 
 	/* Return PTR to root of tree */
-	return tree;
+	return (tree);
 }

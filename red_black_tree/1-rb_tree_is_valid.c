@@ -1,6 +1,6 @@
 #include "rb_trees.h"
 
-/* 
+/*
 * rb_tree_is_valid - Checks if a red-black tree is valid.
 * @tree: Pointer to the root of the red-black tree.
 *
@@ -24,7 +24,7 @@ int rb_tree_is_valid(const rb_tree_t *tree)
 	return check_colors(tree) && (count_black_height(tree) >= 0);
 }
 
-/* 
+/*
 * check_bst - Check if red-black tree satisfies binary search tree properties.
 * @tree: Pointer to the root of the red-black tree.
 * @min: Minimum allowable value for the current node.
@@ -47,7 +47,7 @@ int check_bst(const rb_tree_t *tree, int min, int max)
 						check_bst(tree->right, tree->n, max);
 }
 
-/* 
+/*
 * check_colors - Validates the color properties of the red-black tree.
 * @tree: Pointer to the root of the red-black tree.
 *
@@ -71,7 +71,7 @@ int check_colors(const rb_tree_t *tree)
 	return check_colors(tree->left) && check_colors(tree->right);
 }
 
-/* 
+/*
 * count_black_height - Counts the black height of the red-black tree.
 * @tree: Pointer to the root of the red-black tree.
 *
@@ -81,7 +81,7 @@ int count_black_height(const rb_tree_t *tree)
 {
 	/* If the current node is NULL, return 1 (counting as a black node) */
 	if (!tree)
-		return 1;
+		return (1);
 
 	/* Recursively count the black height of left and right subtrees */
 	int left_height = count_black_height(tree->left);
@@ -89,8 +89,8 @@ int count_black_height(const rb_tree_t *tree)
 
 	/* Check for invalid conditions: one subtree is invalid or heights differ */
 	if (left_height == -1 || right_height == -1 || left_height != right_height)
-		return -1; /* Return -1 if the tree is invalid */
+		return (-1); /* Return -1 if the tree is invalid */
 
 	/* Return the black height, increment if the current node is black */
-	return left_height + (tree->color == BLACK ? 1 : 0);
+	return (left_height + (tree->color == BLACK ? 1 : 0));
 }
