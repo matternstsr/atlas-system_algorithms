@@ -1,50 +1,55 @@
 #include "rb_trees.h"
 
 /* 
-* rb_tree_insert - Inserts a new value into the red-black tree.
-* @tree: Double pointer to the root of the red-black tree.
-* @value: Value to be inserted into the tree.
+* rb_tree_insert - Inserts a new value into red-black tree.
+* @tree: Double PTR to root of red-black tree.
+* @value: Value to be inserted into tree.
 *
-* Return: Pointer to the newly inserted node, or NULL if allocation fails.
+* Return: PTR to newly inserted node, or NULL if allocation fails.
 */
 rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value)
 {
-	/* Create a new red-black tree node with the given value */
+	/* Create a new red-black tree node with given value */
 	rb_tree_t *new_node = rb_tree_node(NULL, value, RED);
-	if (!new_node) /* Check if the new node was created successfully */
+	if (!new_node) /* Check if new node was created successfully */
 		return NULL; /* Return NULL if allocation fails */
 
-	/* If the tree is empty, make the new node the root */
+	/* If tree is empty, make new node root */
 	if (!*tree)
 	{
-		new_node->color = BLACK; /* Set the root node's color to black */
-		*tree = new_node; /* Set the tree to the new node */
-		return new_node; /* Return the new node */
+		new_node->color = BLACK; /* Set root node's color to black */
+		*tree = new_node; /* Set tree to new node */
+		return new_node; /* Return new node */
 	}
-	/* Insert the new node into the appropriate position in the tree */
-	bst_insert(tree, new_node);
+
+	/* Insert new node into appropriate position in tree */
+	if (!bst_insert(tree, new_node)) {
+		free(new_node); /* Free new node if insertion failed */
+		return NULL; /* Return NULL to indicate failure */
+	}
+
 	/* Fix any violations of red-black tree properties after insertion */
 	fix_insert(tree, new_node);
-	return new_node; /* Return the newly inserted node */
+	return new_node; /* Return newly inserted node */
 }
 
 void fix_insert(rb_tree_t **tree, rb_tree_t *node)
 {
-	/* Initialize pointers for parent and grandparent nodes */
+	/* Initialize PTRs for parent and grandparent nodes */
 	rb_tree_t *parent = NULL;
 	rb_tree_t *grandparent = NULL;
 
-	/* Loop while the node is not the root and its parent is red */
-	while ((node != *tree) && (node->color == RED) &&
-			(node->parent->color == RED))
+	/* Loop while node is not root and its parent is red */
+	while ((node != *tree) && (node->color == RED) && 
+		(node->parent && node->parent->color == RED)) // Check for null parent
 	{
-		parent = node->parent; /* Get the parent of the current node */
+		parent = node->parent; /* Get parent of current node */
 		grandparent = parent->parent; /* Get grandparent of current node */
 
 		if (parent == grandparent->left)
 		{
-			/* Case: Parent is the left child of the grandparent */
-			rb_tree_t *uncle = grandparent->right; /* Get the uncle node */
+			/* Case: Parent is left child of grandparent */
+			rb_tree_t *uncle = grandparent->rt; /* Get uncle node */
 
 			if (uncle && uncle->color == RED)
 			{
@@ -52,97 +57,95 @@ void fix_insert(rb_tree_t **tree, rb_tree_t *node)
 				grandparent->color = RED; /* Recolor grandparent to red */
 				parent->color = BLACK; /* Recolor parent to black */
 				uncle->color = BLACK; /* Recolor uncle to black */
-				node = grandparent; /* Move up the tree */
+				node = grandparent; /* Move up tree */
 			}
 			else
 			{
-				if (node == parent->right)
+				if (node == parent->rt)
 				{
-					/* Case: Node is right child of its parent */
+					/* Case: Node is rt child of its parent */
 					/* Left rotation */
-					parent->right = node->left; /* Move left child to parent */
+					parent->rt = node->left; /* Move left child to parent */
 					if (node->left)
 						node->left->parent = parent; /* Update parent ptr */
 					node->left = parent; /* Make parent left child of node */
-					parent->parent = node; /* Update parent pointer */
-					node = parent; /* Update node to the new parent */
+					parent->parent = node; /* Update parent PTR */
+					node = parent; /* Update node to new parent */
 				}
 				parent->color = BLACK; /* Recolor parent to black */
 				grandparent->color = RED; /* Recolor grandparent to red */
-				/* Right rotation */
-				grandparent->left = node->right; /* Move right child to gparent */
-				if (node->right)
-					node->right->parent = grandparent; /* Update parent pointer */
-				node->right = grandparent; /* Make gparent right child of node */
+				/* rt rotation */
+				grandparent->left = node->rt; /* Move rt child to gparent */
+				if (node->rt)
+					node->rt->parent = grandparent; /* Update parent PTR */
+				node->rt = grandparent; /* Make gparent rt child of node */
 			}
 		}
 		else
 		{
-			/* Case: Parent is right child of the gparent */
-			rb_tree_t *uncle = grandparent->left; /* Get the uncle node */
-
+			/* Symmetric case for rt child */
+			rb_tree_t *uncle = grandparent->left; /* Get uncle node */
 			if (uncle && uncle->color == RED)
 			{
-				/* Case: Uncle is red */
-				grandparent->color = RED; /* Recolor grandparent to red */
-				parent->color = BLACK; /* Recolor parent to black */
-				uncle->color = BLACK; /* Recolor uncle to black */
-				node = grandparent; /* Move up the tree */
+				/* Same logic as above */
+				grandparent->color = RED;
+				parent->color = BLACK;
+				uncle->color = BLACK;
+				node = grandparent;
 			}
 			else
 			{
 				if (node == parent->left)
 				{
-					/* Case: Node is left child of its parent (right rotate ) */
-					/* Right rotation */
-					parent->left = node->right; /* Move right child to parent */
-					if (node->right)
-						node->right->parent = parent; /* Update parent prt */
-					node->right = parent; /* Make parent right child of node */
-					parent->parent = node; /* Update parent pointer */
-					node = parent; /* Update node to the new parent */
+					/* rt rotation */
+					parent->left = node->rt;
+					if (node->rt)
+						node->rt->parent = parent;
+					node->rt = parent;
+					parent->parent = node;
+					node = parent;
 				}
-				parent->color = BLACK; /* Recolor parent to black */
-				grandparent->color = RED; /* Recolor grandparent to red */
-				/* Left rotation and Move node's left child to gparent */
-				grandparent->right = node->left;
+				parent->color = BLACK;
+				grandparent->color = RED;
+				grandparent->rt = node->left;
 				if (node->left)
-					node->left->parent = grandparent; /* Update parent ptr */
-				node->left = grandparent; /* Make gparent left child of node */
+					node->left->parent = grandparent;
+				node->left = grandparent;
 			}
 		}
 	}
 
-	(*tree)->color = BLACK; /* Ensure the root is always black */
+	(*tree)->color = BLACK; /* Ensure root is always black */
 }
+
 
 rb_tree_t *bst_insert(rb_tree_t **tree, rb_tree_t *new_node)
 {
-	/* Initialize pointers for the parent and the current node */
+	/* Initialize PTRs for parent and current node */
 	rb_tree_t *parent = NULL;
 	rb_tree_t *current = *tree;
 
-	/* Traverse the tree to find the correct insertion point */
+	/* Traverse tree to find correct insertion point */
 	while (current)
 	{
-		parent = current; /* Keep track of the parent */
+		parent = current; /* Keep track of parent */
 		if (new_node->n < current->n)
-			current = current->left; /* Move to the left child */
+			current = current->left; /* Move to left child */
 		else if (new_node->n > current->n)
-			current = current->right; /* Move to the right child */
+			current = current->rt; /* Move to rt child */
 		else
 		{
-			free(new_node); /* Value already exists, free the new node */
+			free(new_node); /* Value already exists, free new node */
 			return NULL; /* Return NULL to indicate failure */
 		}
 	}
-	new_node->parent = parent; /* Set the parent of the new node */
+	new_node->parent = parent; /* Set parent of new node */
 	if (!parent)
-		*tree = new_node; /* Tree was empty, new node is now the root */
+		*tree = new_node; /* Tree was empty, new node is now root */
 	else if (new_node->n < parent->n)
 		parent->left = new_node; /* Insert as left child */
 	else
-		parent->right = new_node; /* Insert as right child */
+		parent->rt = new_node; /* Insert as rt child */
 
-	return new_node; /* Return the newly inserted node */
+	return new_node; /* Return newly inserted node */
 }
