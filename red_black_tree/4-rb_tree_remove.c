@@ -19,6 +19,13 @@ rb_tree_t *rb_tree_remove(rb_tree_t *root, int n)
 	return (fix_remove)(root, node);
 }
 
+/*
+ * bst_remove - Removes a node with a specified value from the red-black tree.
+ * @root: Pointer to the root of the tree.
+ * @n: Value of the node to be removed.
+ *
+ * Returns: Pointer to the new root of the tree, or NULL if the node was not found.
+ */
 rb_tree_t *bst_remove(rb_tree_t *root, int n)
 {
 	rb_tree_t *node = root;
@@ -74,6 +81,13 @@ rb_tree_t *bst_remove(rb_tree_t *root, int n)
 	return (child); /* Return new root */
 }
 
+/*
+ * transplant - Replaces one subtree with another.
+ * @u: Pointer to the node to be replaced.
+ * @v: Pointer to the node to replace it with.
+ *
+ * Updates the parent pointers accordingly.
+ */
 void transplant(rb_tree_t *u, rb_tree_t *v)
 {
 	if (!u->parent)
@@ -94,6 +108,13 @@ void transplant(rb_tree_t *u, rb_tree_t *v)
 		v->parent = u->parent;
 }
 
+/*
+ * fix_remove - Fixes the red-black tree after a node has been removed.
+ * @root: Pointer to the root of the tree.
+ * @node: Pointer to the node that may need fixing.
+ *
+ * Returns: Pointer to the new root of the tree after fixing.
+ */
 rb_tree_t *fix_remove(rb_tree_t *root, rb_tree_t *node)
 {
 	rb_tree_t *sibling;
@@ -194,6 +215,13 @@ rb_tree_t *fix_remove(rb_tree_t *root, rb_tree_t *node)
 	return (root);
 }
 
+/*
+ * left_rotate - Performs a left rotation on a node in the red-black tree.
+ * @root: Pointer to the root of the tree.
+ * @x: Pointer to the node to be rotated.
+ *
+ * Returns: Pointer to the new root of the tree after rotation.
+ */
 rb_tree_t *left_rotate(rb_tree_t *root, rb_tree_t *x)
 {
 	rb_tree_t *y = x->right;
@@ -223,6 +251,13 @@ rb_tree_t *left_rotate(rb_tree_t *root, rb_tree_t *x)
 	return (root);
 }
 
+/*
+ * right_rotate - Performs a right rotation on a node in the red-black tree.
+ * @root: Pointer to the root of the tree.
+ * @y: Pointer to the node to be rotated.
+ *
+ * Returns: Pointer to the new root of the tree after rotation.
+ */
 rb_tree_t *right_rotate(rb_tree_t *root, rb_tree_t *y)
 {
 	rb_tree_t *x = y->left;

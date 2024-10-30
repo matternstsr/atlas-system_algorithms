@@ -33,6 +33,14 @@ rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value)
 	return (new_node); /* Return newly inserted node */
 }
 
+/*
+ * fix_insert - Fixes violations of red-black tree properties after insertion.
+ * @tree: Double pointer to the root of the red-black tree.
+ * @node: Pointer to the newly inserted node.
+ *
+ * Ensures that the red-black tree properties are maintained by performing
+ * rotations and color adjustments as necessary.
+ */
 void fix_insert(rb_tree_t **tree, rb_tree_t *node)
 {
 	/* Initialize PTRs for parent and grandparent nodes */
@@ -118,7 +126,14 @@ void fix_insert(rb_tree_t **tree, rb_tree_t *node)
 	(*tree)->color = BLACK; /* Ensure root is always black */
 }
 
-
+/*
+ * bst_insert - Inserts a new node into the binary search tree.
+ * @tree: Double pointer to the root of the tree.
+ * @new_node: Pointer to the new node to be inserted.
+ *
+ * Returns: Pointer to the newly inserted node, or NULL if a duplicate value 
+ * is found.
+ */
 rb_tree_t *bst_insert(rb_tree_t **tree, rb_tree_t *new_node)
 {
     /* Initialize pointers for parent and current node */
