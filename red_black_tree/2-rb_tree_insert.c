@@ -49,7 +49,7 @@ void fix_insert(rb_tree_t **tree, rb_tree_t *node)
 		if (parent == grandparent->left)
 		{
 			/* Case: Parent is left child of grandparent */
-			rb_tree_t *uncle = grandparent->rt; /* Get uncle node */
+			rb_tree_t *uncle = grandparent->right; /* Get uncle node */
 
 			if (uncle && uncle->color == RED)
 			{
@@ -61,11 +61,11 @@ void fix_insert(rb_tree_t **tree, rb_tree_t *node)
 			}
 			else
 			{
-				if (node == parent->rt)
+				if (node == parent->right)
 				{
-					/* Case: Node is rt child of its parent */
+					/* Case: Node is right child of its parent */
 					/* Left rotation */
-					parent->rt = node->left; /* Move left child to parent */
+					parent->right = node->left; /* Move left child to parent */
 					if (node->left)
 						node->left->parent = parent; /* Update parent ptr */
 					node->left = parent; /* Make parent left child of node */
@@ -74,16 +74,16 @@ void fix_insert(rb_tree_t **tree, rb_tree_t *node)
 				}
 				parent->color = BLACK; /* Recolor parent to black */
 				grandparent->color = RED; /* Recolor grandparent to red */
-				/* rt rotation */
-				grandparent->left = node->rt; /* Move rt child to gparent */
-				if (node->rt)
-					node->rt->parent = grandparent; /* Update parent PTR */
-				node->rt = grandparent; /* Make gparent rt child of node */
+				/* Right rotation */
+				grandparent->left = node->right; /* Move right child to gparent */
+				if (node->right)
+					node->right->parent = grandparent; /* Update parent PTR */
+				node->right = grandparent; /* Make gparent right child of node */
 			}
 		}
 		else
 		{
-			/* Symmetric case for rt child */
+			/* Symmetric case for right child */
 			rb_tree_t *uncle = grandparent->left; /* Get uncle node */
 			if (uncle && uncle->color == RED)
 			{
@@ -97,17 +97,17 @@ void fix_insert(rb_tree_t **tree, rb_tree_t *node)
 			{
 				if (node == parent->left)
 				{
-					/* rt rotation */
-					parent->left = node->rt;
-					if (node->rt)
-						node->rt->parent = parent;
-					node->rt = parent;
+					/* Right rotation */
+					parent->left = node->right;
+					if (node->right)
+						node->right->parent = parent;
+					node->right = parent;
 					parent->parent = node;
 					node = parent;
 				}
 				parent->color = BLACK;
 				grandparent->color = RED;
-				grandparent->rt = node->left;
+				grandparent->right = node->left;
 				if (node->left)
 					node->left->parent = grandparent;
 				node->left = grandparent;
@@ -132,7 +132,7 @@ rb_tree_t *bst_insert(rb_tree_t **tree, rb_tree_t *new_node)
 		if (new_node->n < current->n)
 			current = current->left; /* Move to left child */
 		else if (new_node->n > current->n)
-			current = current->rt; /* Move to rt child */
+			current = current->right; /* Move to right child */
 		else
 		{
 			free(new_node); /* Value already exists, free new node */
@@ -145,7 +145,7 @@ rb_tree_t *bst_insert(rb_tree_t **tree, rb_tree_t *new_node)
 	else if (new_node->n < parent->n)
 		parent->left = new_node; /* Insert as left child */
 	else
-		parent->rt = new_node; /* Insert as rt child */
+		parent->right = new_node; /* Insert as right child */
 
 	return new_node; /* Return newly inserted node */
 }
