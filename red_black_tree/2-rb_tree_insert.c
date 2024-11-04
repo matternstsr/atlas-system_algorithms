@@ -120,18 +120,20 @@ void fix_insert(rb_tree_t **tree, rb_tree_t *node)
 
         if (parent == grandparent->left)
         {
-            /* Corrected: Pass the node as the first argument */
+            /* Parent is the left child of grandparent, handle the left child case */
             handle_left_child_case(tree, node, parent, grandparent);
         }
         else
         {
-            /* Corrected: Pass the node as the first argument */
+            /* Parent is the right child of grandparent, handle the right child case */
             handle_right_child_case(tree, node, parent, grandparent);
         }
     }
 
-    (*tree)->color = BLACK; /* Ensure root is always black */
+    /* Ensure root is always black */
+    (*tree)->color = BLACK;
 }
+
 
 
 /**
