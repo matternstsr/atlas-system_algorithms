@@ -10,8 +10,8 @@
 */
 rb_tree_t *rb_tree_node(rb_tree_t *parent, int value, rb_color_t color)
 {
-	/* Allocate memory for a new rb_tree_t node */
-	rb_tree_t *node = malloc(sizeof(rb_tree_t));
+	/* Allocate memory for a new rb_tree_t node and initialize to zero */
+	rb_tree_t *node = calloc(1, sizeof(rb_tree_t));
 
 	if (!node) /* Check if memory allocation was successful */
 		return (NULL); /* Return NULL if allocation failed */
@@ -22,9 +22,6 @@ rb_tree_t *rb_tree_node(rb_tree_t *parent, int value, rb_color_t color)
 	node->color = color;
 	/* Set the parent of the new node */
 	node->parent = parent;
-	/* Initialize left and right children to NULL */
-	node->left = NULL;
-	node->right = NULL;
 
 	/* Return the pointer to the newly created node */
 	return (node);
