@@ -37,7 +37,6 @@ rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value)
 
 /**
 * handle_left_child_case - Handles the case where the parent is a left child.
-* @tree: Double PTR to the root of the red-black tree.
 * @node: PTR to the newly inserted node.
 * @parent: PTR to the parent of the newly inserted node.
 * @grandparent: PTR to the grandparent of the newly inserted node.
@@ -80,7 +79,6 @@ void handle_left_child_case(rb_tree_t *node,
 
 /**
 * handle_right_child_case - Handles the case where the parent is a right child.
-* @tree: Double PTR to the root of the red-black tree.
 * @node: PTR to the newly inserted node.
 * @parent: PTR to the parent of the newly inserted node.
 * @grandparent: PTR to the grandparent of the newly inserted node.
