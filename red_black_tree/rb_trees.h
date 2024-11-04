@@ -45,6 +45,7 @@ rb_tree_t *array_to_rb_tree(int *array, size_t size);
 rb_tree_t *rb_tree_remove(rb_tree_t *root, int n);
 
 
+
 /* Helper functions */
 int count_black_height(const rb_tree_t *tree);
 int check_colors(const rb_tree_t *tree);
@@ -56,5 +57,7 @@ rb_tree_t *fix_remove(rb_tree_t *root, rb_tree_t *node);
 void transplant(rb_tree_t *u, rb_tree_t *v);
 rb_tree_t *right_rotate(rb_tree_t *root, rb_tree_t *y);
 rb_tree_t *left_rotate(rb_tree_t *root, rb_tree_t *x);
+
+
 
 #endif /* RB_TREES_H */

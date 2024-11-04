@@ -26,3 +26,22 @@ rb_tree_t *rb_tree_node(rb_tree_t *parent, int value, rb_color_t color)
 	/* Return the pointer to the newly created node */
 	return (node);
 }
+
+/**
+ * rb_tree_free - Frees all nodes in the red-black tree.
+ * @node: Pointer to the root node of the tree.
+ */
+void rb_tree_free(rb_tree_t *node) {
+    if (node) {
+        rb_tree_free(node->left);
+        rb_tree_free(node->right);
+        free(node);
+    }
+}
+
+void cleanup(rb_tree_t **root) {
+    if (root && *root) {
+        rb_tree_free(*root);
+        *root = NULL; /* Avoid dangling pointer */
+    }
+}
