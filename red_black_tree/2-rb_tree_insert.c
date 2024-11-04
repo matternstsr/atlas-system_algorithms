@@ -10,29 +10,30 @@
 */
 rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value)
 {
-    rb_tree_t *new_node = rb_tree_node(NULL, value, RED);
+	/* Create a new red-black tree node with given value */
+	rb_tree_t *new_node = rb_tree_node(NULL, value, RED);
 
-    if (!new_node) /* Check if new node was created successfully */
-        return (NULL); /* Return NULL if allocation fails */
+	if (!new_node) /* Check if new node was created successfully */
+		return (NULL); /* Return NULL if allocation fails */
 
-    /* If tree is empty, make new node root */
-    if (!*tree)
-    {
-        new_node->color = BLACK; /* Set root node's color to black */
-        *tree = new_node; /* Set tree to new node */
-        return (new_node); /* Return new node */
-    }
+	/* If tree is empty, make new node root */
+	if (!*tree)
+	{
+		new_node->color = BLACK; /* Set root node's color to black */
+		*tree = new_node; /* Set tree to new node */
+		return (new_node); /* Return new node */
+	}
 
-    /* Insert new node into appropriate position in tree */
-    if (!bst_insert(tree, new_node))
-    {
-        free(new_node);  /* Free new node if insertion failed */
-        return (NULL); /* Return NULL to indicate failure */
-    }
+	/* Insert new node into appropriate position in tree */
+	if (!bst_insert(tree, new_node))
+	{
+		/*free(new_node);  Free new node if insertion failed */
+		return (NULL); /* Return NULL to indicate failure */
+	}
 
-    /* Fix any violations of red-black tree properties after insertion */
-    fix_insert(tree, new_node);
-    return (new_node); /* Return newly inserted node */
+	/* Fix any violations of red-black tree properties after insertion */
+	fix_insert(tree, new_node);
+	return (new_node); /* Return newly inserted node */
 }
 
 /**
@@ -133,6 +134,8 @@ void fix_insert(rb_tree_t **tree, rb_tree_t *node)
     (*tree)->color = BLACK;
 }
 
+
+
 /**
 * bst_insert - Inserts a new node into the binary search tree.
 * @tree: Double PTR to the root of the tree.
@@ -143,38 +146,39 @@ void fix_insert(rb_tree_t **tree, rb_tree_t *node)
 */
 rb_tree_t *bst_insert(rb_tree_t **tree, rb_tree_t *new_node)
 {
-    rb_tree_t *parent = NULL;
-    rb_tree_t *current = *tree;
+	rb_tree_t *parent = NULL;
+	rb_tree_t *current = *tree;
 
-    while (current)
-    {
-        parent = current;
-        if (new_node->n < current->n)
-            current = current->left;
-        else if (new_node->n > current->n)
-            current = current->right;
-        else
-        {
-            /* Duplicate value found */
-            free(new_node); /* Free the new node */
-            return (NULL); /* Return NULL to indicate failure */
-        }
-    }
+	while (current)
+	{
+		parent = current;
+		if (new_node->n < current->n)
+			current = current->left;
+		else if (new_node->n > current->n)
+			current = current->right;
+		else
+		{
+			/* Duplicate value found */
+			free(new_node); /* Free the new node */
+			return (NULL); /* Return NULL to indicate failure */
+		}
+	}
 
-    new_node->parent = parent;
+	new_node->parent = parent;
 
-    if (!parent)
-    {
-        *tree = new_node; /* Tree was empty; new node is now the root */
-    }
-    else if (new_node->n < parent->n)
-    {
-        parent->left = new_node; /* Insert as left child */
-    }
-    else
-    {
-        parent->right = new_node; /* Insert as right child */
-    }
+	if (!parent)
+	{
+		*tree = new_node; /* Tree was empty; new node is now the root */
+	}
+	else if (new_node->n < parent->n)
+	{
+		parent->left = new_node; /* Insert as left child */
+	}
+	else
+	{
+		parent->right = new_node; /* Insert as right child */
+	}
 
-    return (new_node); /* Return newly inserted node */
+	return (new_node); /* Return newly inserted node */
 }
+
