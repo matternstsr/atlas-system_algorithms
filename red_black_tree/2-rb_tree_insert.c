@@ -26,7 +26,7 @@ rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value)
 	/* Insert new node into appropriate position in tree */
 	if (!bst_insert(tree, new_node))
 	{
-		free(new_node); /* Free new node if insertion failed */
+		/*free(new_node);  Free new node if insertion failed */
 		return (NULL); /* Return NULL to indicate failure */
 	}
 
