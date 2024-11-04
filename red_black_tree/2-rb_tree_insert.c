@@ -60,12 +60,12 @@ void handle_left_child_case(rb_tree_t **tree, rb_tree_t *node,
         if (node == parent->right)
         {
             /* Case: Node is right child of its parent */
-            parent = left_rotate(*tree, parent); /* Left rotation */
+            parent = left_rotate(tree, parent); /* Left rotation */
             node = parent; /* Update node to new parent */
         }
         parent->color = BLACK; /* Recolor parent to black */
         grandparent->color = RED; /* Recolor grandparent to red */
-        *tree = right_rotate(*tree, grandparent); /* Right rotation */
+        *tree = right_rotate(tree, grandparent); /* Right rotation */
     }
 }
 
@@ -93,12 +93,12 @@ void handle_right_child_case(rb_tree_t **tree, rb_tree_t *node,
         if (node == parent->left)
         {
             /* Case: Node is left child of its parent */
-            parent = right_rotate(*tree, parent); /* Right rotation */
+            parent = right_rotate(tree, parent); /* Right rotation */
             node = parent; /* Update node to new parent */
         }
         parent->color = BLACK; /* Recolor parent to black */
         grandparent->color = RED; /* Recolor grandparent to red */
-        *tree = left_rotate(*tree, grandparent); /* Left rotation */
+        *tree = left_rotate(tree, grandparent); /* Left rotation */
     }
 }
 
