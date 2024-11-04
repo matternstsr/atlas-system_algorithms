@@ -41,6 +41,10 @@ void rb_tree_free(rb_tree_t *node)
 	}
 }
 
+/**
+ * cleanup - Removes all nodes in red-black tree and resets root pointer.
+ * @root: Pointer to a pointer that points to the root node of the tree.
+ */
 void cleanup(rb_tree_t **root)
 {
 	if (root && *root)

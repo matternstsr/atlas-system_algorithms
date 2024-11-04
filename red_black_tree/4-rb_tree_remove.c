@@ -17,7 +17,7 @@ rb_tree_t *rb_tree_remove(rb_tree_t *root, int n)
 		return (root); /* Return root if node was not found */
 
 	/* Fix tree to maintain Red-Black properties after removal */
-	return (fix_remove)(root, node);
+	return ((fix_remove)(root, node));
 }
 
 /**

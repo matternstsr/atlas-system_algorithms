@@ -10,18 +10,18 @@ int rb_tree_is_valid(const rb_tree_t *tree)
 {
 	/* Check if the tree is NULL */
 	if (!tree)
-		return 0; /* Return 0 for invalid tree */
+		return (0); /* Return 0 for invalid tree */
 
 	/* Check if the root node is black */
 	if (tree->color != BLACK)
-		return 0; /* Return 0 if root is not black */
+		return (0); /* Return 0 if root is not black */
 
 	/* Check if the tree satisfies BST properties */
 	if (!check_bst(tree, INT_MIN, INT_MAX))
-		return 0; /* Return 0 if BST properties are violated */
+		return (0); /* Return 0 if BST properties are violated */
 
 	/* Check if colors are valid and count black height */
-	return check_colors(tree) && (count_black_height(tree) >= 0);
+	return (check_colors(tree) && (count_black_height(tree) >= 0));
 }
 
 /**
@@ -36,15 +36,15 @@ int check_bst(const rb_tree_t *tree, int min, int max)
 {
 	/* If the current node is NULL, it's a valid subtree */
 	if (!tree)
-		return 1;
+		return (1);
 
 	/* Check if the current node's value is within the allowable range */
 	if (tree->n < min || tree->n > max)
-		return 0; /* Return 0 if the value is out of bounds */
+		return (0); /* Return 0 if the value is out of bounds */
 
 	/* Recursively check the left and right subtrees */
-	return check_bst(tree->left, min, tree->n) &&
-						check_bst(tree->right, tree->n, max);
+	return (check_bst(tree->left, min, tree->n) &&
+						check_bst(tree->right, tree->n, max));
 }
 
 /**
@@ -57,18 +57,18 @@ int check_colors(const rb_tree_t *tree)
 {
 	/* If the current node is NULL, it's a valid subtree */
 	if (!tree)
-		return 1;
+		return (1);
 
 	/* Check for violations of red node properties */
 	if (tree->color == RED)
 	{
 		if ((tree->left && tree->left->color == RED) ||
 			(tree->right && tree->right->color == RED))
-			return 0; /* Return 0 if two consecutive red nodes are found */
+			return (0); /* Return 0 if two consecutive red nodes are found */
 	}
 
 	/* Recursively check the left and right subtrees */
-	return check_colors(tree->left) && check_colors(tree->right);
+	return (check_colors(tree->left) && check_colors(tree->right));
 }
 
 /**

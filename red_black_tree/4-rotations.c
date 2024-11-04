@@ -5,11 +5,12 @@
  * @root: PTR to the root of the tree.
  * @y: PTR to the node to be rotated.
  *
- * Returns: PTR to the new root of the tree after rotation.
+ * Return: PTR to the new root of the tree after rotation.
  */
 rb_tree_t *right_rotate(rb_tree_t *root, rb_tree_t *y)
 {
 	rb_tree_t *x = y->left;
+
 	y->left = x->right;
 
 	if (x->right != NULL)
@@ -41,11 +42,12 @@ rb_tree_t *right_rotate(rb_tree_t *root, rb_tree_t *y)
  * @root: PTR to the root of the tree.
  * @x: PTR to the node to be rotated.
  *
- * Returns: PTR to the new root of the tree after rotation.
+ * Return: PTR to the new root of the tree after rotation.
  */
 rb_tree_t *left_rotate(rb_tree_t *root, rb_tree_t *x)
 {
 	rb_tree_t *y = x->right;
+
 	x->right = y->left;
 
 	if (y->left != NULL)
