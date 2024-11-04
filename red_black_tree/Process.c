@@ -1,3 +1,5 @@
+#include "rb_trees.h"
+
 /**
 * process_left_child_case - Handles the case when the node is a left child.
 * @root: PTR to the root of the tree.
