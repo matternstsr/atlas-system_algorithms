@@ -137,11 +137,11 @@ void fix_insert(rb_tree_t **tree, rb_tree_t *node)
 
 		if (parent == grandparent->left)
 		{
-			handle_left_child_case(tree, node, parent, grandparent);
+			handle_left_child_case(node, parent, grandparent);
 		}
 		else
 		{
-			handle_right_child_case(tree, node, parent, grandparent);
+			handle_right_child_case(node, parent, grandparent);
 		}
 	}
 
