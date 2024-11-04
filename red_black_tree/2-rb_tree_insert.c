@@ -42,8 +42,8 @@ rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value)
 * @parent: PTR to the parent of the newly inserted node.
 * @grandparent: PTR to the grandparent of the newly inserted node.
 */
-void handle_left_child_case(rb_tree_t **tree, rb_tree_t *node,
-								rb_tree_t *parent, rb_tree_t *grandparent)
+void handle_left_child_case(rb_tree_t *node,
+							rb_tree_t *parent, rb_tree_t *grandparent)
 {
 	rb_tree_t *uncle = grandparent->right; /* Get uncle node */
 
@@ -85,8 +85,8 @@ void handle_left_child_case(rb_tree_t **tree, rb_tree_t *node,
 * @parent: PTR to the parent of the newly inserted node.
 * @grandparent: PTR to the grandparent of the newly inserted node.
 */
-void handle_right_child_case(rb_tree_t **tree, rb_tree_t *node,
-								rb_tree_t *parent, rb_tree_t *grandparent)
+void handle_right_child_case(rb_tree_t *node,
+							rb_tree_t *parent, rb_tree_t *grandparent)
 {
 	rb_tree_t *uncle = grandparent->left; /* Get uncle node */
 
