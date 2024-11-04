@@ -11,6 +11,7 @@ rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value)
 {
 	/* Create a new red-black tree node with given value */
 	rb_tree_t *new_node = rb_tree_node(NULL, value, RED);
+
 	if (!new_node) /* Check if new node was created successfully */
 		return (NULL); /* Return NULL if allocation fails */
 
@@ -35,6 +36,90 @@ rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value)
 }
 
 /**
+* handle_left_child_case - Handles the case where the parent is a left child.
+* @tree: Double PTR to the root of the red-black tree.
+* @node: PTR to the newly inserted node.
+* @parent: PTR to the parent of the newly inserted node.
+* @grandparent: PTR to the grandparent of the newly inserted node.
+*/
+void handle_left_child_case(rb_tree_t **tree, rb_tree_t *node,
+								rb_tree_t *parent, rb_tree_t *grandparent)
+{
+	rb_tree_t *uncle = grandparent->right; /* Get uncle node */
+
+	if (uncle && uncle->color == RED)
+	{
+		/* Case: Uncle is red */
+		grandparent->color = RED; /* Recolor grandparent to red */
+		parent->color = BLACK; /* Recolor parent to black */
+		uncle->color = BLACK; /* Recolor uncle to black */
+		node = grandparent; /* Move up tree */
+	}
+	else
+	{
+		if (node == parent->right)
+		{
+			/* Case: Node is right child of its parent */
+			/* Left rotation */
+			parent->right = node->left; /* Move left child to parent */
+			if (node->left)
+				node->left->parent = parent; /* Update parent ptr */
+			node->left = parent; /* Make parent left child of node */
+			parent->parent = node; /* Update parent PTR */
+			node = parent; /* Update node to new parent */
+		}
+		parent->color = BLACK; /* Recolor parent to black */
+		grandparent->color = RED; /* Recolor grandparent to red */
+		/* Right rotation */
+		grandparent->left = node->right; /* Move right child to gparent */
+		if (node->right)
+			node->right->parent = grandparent; /* Update parent PTR */
+		node->right = grandparent; /* Make gparent right child of node */
+	}
+}
+
+/**
+* handle_right_child_case - Handles the case where the parent is a right child.
+* @tree: Double PTR to the root of the red-black tree.
+* @node: PTR to the newly inserted node.
+* @parent: PTR to the parent of the newly inserted node.
+* @grandparent: PTR to the grandparent of the newly inserted node.
+*/
+void handle_right_child_case(rb_tree_t **tree, rb_tree_t *node,
+								rb_tree_t *parent, rb_tree_t *grandparent)
+{
+	rb_tree_t *uncle = grandparent->left; /* Get uncle node */
+
+	if (uncle && uncle->color == RED)
+	{
+		/* Same logic as above */
+		grandparent->color = RED;
+		parent->color = BLACK;
+		uncle->color = BLACK;
+		node = grandparent;
+	}
+	else
+	{
+		if (node == parent->left)
+		{
+			/* Right rotation */
+			parent->left = node->right;
+			if (node->right)
+				node->right->parent = parent;
+			node->right = parent;
+			parent->parent = node;
+			node = parent;
+		}
+		parent->color = BLACK;
+		grandparent->color = RED;
+		grandparent->right = node->left;
+		if (node->left)
+			node->left->parent = grandparent;
+		node->left = grandparent;
+	}
+}
+
+/**
 * fix_insert - Fixes violations of red-black tree properties after insertion.
 * @tree: Double PTR to the root of the red-black tree.
 * @node: PTR to the newly inserted node.
@@ -44,7 +129,7 @@ void fix_insert(rb_tree_t **tree, rb_tree_t *node)
 	rb_tree_t *parent = NULL;
 	rb_tree_t *grandparent = NULL;
 
-	while ((node != *tree) && (node->color == RED) && 
+	while ((node != *tree) && (node->color == RED) &&
 		(node->parent && node->parent->color == RED))
 	{
 		parent = node->parent; /* Get parent of current node */
@@ -52,81 +137,24 @@ void fix_insert(rb_tree_t **tree, rb_tree_t *node)
 
 		if (parent == grandparent->left)
 		{
-			rb_tree_t *uncle = grandparent->right; /* Get uncle node */
-
-			if (uncle && uncle->color == RED)
-			{
-				/* Case: Uncle is red */
-				grandparent->color = RED; /* Recolor grandparent to red */
-				parent->color = BLACK; /* Recolor parent to black */
-				uncle->color = BLACK; /* Recolor uncle to black */
-				node = grandparent; /* Move up tree */
-			}
-			else
-			{
-				if (node == parent->right)
-				{
-					/* Case: Node is right child of its parent */
-					/* Left rotation */
-					parent->right = node->left; /* Move left child to parent */
-					if (node->left)
-						node->left->parent = parent; /* Update parent ptr */
-					node->left = parent; /* Make parent left child of node */
-					parent->parent = node; /* Update parent PTR */
-					node = parent; /* Update node to new parent */
-				}
-				parent->color = BLACK; /* Recolor parent to black */
-				grandparent->color = RED; /* Recolor grandparent to red */
-				/* Right rotation */
-				grandparent->left = node->right; /* Move right child to gparent */
-				if (node->right)
-					node->right->parent = grandparent; /* Update parent PTR */
-				node->right = grandparent; /* Make gparent right child of node */
-			}
+			handle_left_child_case(tree, node, parent, grandparent);
 		}
 		else
 		{
-			/* Symmetric case for right child */
-			rb_tree_t *uncle = grandparent->left; /* Get uncle node */
-			if (uncle && uncle->color == RED)
-			{
-				/* Same logic as above */
-				grandparent->color = RED;
-				parent->color = BLACK;
-				uncle->color = BLACK;
-				node = grandparent;
-			}
-			else
-			{
-				if (node == parent->left)
-				{
-					/* Right rotation */
-					parent->left = node->right;
-					if (node->right)
-						node->right->parent = parent;
-					node->right = parent;
-					parent->parent = node;
-					node = parent;
-				}
-				parent->color = BLACK;
-				grandparent->color = RED;
-				grandparent->right = node->left;
-				if (node->left)
-					node->left->parent = grandparent;
-				node->left = grandparent;
-			}
+			handle_right_child_case(tree, node, parent, grandparent);
 		}
 	}
 
 	(*tree)->color = BLACK; /* Ensure root is always black */
 }
 
+
 /**
 * bst_insert - Inserts a new node into the binary search tree.
 * @tree: Double PTR to the root of the tree.
 * @new_node: PTR to the new node to be inserted.
 *
-* Returns: PTR to the newly inserted node, or NULL if a duplicate value
+* Return: PTR to the newly inserted node, or NULL if a duplicate value
 * is found.
 */
 rb_tree_t *bst_insert(rb_tree_t **tree, rb_tree_t *new_node)
