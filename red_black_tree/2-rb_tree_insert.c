@@ -1,4 +1,5 @@
 #include "rb_trees.h"
+#include "rotations.c"
 
 /**
 * rb_tree_insert - Inserts a new value into red-black tree.

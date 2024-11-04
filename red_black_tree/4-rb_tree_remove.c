@@ -1,5 +1,5 @@
 #include "rb_trees.h"
-#include "4-rotations.c"
+#include "rotations.c"
 #include "Process.c"
 /**
 * rb_tree_remove - Removes a value from red-black tree.
