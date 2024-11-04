@@ -166,3 +166,4 @@ rb_tree_t *bst_insert(rb_tree_t **tree, rb_tree_t *new_node)
 
     return (new_node); /* Return newly inserted node */
 }
+
