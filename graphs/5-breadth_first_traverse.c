@@ -5,7 +5,8 @@
 /**
 * breadth_first_traverse - Performs a breadth-first traversal of the graph.
 * @graph: PTR to the graph structure.
-* @action: Callback function to be called for each vertex during the traversal. It receives the vertex and its depth.
+* @action: Callback function to be called for each vertex during the traversal.
+*          It receives the vertex and its depth.
 *
 * Return: The maximum depth reached during the traversal.
 */
@@ -21,7 +22,6 @@ size_t breadth_first_traverse(const graph_t *graph, void (*action)(const vertex_
 
     /* Create the queue */
     queue_t *queue = queue_create(graph->nb_vertices);
-    /* Pass the graph size as capacity */
     if (!queue) {
         free(visited);
         return 0;
@@ -33,9 +33,7 @@ size_t breadth_first_traverse(const graph_t *graph, void (*action)(const vertex_
 
     size_t depth = 0;
     while (!queue_is_empty(queue)) {
-        /* Use the macro to get the size of the queue */
-        size_t queue_size = queue->size; /* macro */
-
+        size_t queue_size = queue->size;  /* # of vertices at current level */
         for (size_t i = 0; i < queue_size; i++) {
             vertex_t *vertex = queue_dequeue(queue);
             action(vertex, depth);
@@ -49,13 +47,13 @@ size_t breadth_first_traverse(const graph_t *graph, void (*action)(const vertex_
                 edge = edge->next;
             }
         }
-        depth++;
-        if (depth > max_depth)  /* Update max depth */
+
+        /* After processing all vertices at current level, increment depth */
+        if (++depth > max_depth)
             max_depth = depth;
     }
 
-    /* Clean up */
     free(visited);
     queue_delete(queue);
-    return max_depth;  /* Return the max depth */
+    return max_depth;
 }
