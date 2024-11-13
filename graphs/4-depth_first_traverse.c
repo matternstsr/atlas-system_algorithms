@@ -14,7 +14,7 @@ static void dfs(
 	bool *visited,
 	size_t *max_depth,
 	void (*action)(const vertex_t *v, size_t depth)
-);
+)
 {
 	visited[vertex->index] = true;
 
@@ -36,7 +36,7 @@ static void dfs(
 size_t depth_first_traverse(
 	const graph_t *graph,
 	void (*action)(const vertex_t *v, size_t depth)
-);
+)
 {
 	if (!graph || !action)
 		return (0);
