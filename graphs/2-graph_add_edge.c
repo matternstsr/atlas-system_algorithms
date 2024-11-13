@@ -70,10 +70,10 @@ vertex_t *find_vertex(const graph_t *graph, const char *str) {
 
     while (current) {
         if (strcmp(current->content, str) == 0) {
-            return current;  Vertex found
+            return current;  /* Vertex found */
         }
         current = current->next;
-    }
 
-    return NULL;  Vertex not found
+    }
+    return NULL;  /* Vertex not found */
 }
