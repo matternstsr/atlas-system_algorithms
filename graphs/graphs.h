@@ -7,6 +7,7 @@
 #include <string.h>  /* Strdup */
 #include <stdio.h>   /* For I/O functions like printf, etc. */
 #include <assert.h>  /* For debugging (optional) */
+#include "queue.h"
 
 /**
  * enum edge_type_e - Enumerates the different types of
@@ -22,7 +23,7 @@ typedef enum edge_type_e
 } edge_type_t;
 
 
-/* Forward declar of vertex_t for edge_t - resolve this circular dependency */
+/* Forward declaration of vertex_t for edge_t - resolve this circular dependency */
 typedef struct vertex_s vertex_t;
 
 /**
@@ -73,7 +74,6 @@ typedef struct graph_s
     vertex_t    *vertices;     /* Head of the adjacency list */
 } graph_t;
 
-
 /* Function prototypes */
 graph_t *graph_create(void);
 void graph_delete(graph_t *graph);
@@ -83,6 +83,5 @@ size_t depth_first_traverse(const graph_t *graph, void (*action)(const vertex_t 
 size_t breadth_first_traverse(const graph_t *graph, void (*action)(const vertex_t *v, size_t depth));
 void graph_display(const graph_t *graph);
 vertex_t *find_vertex(const graph_t *graph, const char *str);
-
 
 #endif /* GRAPHS_H */

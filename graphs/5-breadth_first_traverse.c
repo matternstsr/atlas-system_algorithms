@@ -1,4 +1,5 @@
 #include "graphs.h"
+#include "queue.h"
 
 /**
 * breadth_first_traverse - Performs a breadth-first traversal of the graph.
@@ -17,13 +18,15 @@ size_t breadth_first_traverse(const graph_t *graph, void (*action)(const vertex_
     if (!visited)
         return 0;
 
+    /* Create the queue */
     queue_t *queue = queue_create();
     if (!queue) {
         free(visited);
         return 0;
     }
 
-    queue_enqueue(queue, graph->vertices); /* Enqueue the first vertex */
+    /* Enqueue the first vertex */
+    queue_enqueue(queue, graph->vertices);
     visited[graph->vertices->index] = true;
 
     size_t depth = 0;
@@ -45,6 +48,7 @@ size_t breadth_first_traverse(const graph_t *graph, void (*action)(const vertex_
         depth++;
     }
 
+    /* Clean up */
     free(visited);
     queue_delete(queue);
     return depth - 1; /* Return the max depth (last depth level) */
