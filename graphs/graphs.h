@@ -3,7 +3,10 @@
 
 #include <stddef.h>  /* For size_t */
 #include <stdbool.h> /* For bool type */
-#include <stdlib.h> /* Malloc*/
+#include <stdlib.h>  /* Malloc */
+#include <string.h>  /* Strdup */
+#include <stdio.h>   /* For I/O functions like printf, etc. */
+#include <assert.h>  /* For debugging (optional) */
 
 /**
  * enum edge_type_e - Enumerates the different types of
