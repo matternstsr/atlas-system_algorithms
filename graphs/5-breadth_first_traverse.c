@@ -1,5 +1,6 @@
 #include "graphs.h"
 #include "queue.h"
+#include "queue.c"
 
 /**
 * breadth_first_traverse - Performs a breadth-first traversal of the graph.
