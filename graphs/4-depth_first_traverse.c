@@ -8,6 +8,21 @@
 * Return: The maximum depth reached during the traversal.
 */
 
+static void dfs(vertex_t *vertex, size_t depth, bool *visited, size_t *max_depth, void (*action)(const vertex_t *v, size_t depth)) {
+    visited[vertex->index] = true;
+    action(vertex, depth);
+
+    if (depth > *max_depth)
+        *max_depth = depth;
+
+    edge_t *edge = vertex->edges;
+    while (edge) {
+        if (!visited[edge->dest->index])
+            dfs(edge->dest, depth + 1, visited, max_depth, action);
+        edge = edge->next;
+    }
+}
+
 size_t depth_first_traverse(const graph_t *graph, void (*action)(const vertex_t *v, size_t depth)) {
     if (!graph || !action)
         return 0;
@@ -17,22 +32,8 @@ size_t depth_first_traverse(const graph_t *graph, void (*action)(const vertex_t 
     if (!visited)
         return 0;
 
-    void dfs(vertex_t *vertex, size_t depth) {
-        visited[vertex->index] = true;
-        action(vertex, depth);
-        if (depth > max_depth)
-            max_depth = depth;
-
-        edge_t *edge = vertex->edges;
-        while (edge) {
-            if (!visited[edge->dest->index])
-                dfs(edge->dest, depth + 1);
-            edge = edge->next;
-        }
-    }
-
     if (graph->vertices)
-        dfs(graph->vertices, 0);
+        dfs(graph->vertices, 0, visited, &max_depth, action);
 
     free(visited);
     return max_depth;
