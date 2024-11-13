@@ -7,7 +7,6 @@
 #include <string.h>  /* Strdup */
 #include <stdio.h>   /* For I/O functions like printf, etc. */
 #include <assert.h>  /* For debugging (optional) */
-#include "queue.h"
 
 /**
  * enum edge_type_e - Enumerates the different types of
