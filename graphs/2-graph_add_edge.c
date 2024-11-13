@@ -14,7 +14,7 @@ int graph_add_edge(
 	const char *src,
 	const char *dest,
 	edge_type_t type
-);
+)
 {
 	vertex_t *src_vertex = find_vertex(graph, src);
 	vertex_t *dest_vertex = find_vertex(graph, dest);
