@@ -19,7 +19,7 @@ size_t breadth_first_traverse(const graph_t *graph, void (*action)(const vertex_
         return 0;
 
     /* Create the queue */
-    queue_t *queue = queue_create();
+    queue_t *queue = queue_create(graph->nb_vertices); // Pass the graph size as capacity
     if (!queue) {
         free(visited);
         return 0;
@@ -31,7 +31,7 @@ size_t breadth_first_traverse(const graph_t *graph, void (*action)(const vertex_
 
     size_t depth = 0;
     while (!queue_is_empty(queue)) {
-        size_t queue_size = queue_size(queue);
+        size_t queue_size = queue_size(queue); // Ensure that this is correctly handled according to your queue.h
         for (size_t i = 0; i < queue_size; i++) {
             vertex_t *vertex = queue_dequeue(queue);
             action(vertex, depth);
@@ -46,10 +46,13 @@ size_t breadth_first_traverse(const graph_t *graph, void (*action)(const vertex_
             }
         }
         depth++;
+        if (depth > max_depth)  // Update max depth
+            max_depth = depth;
     }
 
     /* Clean up */
     free(visited);
     queue_delete(queue);
-    return depth - 1; /* Return the max depth (last depth level) */
+    return max_depth;  // Return the max depth
 }
+
