@@ -2,33 +2,29 @@
 #define QUEUE_H
 
 #include <stddef.h>  /* For size_t */
-#include <stdbool.h> /* For bool type */
-#include <stdlib.h>  /* For malloc, free */
 
 /**
- * struct queue_s - A simple queue data structure.
+ * struct queue_s - A simple queue data structure for storing pointers.
  * 
- * @size: The number of items currently in the queue.
+ * @size: The current number of items in the queue.
  * @capacity: The maximum number of items the queue can hold.
- * @items: An array of items in the queue, representing the queue's data.
+ * @front: The index of the front item in the queue.
+ * @rear: The index of the rear item in the queue.
+ * @data: Pointer to the array of items in the queue.
  */
 typedef struct queue_s {
-    size_t size;        /* The number of items currently in the queue */
-    size_t capacity;    /* The maximum number of items the queue can hold */
-    void **items;       /* Pointer to the array of items (void pointers for flexibility) */
-    size_t front;       /* The front index of the queue */
-    size_t rear;        /* The rear index of the queue */
+    size_t size;      /* The number of items currently in the queue */
+    size_t capacity;  /* The maximum number of items the queue can hold */
+    size_t front;     /* The index of the front item in the queue */
+    size_t rear;      /* The index of the rear item in the queue */
+    void **data;      /* Array of pointers to the items (e.g., vertices or other data) */
 } queue_t;
 
-/* Macro to get the size of the queue (number of elements in the queue) */
-#define QUEUE_SIZE(q) ((q)->size)
-
-/* Function prototypes for queue operations */
+/* Function prototypes */
 queue_t *queue_create(size_t capacity);
-void queue_delete(queue_t *queue);
-bool queue_is_empty(queue_t *queue);
-bool queue_is_full(queue_t *queue);
-void queue_enqueue(queue_t *queue, void *item);
+int queue_enqueue(queue_t *queue, void *item);
 void *queue_dequeue(queue_t *queue);
+int queue_is_empty(queue_t *queue);
+void queue_delete(queue_t *queue);
 
 #endif /* QUEUE_H */
