@@ -10,51 +10,64 @@
  * Return: 1 on success (edge added), 0 on failure (e.g., if vertices not found or memory allocation fails).
  */
 int graph_add_edge(graph_t *graph, const char *src, const char *dest, edge_type_t type) {
+    /* Find source and destination vertices */
     vertex_t *src_vertex = find_vertex(graph, src);
     vertex_t *dest_vertex = find_vertex(graph, dest);
 
-    if (!src_vertex || !dest_vertex)
+    if (!src_vertex) {
+        fprintf(stderr, "Failed to find source vertex: %s\n", src);
         return 0;
+    }
+    if (!dest_vertex) {
+        fprintf(stderr, "Failed to find destination vertex: %s\n", dest);
+        return 0;
+    }
 
+    /* Allocate memory for a new edge */
     edge_t *new_edge = malloc(sizeof(edge_t));
-    if (!new_edge)
+    if (!new_edge) {
+        fprintf(stderr, "Failed to allocate memory for new edge\n");
         return 0;
+    }
 
     new_edge->dest = dest_vertex;
     new_edge->next = NULL;
 
-    /* Insert at the end of the list (preserving order) */
+    /* Insert the new edge at the end of the source vertex's edge list */
     if (!src_vertex->edges) {
-        src_vertex->edges = new_edge;  /* First edge */
+        src_vertex->edges = new_edge;
     } else {
         edge_t *current = src_vertex->edges;
         while (current->next) {
-            current = current->next;  /* Find the last edge */
+            current = current->next;
         }
-        current->next = new_edge;  /* Add new edge to the end */
+        current->next = new_edge;
     }
 
+    /* If the edge is bidirectional, add the reverse edge */
     if (type == BIDIRECTIONAL) {
         new_edge = malloc(sizeof(edge_t));
-        if (!new_edge)
+        if (!new_edge) {
+            fprintf(stderr, "Failed to allocate memory for bidirectional edge\n");
             return 0;
+        }
 
         new_edge->dest = src_vertex;
         new_edge->next = NULL;
 
-        /* Insert at the end of the list for the destination vertex as well */
+        /* Insert the new edge at the end of the destination vertex's edge list */
         if (!dest_vertex->edges) {
-            dest_vertex->edges = new_edge;  /* First edge for destination vertex */
+            dest_vertex->edges = new_edge;
         } else {
             edge_t *current = dest_vertex->edges;
             while (current->next) {
-                current = current->next;  /* Find the last edge */
+                current = current->next;
             }
-            current->next = new_edge;  /* Add new edge to the end */
+            current->next = new_edge;
         }
     }
 
-    return 1;
+    return 1;  /* Successfully added the edge(s) */
 }
 
 
