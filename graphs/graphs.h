@@ -21,6 +21,7 @@ typedef enum edge_type_e
     BIDIRECTIONAL
 } edge_type_t;
 
+
 /* Forward declar of vertex_t for edge_t - resolve this circular dependency */
 typedef struct vertex_s vertex_t;
 
@@ -58,6 +59,7 @@ struct vertex_s
     struct vertex_s *next;  /* Next vertex in the adjacency list */
 };
 
+
 /**
  * struct graph_s - Representation of a graph
  * We use an adjacency linked list to represent our graph.
@@ -80,5 +82,6 @@ int graph_add_edge(graph_t *graph, const char *src, const char *dest, edge_type_
 size_t depth_first_traverse(const graph_t *graph, void (*action)(const vertex_t *v, size_t depth));
 size_t breadth_first_traverse(const graph_t *graph, void (*action)(const vertex_t *v, size_t depth));
 void graph_display(const graph_t *graph);
+
 
 #endif /* GRAPHS_H */
