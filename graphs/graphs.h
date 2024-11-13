@@ -82,6 +82,7 @@ int graph_add_edge(graph_t *graph, const char *src, const char *dest, edge_type_
 size_t depth_first_traverse(const graph_t *graph, void (*action)(const vertex_t *v, size_t depth));
 size_t breadth_first_traverse(const graph_t *graph, void (*action)(const vertex_t *v, size_t depth));
 void graph_display(const graph_t *graph);
+vertex_t *find_vertex(const graph_t *graph, const char *str);
 
 
 #endif /* GRAPHS_H */

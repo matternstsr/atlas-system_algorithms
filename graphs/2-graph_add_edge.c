@@ -36,3 +36,23 @@ int graph_add_edge(graph_t *graph, const char *src, const char *dest, edge_type_
 
     return 1;
 }
+
+/**
+ * find_vertex - Finds a vertex by its string content in the graph.
+ * @graph: The graph where the vertex should be searched.
+ * @str: The string content of the vertex to find.
+ *
+ * Return: A pointer to the vertex if found, or NULL if not found.
+ */
+vertex_t *find_vertex(const graph_t *graph, const char *str) {
+    vertex_t *current = graph->vertices;
+
+    while (current) {
+        if (strcmp(current->content, str) == 0) {
+            return current;  // Vertex found
+        }
+        current = current->next;
+    }
+
+    return NULL;  // Vertex not found
+}
