@@ -1,6 +1,7 @@
 #include "graphs.h"
 #include "queue.h"
 #include "queue.c"
+#include "_names.h"
 
 /**
 * breadth_first_traverse - Performs a breadth-first traversal of the graph.
@@ -11,9 +12,9 @@
 * Return: The maximum depth reached during the traversal.
 */
 
-void breadth_first_traverse(Graph *graph, void (*action)(Vertex)) {
+void breadth_first_traverse(graph_t *graph, void (*action)(Vertex)) {
     if (graph == NULL || graph->num_vertices == 0) {
-        /* If graph is NULL or has no vertices, do nothing. */
+        /* Handle empty graph or null graph case */
         return;
     }
 
