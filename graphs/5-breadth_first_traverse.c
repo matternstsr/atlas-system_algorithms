@@ -33,7 +33,7 @@ size_t breadth_first_traverse(const graph_t *graph, void (*action)(const vertex_
     size_t depth = 0;
     while (!queue_is_empty(queue)) {
         /* Use the macro to get the size of the queue */
-        size_t queue_size = QUEUE_SIZE(queue); /* macro */
+        size_t queue_size = QUEUE_H(queue); /* macro */
 
         for (size_t i = 0; i < queue_size; i++) {
             vertex_t *vertex = queue_dequeue(queue);
