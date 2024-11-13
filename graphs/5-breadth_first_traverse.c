@@ -11,55 +11,38 @@
 * Return: The maximum depth reached during the traversal.
 */
 
-size_t breadth_first_traverse(const graph_t *graph, void (*action)(const vertex_t *v, size_t depth)) {
-    if (!graph || !action)
-        return 0;
-
-    size_t max_depth = 0;
-    bool *visited = calloc(graph->nb_vertices, sizeof(bool));
-    if (!visited)
-        return 0;
-
-    /* Create the queue */
-    queue_t *queue = queue_create(graph->nb_vertices);
-    if (!queue) {
-        free(visited);
-        return 0;
+void breadth_first_traverse(Graph *graph, void (*action)(Vertex)) {
+    if (graph == NULL || graph->num_vertices == 0) {
+        /* If graph is NULL or has no vertices, do nothing. */
+        return;
     }
 
-    /* Enqueue the first vertex */
-    queue_enqueue(queue, graph->vertices);
-    visited[graph->vertices->index] = true;
+    Queue *queue = create_queue();
+    bool *visited = calloc(graph->num_vertices, sizeof(bool));
 
-    size_t depth = 0;
-    while (!queue_is_empty(queue)) {
-        size_t queue_size = queue->size;  /* # of vertices at current level */
-        
-        /* Process all vertices at the current level */
-        for (size_t i = 0; i < queue_size; i++) {
-            vertex_t *vertex = queue_dequeue(queue);
-            action(vertex, depth);
+    for (int i = 0; i < graph->num_vertices; i++) {
+        if (!visited[i]) {
+            enqueue(queue, i);
+            visited[i] = true;
 
-            edge_t *edge = vertex->edges;
-            while (edge) {
-                if (!visited[edge->dest->index]) {
-                    visited[edge->dest->index] = true;
-                    queue_enqueue(queue, edge->dest);
+            while (!is_empty(queue)) {
+                int vertex = dequeue(queue);
+                /* Perform the action if it's not NULL. */
+                if (action != NULL) {
+                    action(vertex);
                 }
-                edge = edge->next;
+
+                /* Traverse all adjacent vertices. */
+                for (int j = 0; j < graph->num_vertices; j++) {
+                    if (graph->adjacency_matrix[vertex][j] && !visited[j]) {
+                        enqueue(queue, j);
+                        visited[j] = true;
+                    }
+                }
             }
-        }
-
-        /* After processing all vertices at current level, increment depth */
-        depth++;
-
-        /* Update max depth if necessary */
-        if (depth > max_depth) {
-            max_depth = depth;
         }
     }
 
     free(visited);
-    queue_delete(queue);
-    return max_depth;
+    free_queue(queue);
 }
