@@ -7,20 +7,7 @@
 #include <string.h>  /* Strdup */
 #include <stdio.h>   /* For I/O functions like printf, etc. */
 #include <assert.h>  /* For debugging (optional) */
-
-#define QUEUE_SIZE(q) ((q)->size)
-
-
-/**
- * struct queue_s - A simple queue data structure.
- * 
- * @size: The number of items currently in the queue.
- */
-
-typedef struct queue_s {
-    size_t size;     /* The number of items in the queue */
-
-} queue_t;
+#include "queue.h"   /* Include queue.h to use queue_t and related functions */
 
 /**
  * enum edge_type_e - Enumerates the different types of
