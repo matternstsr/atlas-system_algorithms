@@ -34,6 +34,8 @@ size_t breadth_first_traverse(const graph_t *graph, void (*action)(const vertex_
     size_t depth = 0;
     while (!queue_is_empty(queue)) {
         size_t queue_size = queue->size;  /* # of vertices at current level */
+        
+        /* Process all vertices at the current level */
         for (size_t i = 0; i < queue_size; i++) {
             vertex_t *vertex = queue_dequeue(queue);
             action(vertex, depth);
@@ -49,8 +51,12 @@ size_t breadth_first_traverse(const graph_t *graph, void (*action)(const vertex_
         }
 
         /* After processing all vertices at current level, increment depth */
-        if (++depth > max_depth)
+        depth++;
+
+        /* Update max depth if necessary */
+        if (depth > max_depth) {
             max_depth = depth;
+        }
     }
 
     free(visited);
