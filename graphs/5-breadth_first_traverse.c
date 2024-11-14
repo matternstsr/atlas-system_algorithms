@@ -49,7 +49,6 @@ size_t breadth_first_traverse(
 * @queue: The queue holding the vertices to be processed.
 * @visited: Boolean array to track visited vertices.
 * @action: Callback function to be called for each vertex.
-* @max_vertices: The total number of vertices in the graph.
 *
 * Return: The maximum depth reached during traversal.
 */
@@ -58,7 +57,6 @@ size_t bfs_process_queue(
 	queue_t *queue,
 	bool *visited,
 	void (*action)(const vertex_t *v, size_t depth),
-	size_t max_vertices
 )
 {
 	size_t max_depth = 0;
