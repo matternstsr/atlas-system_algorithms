@@ -56,7 +56,7 @@ size_t breadth_first_traverse(
 size_t bfs_process_queue(
 	queue_t *queue,
 	bool *visited,
-	void (*action)(const vertex_t *v, size_t depth),
+	void (*action)(const vertex_t *v, size_t depth)
 )
 {
 	size_t max_depth = 0;
