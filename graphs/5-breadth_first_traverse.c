@@ -13,7 +13,7 @@
 
 size_t breadth_first_traverse(
 	const graph_t *graph,
-	void (*action)(const vertex_t *v, size_t depth)
+	void (*action)(const v_t *v, size_t depth)
 )
 {
 	if (!graph || !action)
@@ -25,8 +25,7 @@ size_t breadth_first_traverse(
 	if (!visited)
 		return (0);
 
-	/* Create the queue */
-	queue_t *queue = queue_create(graph->nb_vertices);
+	queue_t *queue = queue_create(graph->nb_vertices); /* Create the queue */
 
 	if (!queue)
 	{
@@ -34,21 +33,44 @@ size_t breadth_first_traverse(
 		return (0);
 	}
 
-	/* Enqueue the first vertex */
-	queue_enqueue(queue, graph->vertices);
-
+	queue_enqueue(queue, graph->vertices); /* Enqueue the first vertex */
 	visited[graph->vertices->index] = true;
 
+	max_depth = bfs_process_queue(queue, visited, action, graph->nb_vertices);
+
+	free(visited);
+	queue_delete(queue);
+	return (max_depth);
+}
+
+
+/**
+* bfs_process_queue - Processes vertices in the queue during BFS.
+* @queue: The queue holding the vertices to be processed.
+* @visited: Boolean array to track visited vertices.
+* @action: Callback function to be called for each vertex.
+* @max_vertices: The total number of vertices in the graph.
+*
+* Return: The maximum depth reached during traversal.
+*/
+
+size_t bfs_process_queue(
+	queue_t *queue,
+	bool *visited,
+	void (*action)(const v_t *v, size_t depth),
+	size_t max_vertices
+)
+{
+	size_t max_depth = 0;
 	size_t depth = 0;
 
 	while (!queue_is_empty(queue))
 	{
 		size_t queue_size = queue->size;  /* # of vertices at current level */
-
-		/* Process all vertices at the current level */
+		/* Process vertices at current level */
 		for (size_t i = 0; i < queue_size; i++)
 		{
-			vertex_t *vertex = queue_dequeue(queue);
+			v_t *vertex = queue_dequeue(queue);
 
 			action(vertex, depth);
 
@@ -64,18 +86,10 @@ size_t breadth_first_traverse(
 				edge = edge->next;
 			}
 		}
-
-		/* After processing all vertices at current level, increment depth */
-		depth++;
-
-		/* Update max depth if necessary */
-		if (depth > max_depth)
-		{
+		depth++; /* Increment depth after processing current level */
+		if (depth > max_depth) /* Update max depth if necessary */
 			max_depth = depth;
-		}
 	}
 
-	free(visited);
-	queue_delete(queue);
 	return (max_depth);
 }

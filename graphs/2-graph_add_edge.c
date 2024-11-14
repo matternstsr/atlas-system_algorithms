@@ -16,8 +16,7 @@ int graph_add_edge(
 	edge_type_t type
 )
 {
-	vertex_t *src_vertex = find_vertex(graph, src);
-	vertex_t *dest_vertex = find_vertex(graph, dest);
+	v_t *src_vertex = findv(graph, src), v_t *dest_vertex = findv(graph, dest);
 
 	if (!src_vertex || !dest_vertex)
 		return (0);
@@ -35,7 +34,8 @@ int graph_add_edge(
 		edge_t *current = src_vertex->edges;
 
 		while (current->next)
-			current = current->next, current->next = new_edge; /*find/Add edge*/
+			current = current->next;  /* Find the last edge */
+		current->next = new_edge;  /* Add new edge to the end */
 	}
 	if (type == BIDIRECTIONAL)
 	{
@@ -59,15 +59,15 @@ int graph_add_edge(
 }
 
 /**
-* find_vertex - Finds a vertex by its string content in the graph.
+* findv - Finds a vertex by its string content in the graph.
 * @graph: The graph where the vertex should be searched.
 * @str: The string content of the vertex to find.
 *
 * Return: A pointer to the vertex if found, or NULL if not found.
 */
-vertex_t *find_vertex(const graph_t *graph, const char *str)
+v_t *findv(const graph_t *graph, const char *str)
 {
-	vertex_t *current = graph->vertices;
+	v_t *current = graph->vertices;
 
 	while (current)
 	{

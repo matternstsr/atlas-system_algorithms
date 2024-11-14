@@ -8,18 +8,18 @@
 * Return: PTR to the newly added vertex, or NULL on failure.
 */
 
-vertex_t *graph_add_vertex(graph_t *graph, const char *str)
+v_t *graph_add_vertex(graph_t *graph, const char *str)
 
 {
-	vertex_t *new_vertex;
-	vertex_t *current;
+	v_t *new_vertex;
+	v_t *current;
 
 	/* Check if the graph or string is NULL */
 	if (!graph || !str)
 		return (NULL);
 
 	/* Allocate memory for the new vertex */
-	new_vertex = malloc(sizeof(vertex_t));
+	new_vertex = malloc(sizeof(v_t));
 	if (!new_vertex)
 		return (NULL);
 

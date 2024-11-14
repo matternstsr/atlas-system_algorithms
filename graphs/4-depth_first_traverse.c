@@ -1,19 +1,20 @@
 #include "graphs.h"
 
 /**
-* depth_first_traverse - Performs a depth-first traversal of the graph.
-* @graph: PTR to the graph structure.
-* @action: called for each vertex during traversal. It rec vertex & its depth.
-*
-* Return: The maximum depth reached during the traversal.
-*/
+ * dfs - Depth-first search recursive helper function.
+ * @vertex: Pointer to the current vertex being processed.
+ * @depth: Current depth in the graph traversal.
+ * @visited: Array tracking whether vertices have been visited.
+ * @max_depth: Maximum depth encountered during traversal.
+ * @action: Callback function to be executed on each vertex.
+ */
 
 static void dfs(
-	vertex_t *vertex,
+	v_t *vertex,
 	size_t depth,
 	bool *visited,
 	size_t *max_depth,
-	void (*action)(const vertex_t *v, size_t depth)
+	void (*action)(const v_t *v, size_t depth)
 )
 {
 	visited[vertex->index] = true;
@@ -35,7 +36,7 @@ static void dfs(
 
 size_t depth_first_traverse(
 	const graph_t *graph,
-	void (*action)(const vertex_t *v, size_t depth)
+	void (*action)(const v_t *v, size_t depth)
 )
 {
 	if (!graph || !action)

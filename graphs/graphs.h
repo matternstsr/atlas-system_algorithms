@@ -23,8 +23,8 @@ typedef enum edge_type_e
 } edge_type_t;
 
 
-/* Forward declaration of vertex_t for edge_t - resolve this circular dependency */
-typedef struct vertex_s vertex_t;
+/* Forward declaration of v_t for edge_t - resolve this circular dependency */
+typedef struct vertex_s v_t;
 
 /**
 * struct edge_s - Node in the linked list of edges for a given vertex
@@ -35,7 +35,7 @@ typedef struct vertex_s vertex_t;
 */
 typedef struct edge_s
 {
-	vertex_t    *dest;  /* Destination vertex */
+	v_t    *dest;  /* Destination vertex */
 	struct edge_s *next; /* Next edge in the list */
 } edge_t;
 
@@ -71,17 +71,18 @@ struct vertex_s
 typedef struct graph_s
 {
 	size_t      nb_vertices;   /* Total number of vertices in the graph */
-	vertex_t    *vertices;     /* Head of the adjacency list */
+	v_t    *vertices;     /* Head of the adjacency list */
 } graph_t;
 
 /* Function prototypes */
 graph_t *graph_create(void);
 void graph_delete(graph_t *graph);
-vertex_t *graph_add_vertex(graph_t *graph, const char *str);
+v_t *graph_add_vertex(graph_t *graph, const char *str);
 int graph_add_edge(graph_t *graph, const char *src, const char *dest, edge_type_t type);
-size_t depth_first_traverse(const graph_t *graph, void (*action)(const vertex_t *v, size_t depth));
-size_t breadth_first_traverse(const graph_t *graph, void (*action)(const vertex_t *v, size_t depth));
+size_t depth_first_traverse(const graph_t *graph, void (*action)(const v_t *v, size_t depth));
+size_t breadth_first_traverse(const graph_t *graph, void (*action)(const v_t *v, size_t depth));
+size_t bfs_process_queue(queue_t *queue, bool *visited, void (*action)(const v_t *v, size_t depth), size_t max_vertices);
 void graph_display(const graph_t *graph);
-vertex_t *find_vertex(const graph_t *graph, const char *str);
+v_t *findv(const graph_t *graph, const char *str);
 
 #endif /* GRAPHS_H */
