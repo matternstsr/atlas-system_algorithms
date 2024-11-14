@@ -10,7 +10,6 @@
 *
 * Return: The maximum depth reached during the traversal.
 */
-
 size_t breadth_first_traverse(
 	const graph_t *graph,
 	void (*action)(const vertex_t *v, size_t depth)
@@ -36,13 +35,12 @@ size_t breadth_first_traverse(
 	queue_enqueue(queue, graph->vertices); /* Enqueue the first vertex */
 	visited[graph->vertices->index] = true;
 
-	max_depth = bfs_process_queue(queue, visited, action, graph->nb_vertices);
+	max_depth = bfs_process_queue(queue, visited, action);
 
 	free(visited);
 	queue_delete(queue);
 	return (max_depth);
 }
-
 
 /**
 * bfs_process_queue - Processes vertices in the queue during BFS.
@@ -52,7 +50,6 @@ size_t breadth_first_traverse(
 *
 * Return: The maximum depth reached during traversal.
 */
-
 size_t bfs_process_queue(
 	queue_t *queue,
 	bool *visited,
