@@ -16,7 +16,7 @@ int graph_add_edge(
 	edge_type_t type
 )
 {
-	v_t *src_vertex = findv(graph, src), v_t *dest_vertex = findv(graph, dest);
+	vertex_t *src_vertex = findv(graph, src), vertex_t *dest_vertex = findv(graph, dest);
 
 	if (!src_vertex || !dest_vertex)
 		return (0);
@@ -65,9 +65,9 @@ int graph_add_edge(
 *
 * Return: A pointer to the vertex if found, or NULL if not found.
 */
-v_t *findv(const graph_t *graph, const char *str)
+vertex_t *findv(const graph_t *graph, const char *str)
 {
-	v_t *current = graph->vertices;
+	vertex_t *current = graph->vertices;
 
 	while (current)
 	{

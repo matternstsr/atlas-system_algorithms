@@ -13,7 +13,7 @@
 
 size_t breadth_first_traverse(
 	const graph_t *graph,
-	void (*action)(const v_t *v, size_t depth)
+	void (*action)(const vertex_t *v, size_t depth)
 )
 {
 	if (!graph || !action)
@@ -57,7 +57,7 @@ size_t breadth_first_traverse(
 size_t bfs_process_queue(
 	queue_t *queue,
 	bool *visited,
-	void (*action)(const v_t *v, size_t depth),
+	void (*action)(const vertex_t *v, size_t depth),
 	size_t max_vertices
 )
 {
@@ -70,7 +70,7 @@ size_t bfs_process_queue(
 		/* Process vertices at current level */
 		for (size_t i = 0; i < queue_size; i++)
 		{
-			v_t *vertex = queue_dequeue(queue);
+			vertex_t *vertex = queue_dequeue(queue);
 
 			action(vertex, depth);
 

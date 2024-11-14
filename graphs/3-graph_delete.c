@@ -12,7 +12,7 @@ void graph_delete(graph_t *graph)
 	if (!graph)
 		return;
 
-	v_t *vertex = graph->vertices;
+	vertex_t *vertex = graph->vertices;
 
 	while (vertex)
 	{
@@ -27,7 +27,7 @@ void graph_delete(graph_t *graph)
 			free(temp);
 		}
 		free(vertex->content);
-		v_t *temp = vertex;
+		vertex_t *temp = vertex;
 
 		vertex = vertex->next;
 
