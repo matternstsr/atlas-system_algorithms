@@ -21,39 +21,31 @@ int graph_add_edge(
 
 	if (!src_vertex || !dest_vertex)
 		return (0);
-
 	edge_t *new_edge = malloc(sizeof(edge_t));
 
 	if (!new_edge)
 		return (0);
-
 	new_edge->dest = dest_vertex;
 	new_edge->next = NULL;
 
-	/* Insert at the end of the list (preserving order) */
-	if (!src_vertex->edges)
+	if (!src_vertex->edges)/* Insert at end of the list (preserving order) */
 		src_vertex->edges = new_edge;  /* First edge */
 	else
 	{
 		edge_t *current = src_vertex->edges;
 
 		while (current->next)
-			current = current->next;  /* Find the last edge */
-		current->next = new_edge;  /* Add new edge to the end */
+			current = current->next, current->next = new_edge; /*find/Add edge*/
 	}
-
 	if (type == BIDIRECTIONAL)
 	{
 		new_edge = malloc(sizeof(edge_t));
 		if (!new_edge)
 			return (0);
+		new_edge->dest = src_vertex, new_edge->next = NULL;
 
-		new_edge->dest = src_vertex;
-		new_edge->next = NULL;
-
-		/* Insert at the end of the list for the destination vertex as well */
-		if (!dest_vertex->edges)
-			dest_vertex->edges = new_edge;  /* First edge for destination vertex */
+		if (!dest_vertex->edges)/* Insert at end of list for dest vertex also */
+			dest_vertex->edges = new_edge;  /* First edge for dest vertex */
 		else
 		{
 			edge_t *current = dest_vertex->edges;
@@ -63,10 +55,8 @@ int graph_add_edge(
 			current->next = new_edge;  /* Add new edge to the end */
 		}
 	}
-
 	return (1);
 }
-
 
 /**
 * find_vertex - Finds a vertex by its string content in the graph.
