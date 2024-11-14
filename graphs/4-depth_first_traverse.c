@@ -1,13 +1,13 @@
 #include "graphs.h"
 
 /**
- * dfs - Depth-first search recursive helper function.
- * @vertex: Pointer to the current vertex being processed.
- * @depth: Current depth in the graph traversal.
- * @visited: Array tracking whether vertices have been visited.
- * @max_depth: Maximum depth encountered during traversal.
- * @action: Callback function to be executed on each vertex.
- */
+* dfs - Depth-first search recursive helper function.
+* @vertex: Pointer to the current vertex being processed.
+* @depth: Current depth in the graph traversal.
+* @visited: Array tracking whether vertices have been visited.
+* @max_depth: Maximum depth encountered during traversal.
+* @action: Callback function to be executed on each vertex.
+*/
 
 static void dfs(
 	vertex_t *vertex,

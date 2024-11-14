@@ -16,7 +16,8 @@ int graph_add_edge(
 	edge_type_t type
 )
 {
-	vertex_t *src_vertex = findv(graph, src), vertex_t *dest_vertex = findv(graph, dest);
+	vertex_t *src_vertex = findv(graph, src);
+	vertex_t *dest_vertex = findv(graph, dest);
 
 	if (!src_vertex || !dest_vertex)
 		return (0);
