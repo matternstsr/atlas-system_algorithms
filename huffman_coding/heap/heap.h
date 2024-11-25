@@ -1,7 +1,9 @@
 #ifndef HEAP_H
 #define HEAP_H
 
-#include <stddef.h>
+#include <stddef.h>  /* For NULL */
+#include <stdio.h>   /* For printf, fprintf, stderr */
+#include <stdlib.h>  /* For EXIT_FAILURE, EXIT_SUCCESS */
 
 /**
 * struct binary_tree_node_s - Binary tree node data structure
