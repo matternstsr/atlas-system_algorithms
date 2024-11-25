@@ -40,5 +40,6 @@ binary_tree_node_t *binary_tree_node(binary_tree_node_t *parent, void *data);
 binary_tree_node_t *heap_insert(heap_t *heap, void *data);
 void *heap_extract(heap_t *heap);
 void heap_delete(heap_t *heap, void (*free_data)(void *));
+void heapify(heap_t *heap, heap_node_t *node);
 
 #endif /* HEAP_H */
