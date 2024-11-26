@@ -42,5 +42,6 @@ void *heap_extract(heap_t *heap);
 void heap_delete(heap_t *heap, void (*free_data)(void *));
 void bubble_up(binary_tree_node_t *node, heap_t *heap);
 binary_tree_node_t *insert_node(heap_t *heap, void *data);
+void bubble_up(binary_tree_node_t *node, heap_t *heap);
 
 #endif /* HEAP_H */
