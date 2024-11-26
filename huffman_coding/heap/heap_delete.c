@@ -7,13 +7,13 @@
 */
 void delete_node(binary_tree_node_t *node, void (*free_data)(void *))
 {
-    if (!node)
-        return;
-    delete_node(node->left, free_data);
-    delete_node(node->right, free_data);
-    if (free_data)
-        free_data(node->data);
-    free(node);
+	if (!node)
+		return;
+	delete_node(node->left, free_data);
+	delete_node(node->right, free_data);
+	if (free_data)
+		free_data(node->data);
+	free(node);
 }
 
 /**
@@ -23,8 +23,8 @@ void delete_node(binary_tree_node_t *node, void (*free_data)(void *))
 */
 void heap_delete(heap_t *heap, void (*free_data)(void *))
 {
-    if (!heap)
-        return;
-    delete_node(heap->root, free_data);
+	if (!heap)
+		return;
+	delete_node(heap->root, free_data);
 	free(heap);
 }
