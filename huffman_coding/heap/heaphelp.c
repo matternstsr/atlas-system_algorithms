@@ -33,17 +33,13 @@ void bubble_down(binary_tree_node_t *node, heap_t *heap)
 
 	if (left && heap->data_cmp(left->data, smallest->data) < 0)
 		smallest = left;
-
 	if (right && heap->data_cmp(right->data, smallest->data) < 0)
 		smallest = right;
-
 	if (smallest != node)
 	{
 		void *temp = node->data;
-
 		node->data = smallest->data;
 		smallest->data = temp;
-
 		bubble_down(smallest, heap);
 	}
 }
