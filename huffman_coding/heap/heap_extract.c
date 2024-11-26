@@ -18,13 +18,10 @@
 */
 void *heap_extract(heap_t *heap)
 {
-	void *data;
-	binary_tree_node_t *last_node;
-
 	if (!heap || !heap->root)
 		return (NULL);
 
-	data = heap->root->data;
+	void *data = heap->root->data;
 
 	if (heap->size == 1)
 	{
@@ -33,6 +30,7 @@ void *heap_extract(heap_t *heap)
 	}
 	else
 	{
+		binary_tree_node_t *last_node = NULL;
 		binary_tree_node_t *current = heap->root;
 		binary_tree_node_t *queue[1024];
 		int front = 0, rear = 0;
@@ -56,8 +54,6 @@ void *heap_extract(heap_t *heap)
 				last_node->parent->right = NULL;
 		}
 		free(last_node);
-		heap->root->left = NULL;
-		heap->root->right = NULL;
 	}
 	heap->size--;
 	if (heap->root != NULL)
