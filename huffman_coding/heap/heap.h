@@ -4,7 +4,6 @@
 #include <stddef.h>  /* For NULL */
 #include <stdio.h>   /* For printf, fprintf, stderr */
 #include <stdlib.h>  /* For EXIT_FAILURE, EXIT_SUCCESS */
-#include "binary_tree.h" /* where binary_tree_node_t is defined */
 
 
 /**

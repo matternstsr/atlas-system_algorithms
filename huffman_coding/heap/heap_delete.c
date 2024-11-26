@@ -1,3 +1,5 @@
+#include "heap.h"
+
 /**
 * delete_node - Recursively deletes nodes in the binary tree.
 * @node: The node to delete.
