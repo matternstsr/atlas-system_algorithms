@@ -4,6 +4,7 @@
 #include <stddef.h>  /* For NULL */
 #include <stdio.h>   /* For printf, fprintf, stderr */
 #include <stdlib.h>  /* For EXIT_FAILURE, EXIT_SUCCESS */
+#include "binary_tree.h" /* where binary_tree_node_t is defined */
 
 
 /**
@@ -45,6 +46,5 @@ void bubble_up(binary_tree_node_t *node, heap_t *heap);
 binary_tree_node_t *insert_node(heap_t *heap, void *data);
 void bubble_down(binary_tree_node_t *node, heap_t *heap);
 void delete_node(binary_tree_node_t *node, void (*free_data)(void *));
-
 
 #endif /* HEAP_H */
