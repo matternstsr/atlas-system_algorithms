@@ -2,6 +2,8 @@
 #define HUFFMAN_H
 
 #include <stddef.h>
+#include "binary_tree.h"
+#include "heap.h"
 
 /**
 * struct symbol_s - Stores a char and its associated frequency
@@ -22,4 +24,5 @@ int huffman_extract_and_insert(heap_t *priority_queue);
 static void generate_huffman_codes(
 	binary_tree_node_t *node,
 	char *code, size_t depth);
+
 #endif /* HUFFMAN_H */
