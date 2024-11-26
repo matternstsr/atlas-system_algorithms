@@ -2,9 +2,9 @@
 #include "heap.h"
 
 /**
-* heap_delete - Deletes a heap
-* @heap: Pointer to the heap to delete
-* @free_data: Function to free the data stored in nodes
+* delete_node - Recursively deletes nodes in the binary tree.
+* @node: The node to delete.
+* @free_data: Function to free the data stored in nodes.
 */
 void delete_node(binary_tree_node_t *node, void (*free_data)(void *))
 {
@@ -18,14 +18,15 @@ void delete_node(binary_tree_node_t *node, void (*free_data)(void *))
 }
 
 /**
- * heap_delete - Deletes a heap
- * @heap: Pointer to the heap to delete
- * @free_data: Function to free the data stored in nodes
- */
+* heap_delete - Deletes a heap
+* @heap: Pointer to the heap to delete
+* @free_data: Function to free the data stored in nodes
+*/
 void heap_delete(heap_t *heap, void (*free_data)(void *))
 {
     if (!heap)
         return;
-    delete_node(heap->root, free_data);
+    if (heap->root)
+        delete_node(heap->root, free_data);
     free(heap);
 }
