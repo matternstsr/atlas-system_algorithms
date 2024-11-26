@@ -1,8 +1,9 @@
 #ifndef HUFFMAN_H
 #define HUFFMAN_H
 
-#include <stddef.h>
-#include "binary_tree.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 #include "heap.h"
 
 /**
