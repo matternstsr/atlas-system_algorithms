@@ -12,7 +12,7 @@
 
 int huffman_extract_and_insert(heap_t *priority_queue)
 {
-	if (heap_size(priority_queue) < 2)
+	if (!priority_queue || !priority_queue->root)
 		return (0);
 	binary_tree_node_t *node1 = heap_extract(priority_queue);
 	binary_tree_node_t *node2 = heap_extract(priority_queue);
