@@ -27,6 +27,7 @@ void generate_huffman_codes(
 	char *code, size_t depth);
 void heap_destroy(heap_t *heap);
 int symbol_compare(void *a, void *b);
+void free_heap_nodes(binary_tree_node_t *node);
 
 #endif /* HUFFMAN_H */
 
