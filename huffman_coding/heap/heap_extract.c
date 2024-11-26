@@ -23,9 +23,7 @@ void *heap_extract(heap_t *heap)
 
 	if (!heap || !heap->root)
 		return (NULL);
-
 	data = heap->root->data;
-
 	if (heap->size == 1)
 	{
 		free(heap->root);
@@ -61,6 +59,10 @@ void *heap_extract(heap_t *heap)
 	}
 	heap->size--;
 	if (heap->root != NULL)
+		binary_tree_print(heap->root);
+	if (heap->root != NULL)
 		bubble_down(heap->root, heap);
+	if (heap->root != NULL)
+		binary_tree_print(heap->root);
 	return (data);
 }
