@@ -40,9 +40,6 @@ heap_t *huffman_priority_queue(char *data, size_t *freq, size_t size)
 	return (priority_queue);
 }
 
-#include <stdlib.h>
-#include "huffman.h"
-
 /**
 * symbol_compare - Compares two symbols by frequency.
 * @a: The first symbol.
@@ -51,9 +48,9 @@ heap_t *huffman_priority_queue(char *data, size_t *freq, size_t size)
 */
 int symbol_compare(void *a, void *b)
 {
-    symbol_t *symbol_a = (symbol_t *)a;
-    symbol_t *symbol_b = (symbol_t *)b;
-    return (int)(symbol_a->freq - symbol_b->freq);
+	symbol_t *symbol_a = (symbol_t *)a;
+	symbol_t *symbol_b = (symbol_t *)b;
+	return (int)(symbol_a->freq - symbol_b->freq);
 }
 
 /**
@@ -63,16 +60,16 @@ int symbol_compare(void *a, void *b)
 */
 binary_tree_node_t *binary_tree_node_create(void *data)
 {
-    binary_tree_node_t *node = malloc(sizeof(binary_tree_node_t));
+	binary_tree_node_t *node = malloc(sizeof(binary_tree_node_t));
 
-    if (!node)
-        return (NULL);
+	if (!node)
+		return (NULL);
 
-    node->data = data;
-    node->left = NULL;
-    node->right = NULL;
+	node->data = data;
+	node->left = NULL;
+	node->right = NULL;
 
-    return (node);
+	return (node);
 }
 
 /**
@@ -81,18 +78,23 @@ binary_tree_node_t *binary_tree_node_create(void *data)
 */
 void heap_destroy(heap_t *heap)
 {
-    if (!heap)
-        return;
-    for (size_t i = 0; i < heap->size; i++)
-    {
-        binary_tree_node_t *node = heap->array[i];
-        if (node)
-        {
-            if (node->data)
-                free(node->data);
-            free(node);
-        }
-    }
-    free(heap->array);
-    free(heap);
+	if (!heap)
+		return;
+	free_heap_nodes(heap->root);
+	free(heap);
+}
+
+/**
+* free_heap_nodes - Recursively frees the nodes in the heap.
+* @node: The current node to free.
+*/
+void free_heap_nodes(binary_tree_node_t *node)
+{
+	if (!node)
+		return;
+	free_heap_nodes(node->left);
+	free_heap_nodes(node->right);
+	if (node->data)
+		free(node->data);
+	free(node);
 }
