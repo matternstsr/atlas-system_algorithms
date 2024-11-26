@@ -19,6 +19,7 @@
 void *heap_extract(heap_t *heap)
 {
 	void *data;
+	binary_tree_node_t *last_node;
 
 	if (!heap || !heap->root)
 		return (NULL);
@@ -32,7 +33,7 @@ void *heap_extract(heap_t *heap)
 	}
 	else
 	{
-		last_node = heap->root;
+		*last_node = heap->root;
 		binary_tree_node_t *current = heap->root;
 		binary_tree_node_t *queue[1024];
 		int front = 0, rear = 0;
