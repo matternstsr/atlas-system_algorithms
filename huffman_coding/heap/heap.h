@@ -5,6 +5,7 @@
 #include <stdio.h>   /* For printf, fprintf, stderr */
 #include <stdlib.h>  /* For EXIT_FAILURE, EXIT_SUCCESS */
 
+
 /**
 * struct binary_tree_node_s - Binary tree node data structure
 *
@@ -42,6 +43,6 @@ void *heap_extract(heap_t *heap);
 void heap_delete(heap_t *heap, void (*free_data)(void *));
 void bubble_up(binary_tree_node_t *node, heap_t *heap);
 binary_tree_node_t *insert_node(heap_t *heap, void *data);
-void bubble_up(binary_tree_node_t *node, heap_t *heap);
+void bubble_down(binary_tree_node_t *node, heap_t *heap);
 
 #endif /* HEAP_H */
