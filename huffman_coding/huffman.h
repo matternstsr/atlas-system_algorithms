@@ -18,6 +18,13 @@ typedef struct symbol_s
 	size_t freq;
 } symbol_t;
 
+typedef struct binary_tree_node_s {
+    void *data;
+    struct binary_tree_node_s *left;
+    struct binary_tree_node_s *right;
+} binary_tree_node_t;
+
+
 symbol_t *symbol_create(char data, size_t freq);
 binary_tree_node_t *huffman_tree(char *data, size_t *freq, size_t size);
 heap_t *huffman_priority_queue(char *data, size_t *freq, size_t size);
