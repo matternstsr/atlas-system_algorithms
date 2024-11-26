@@ -13,24 +13,20 @@
  */
 binary_tree_node_t *huffman_tree(char *data, size_t *freq, size_t size)
 {
-	heap_t *priority_heap = NULL;
+    heap_t *priority_queue = huffman_priority_queue(data, freq, size);
 
-	heap_t *priority_queue = huffman_priority_queue(data, freq, size);
+    if (!priority_queue)
+        return (NULL);
 
-	if (!priority_queue)
-		return (NULL);
+    while (priority_queue->size > 1)
+    {
+        if (!huffman_extract_and_insert(priority_queue))
+        {
+            heap_destroy(priority_queue);
+            return (NULL);
+        }
+    }
 
-	priority_heap = huffman_priority_queue(data, freq, size);
-	if (!priority_heap)
-		return (NULL);
-	while (priority_heap->size > 1)
-	{
-		if (!huffman_extract_and_insert(priority_queue))
-		{
-			heap_destroy(priority_queue);
-			return (NULL);
-		}
-	}
-
-	return (priority_queue->root);
+    return (priority_queue->root);
 }
+
