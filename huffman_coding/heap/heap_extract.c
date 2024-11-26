@@ -25,8 +25,7 @@ void *heap_extract(heap_t *heap)
 
 	if (heap->size == 1)
 	{
-		free(heap->root);
-		heap->root = NULL;
+		free(heap->root), heap->root = NULL;
 	}
 	else
 	{
@@ -44,8 +43,7 @@ void *heap_extract(heap_t *heap)
 			if (current->right)
 				queue[rear++] = current->right;
 		}
-		last_node = current;
-		heap->root->data = last_node->data;
+		last_node = current, heap->root->data = last_node->data;
 		if (last_node->parent)
 		{
 			if (last_node->parent->left == last_node)
@@ -60,3 +58,4 @@ void *heap_extract(heap_t *heap)
 		bubble_down(heap->root, heap);
 	return (data);
 }
+
