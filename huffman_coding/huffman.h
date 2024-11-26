@@ -29,6 +29,7 @@ void heap_destroy(heap_t *heap);
 int symbol_compare(void *a, void *b);
 void free_heap_nodes(binary_tree_node_t *node);
 binary_tree_node_t *huffman_tree(char *data, size_t *freq, size_t size);
+int huffman_codes(char *data, size_t *freq, size_t size);
 
 #endif /* HUFFMAN_H */
 
