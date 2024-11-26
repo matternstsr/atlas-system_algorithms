@@ -11,6 +11,7 @@ void delete_node(binary_tree_node_t *node, void (*free_data)(void *))
 		return;
 	delete_node(node->left, free_data);
 	delete_node(node->right, free_data);
+	/* had if (node->data)*/
 	if (free_data)
 		free_data(node->data);
 	free(node);
