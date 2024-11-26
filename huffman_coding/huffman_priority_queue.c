@@ -20,12 +20,14 @@ heap_t *huffman_priority_queue(char *data, size_t *freq, size_t size)
 	for (size_t i = 0; i < size; i++)
 	{
 		symbol_t *symbol = symbol_create(data[i], freq[i]);
+
 		if (!symbol)
 		{
 			heap_destroy(priority_queue);
 			return (NULL);
 		}
 		binary_tree_node_t *node = binary_tree_node_create(symbol);
+
 		if (!node)
 		{
 			heap_destroy(priority_queue);
@@ -50,7 +52,8 @@ int symbol_compare(void *a, void *b)
 {
 	symbol_t *symbol_a = (symbol_t *)a;
 	symbol_t *symbol_b = (symbol_t *)b;
-	return (int)(symbol_a->freq - symbol_b->freq);
+
+	return ((int)(symbol_a->freq - symbol_b->freq));
 }
 
 /**
