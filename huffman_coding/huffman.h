@@ -18,15 +18,15 @@ typedef struct symbol_s
 	size_t freq;
 } symbol_t;
 
-/* Function Prototypes */
-heap_t *heap_create(int (*data_cmp)(void *, void *));
-symbol_t *symbol_create(char character, size_t freq);
-int heap_insert(heap_t *heap, binary_tree_node_t *node);
-void heap_destroy(heap_t *heap);
-void *heap_extract(heap_t *heap);
-int symbol_compare(void *a, void *b);
+symbol_t *symbol_create(char data, size_t freq);
 binary_tree_node_t *binary_tree_node_create(void *data);
-void heap_delete(heap_t *heap, void (*free_data)(void *));
+heap_t *huffman_priority_queue(char *data, size_t *freq, size_t size);
+int huffman_extract_and_insert(heap_t *priority_queue);
+void generate_huffman_codes(
+	binary_tree_node_t *node,
+	char *code, size_t depth);
+void heap_destroy(heap_t *heap);
+int symbol_compare(void *a, void *b);
 void free_heap_nodes(binary_tree_node_t *node);
 
 #endif /* HUFFMAN_H */
