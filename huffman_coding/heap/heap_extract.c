@@ -19,7 +19,6 @@
 void *heap_extract(heap_t *heap)
 {
 	void *data;
-	binary_tree_node_t *last_node;
 
 	if (!heap || !heap->root)
 		return (NULL);
