@@ -10,14 +10,16 @@ void heap_delete(heap_t *heap, void (*free_data)(void *))
 {
     if (!heap)
         return;
-    for (size_t i = 0; i < heap->size; i++)
+    void delete_node(binary_tree_node_t *node)
     {
-        if (heap->array[i])
-        {
-            free_data(heap->array[i]->data);
-            free(heap->array[i]);
-        }
+        if (!node)
+            return;
+        delete_node(node->left);
+        delete_node(node->right);
+        if (node->data)
+            free_data(node->data);
+        free(node);
     }
-    free(heap->array);
+    delete_node(heap->root);
     free(heap);
 }
