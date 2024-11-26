@@ -57,19 +57,15 @@ void *heap_extract(heap_t *heap)
 			else if (last_node->parent->right == last_node)
 				last_node->parent->right = NULL;
 		}
-
 		free(last_node);
+
 		heap->root->left = NULL;
 		heap->root->right = NULL;
 	}
 
 	heap->size--;
 
-	// Only call bubble_down if heap->root is not NULL
 	if (heap->root != NULL)
-	{
 		bubble_down(heap->root, heap);
-	}
-
 	return (data);
 }
