@@ -2,6 +2,19 @@
 #include "huffman.h"
 
 /**
+* symbol_compare - Compares two symbols by frequency.
+* @a: The first symbol.
+* @b: The second symbol.
+* Return: Negative, zero, or positive value based on comparison.
+*/
+int symbol_compare(void *a, void *b)
+{
+    symbol_t *symbol_a = (symbol_t *)a;
+    symbol_t *symbol_b = (symbol_t *)b;
+    return (int)(symbol_a->freq - symbol_b->freq);
+}
+
+/**
 * binary_tree_node_create - Creates a binary tree node.
 * @data: The data to store in the node.
 * Return: A pointer to the newly created node.
