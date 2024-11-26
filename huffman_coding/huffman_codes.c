@@ -11,7 +11,7 @@
  * @depth: The current depth in the Huffman tree, representing the length of
  *         the current Huffman code.
  */
-static void generate_huffman_codes(
+void generate_huffman_codes(
 	binary_tree_node_t *node,
 	char *code, size_t depth)
 {
