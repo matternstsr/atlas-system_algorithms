@@ -18,53 +18,58 @@
 */
 void *heap_extract(heap_t *heap)
 {
-    void *data;
-    binary_tree_node_t *last_node;
+	void *data;
+	binary_tree_node_t *last_node;
 
-    if (!heap || !heap->root)
-        return (NULL);
+	if (!heap || !heap->root)
+		return (NULL);
 
-    data = heap->root->data;
+	data = heap->root->data;
 
-    if (heap->size == 1)
-    {
-        free(heap->root);
-        heap->root = NULL;
-    }
-    else
-    {
-        binary_tree_node_t *current = heap->root;
-        binary_tree_node_t *queue[1024];
-        int front = 0, rear = 0;
+	if (heap->size == 1)
+	{
+		free(heap->root);
+		heap->root = NULL;
+	}
+	else
+	{
+		binary_tree_node_t *current = heap->root;
+		binary_tree_node_t *queue[1024];
+		int front = 0, rear = 0;
 
-        queue[rear++] = current;
-        while (front < rear)
-        {
-            current = queue[front++];
-            if (current->left)
-                queue[rear++] = current->left;
-            if (current->right)
-                queue[rear++] = current->right;
-        }
+		queue[rear++] = current;
+		while (front < rear)
+		{
+			current = queue[front++];
+			if (current->left)
+				queue[rear++] = current->left;
+			if (current->right)
+				queue[rear++] = current->right;
+		}
 
-        last_node = current;
-        heap->root->data = last_node->data;
+		last_node = current;
+		heap->root->data = last_node->data;
 
-        if (last_node->parent && last_node != heap->root)
-        {
-            if (last_node->parent->left == last_node)
-                last_node->parent->left = NULL;
-            else if (last_node->parent->right == last_node)
-                last_node->parent->right = NULL;
-        }
+		if (last_node->parent && last_node != heap->root)
+		{
+			if (last_node->parent->left == last_node)
+				last_node->parent->left = NULL;
+			else if (last_node->parent->right == last_node)
+				last_node->parent->right = NULL;
+		}
 
-        free(last_node);
-        heap->root->left = NULL;
-        heap->root->right = NULL;
-    }
+		free(last_node);
+		heap->root->left = NULL;
+		heap->root->right = NULL;
+	}
 
-    heap->size--;
-    bubble_down(heap->root, heap);
+	heap->size--;
 
-    return (data);
+	// Only call bubble_down if heap->root is not NULL
+	if (heap->root != NULL)
+	{
+		bubble_down(heap->root, heap);
+	}
+
+	return (data);
 }
