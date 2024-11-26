@@ -25,7 +25,6 @@ void heap_delete(heap_t *heap, void (*free_data)(void *))
 {
     if (!heap)
         return;
-    if (heap->root)
-        delete_node(heap->root, free_data);
-    free(heap);
+    delete_node(heap->root, free_data);
+	free(heap);
 }
