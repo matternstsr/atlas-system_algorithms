@@ -41,8 +41,7 @@ heap_t *huffman_priority_queue(char *data, size_t *freq, size_t size)
 }
 
 /**
-* symbol_compare - Compares two symbols by frequency, and by character if
-*                  frequencies are the same.
+* symbol_compare - Compares two symbols by frequency.
 * @a: The first symbol.
 * @b: The second symbol.
 * Return: Negative, zero, or positive value based on comparison.
@@ -51,9 +50,7 @@ int symbol_compare(void *a, void *b)
 {
 	symbol_t *symbol_a = (symbol_t *)a;
 	symbol_t *symbol_b = (symbol_t *)b;
-	if (symbol_a->freq != symbol_b->freq)
-		return (int)(symbol_a->freq - symbol_b->freq);
-	return (int)(symbol_a->data - symbol_b->data);
+	return (int)(symbol_a->freq - symbol_b->freq);
 }
 
 /**
