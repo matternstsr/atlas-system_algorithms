@@ -14,11 +14,11 @@ int huffman_extract_and_insert(heap_t *priority_queue)
         return (0);
     binary_tree_node_t *node1 = heap_extract(priority_queue);
     binary_tree_node_t *node2 = heap_extract(priority_queue);
-
     if (!node1 || !node2)
         return (0);
-    symbol_t *symbol1 = (symbol_t *)node1->data;
-    symbol_t *symbol2 = (symbol_t *)node2->data;
+    /* Print the heap before insertion */
+    printf("Heap before insertion:\n");
+    print_heap(priority_queue);
     symbol_t *new_symbol = symbol_create('\0', symbol1->freq + symbol2->freq);
     if (!new_symbol)
         return (0);
@@ -30,5 +30,8 @@ int huffman_extract_and_insert(heap_t *priority_queue)
     if (heap_insert(priority_queue, new_node) == 0)
         return (0);
 
+    /* Print the heap after insertion */
+    printf("Heap after insertion:\n");
+    print_heap(priority_queue);
     return (1);
 }
