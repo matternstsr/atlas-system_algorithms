@@ -25,7 +25,39 @@ binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 	}
 	else
 	{
+		binary_tree_node_t *current = heap->root;
+		binary_tree_node_t *queue[1024];
+		int front = 0, rear = 0;
+		queue[rear++] = current;
+
+		while (front < rear)
+		{
+			current = queue[front++];
+			if (current->left == NULL)
+			{
+				current->left = node;
+				node->parent = current;
+				break;
+			}
+			else
+			{
+				queue[rear++] = current->left;
+			}
+
+			if (current->right == NULL)
+			{
+				current->right = node;
+				node->parent = current;
+				break;
+			}
+			else
+			{
+				queue[rear++] = current->right;
+			}
+		}
 	}
+
+	bubble_up(node, heap);
 
 	heap->size++;
 	return (node);
