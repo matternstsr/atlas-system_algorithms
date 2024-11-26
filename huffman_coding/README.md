@@ -32,7 +32,7 @@ This project contains several functions that:
 - **Priority Queue**: Build a priority queue (min-heap) using the symbols based on their frequencies.
 - **Huffman Tree Construction**: Iteratively extract the least frequent nodes and combine them to form a Huffman tree.
 - **Huffman Codes Generation**: Generate and print the Huffman codes for each symbol by traversing the Huffman tree.
-  
+
 ---
 
 ## File Structure
@@ -89,16 +89,16 @@ The project provides a series of example programs to demonstrate the functionali
 
 1. **Symbol Creation**: `5-main.c`
     - This example creates symbols using `symbol_create()` with specified data and frequency.
-    
+
 2. **Priority Queue**: `6-main.c`
     - This example builds the priority queue (min-heap) from a set of symbols and their frequencies.
-    
+
 3. **Extract and Insert**: `7-main.c`
     - This example demonstrates the process of extracting the two least frequent nodes from the heap and inserting a new internal node.
-    
+
 4. **Building the Huffman Tree**: `8-main.c`
     - This example constructs the Huffman tree by repeatedly extracting and inserting nodes until only one node remains in the priority queue.
-    
+
 5. **Huffman Codes**: `9-main.c`
     - This example generates the Huffman codes for each symbol by traversing the Huffman tree and prints them.
 
