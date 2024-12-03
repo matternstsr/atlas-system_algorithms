@@ -191,7 +191,7 @@ void enqueue(queue_t *queue, void *item)
     }
 
     /* Debugging output to track enqueue operations */
-    printf("Enqueued item: [%d, %d]\n", ((point_t *)item)->x, ((point_t *)item)->y);
+    /* printf("Enqueued item: [%d, %d]\n", ((point_t *)item)->x, ((point_t *)item)->y); */
 }
 
 /**
