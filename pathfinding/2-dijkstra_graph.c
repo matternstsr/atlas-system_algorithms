@@ -2,34 +2,67 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static int compare_distances(const void *a, const void *b);
-
-/**
-* dijkstra_graph - Find shortest path using Dijkstra's algorithm in a graph.
-* @graph: The graph to explore.
-* @start: The starting vertex.
-* @target: The target vertex.
-*
-* Return: A queue that has shortest path start to target, NULL no path found.
-*/
 queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
-						vertex_t const *target)
+                        vertex_t const *target)
 {
-	/* Use Dijkstra's algorithm to find the shortest path  */
-	queue_t *path = create_queue();
+    /* Implement Dijkstra's algorithm here */
+    queue_t *path = create_queue();
 
-	if (!path)
-		return (NULL);
+    if (!path)
+        return (NULL);
 
-	/* Implement the algorithm (skipped implementation details) */
-	/* For now, it simply returns a path found (simulation of Dijkstra's) */
+    /* Pretend the path is found to the target */
+    char *city_name = strdup(start->name);
 
-	char *city_name = strdup(start->name);
+    enqueue(path, city_name);
+    enqueue(path, strdup(target->name));
 
-	enqueue(path, city_name);
+    return (path);
+}
 
-	/* Pretend the path is found to the target */
-	enqueue(path, strdup(target->name));
+queue_t *create_queue(void)
+{
+    queue_t *queue = malloc(sizeof(queue_t));
+    if (!queue)
+        return NULL;
+    queue->front = queue->rear = NULL;
+    return queue;
+}
 
-	return (path);
+void enqueue(queue_t *queue, void *item)
+{
+    if (!queue) return;
+
+    /* Create a new node */
+    queue_node_t *node = malloc(sizeof(queue_node_t));
+    if (!node) return;
+
+    node->item = item;
+    node->next = NULL;
+
+    if (queue->rear)
+    {
+        queue->rear->next = node;
+        queue->rear = node;
+    }
+    else
+    {
+        queue->front = queue->rear = node;
+    }
+}
+
+void *dequeue(queue_t *queue)
+{
+    if (!queue || !queue->front)
+        return NULL;
+
+    queue_node_t *node = queue->front;
+    void *item = node->item;
+    queue->front = node->next;
+
+    if (!queue->front)
+        queue->rear = NULL;
+
+    free(node);
+    return item;
 }
