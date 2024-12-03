@@ -44,27 +44,13 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 
     /* Start exploring the map */
     if (explore_cell(map, rows, cols, start, target, path, visited)) {
-        /* Reverse the path before returning */
-        queue_t *reversed_path = create_queue();
-        if (!reversed_path) {
-            printf("Failed to create reversed queue\n");
-            free(visited);
-            free(path);
-            return NULL;
-        }
-
-        /* Reverse the order of items in the path queue */
-        while (path->front) {
-            enqueue(reversed_path, dequeue(path));
-        }
-
         /* Free visited memory */
         for (int i = 0; i < rows; i++) {
             free(visited[i]);
         }
         free(visited);
 
-        return reversed_path;
+        return path;
     }
 
     /* If no path is found, free memory and return NULL */
@@ -101,7 +87,7 @@ static int explore_cell(char **map, int rows, int cols,
     }
 
     /* Debugging output to show current exploration */
-    printf("Checking coordinates [%d, %d]\n", current->y, current->x);
+    printf("Checking coordinates [%d, %d]\n", current->x, current->y);
 
     /* If the target is found */
     if (current->x == target->x && current->y == target->y) {
@@ -114,7 +100,7 @@ static int explore_cell(char **map, int rows, int cols,
         *new_point = *current;
         enqueue(path, new_point);
 
-        /* Print the path found so far */
+        /* Path found, return 1 */
         return 1;
     }
 
