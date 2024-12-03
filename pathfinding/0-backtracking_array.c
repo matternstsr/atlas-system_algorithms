@@ -44,14 +44,27 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 
     /* Start exploring the map */
     if (explore_cell(map, rows, cols, start, target, path, visited)) {
-        /* No need to reverse the order of the path here, it’s in the correct order */
+        /* Reverse the path before returning */
+        queue_t *reversed_path = create_queue();
+        if (!reversed_path) {
+            printf("Failed to create reversed queue\n");
+            free(visited);
+            free(path);
+            return NULL;
+        }
+
+        /* Reverse the order of items in the path queue */
+        while (path->front) {
+            enqueue(reversed_path, dequeue(path));
+        }
+
         /* Free visited memory */
         for (int i = 0; i < rows; i++) {
             free(visited[i]);
         }
         free(visited);
 
-        return path;
+        return reversed_path;
     }
 
     /* If no path is found, free memory and return NULL */
