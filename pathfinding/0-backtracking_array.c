@@ -88,3 +88,57 @@ static int explore_cell(char **map, int rows, int cols,
 	}
 	return (0);
 }
+
+/* Creates a new queue */
+queue_t *create_queue(void)
+{
+	queue_t *queue = malloc(sizeof(queue_t));
+	if (queue)
+	{
+		queue->front = NULL;
+		queue->rear = NULL;
+	}
+	return queue;
+}
+
+/* Enqueue an item to the queue */
+void enqueue(queue_t *queue, void *item)
+{
+	if (!queue) return;
+
+	Create a new node
+	queue_node_t *node = malloc(sizeof(queue_node_t));
+	if (!node) return;
+
+	node->item = item;
+	node->next = NULL;
+
+	if (queue->rear)
+	{
+		queue->rear->next = node;
+	}
+	queue->rear = node;
+
+	if (!queue->front)
+	{
+		queue->front = node;
+	}
+}
+
+/* Dequeue an item from the queue */
+void *dequeue(queue_t *queue)
+{
+	if (!queue || !queue->front) return NULL;
+
+	queue_node_t *node = queue->front;
+	void *item = node->item;
+
+	queue->front = node->next;
+	if (!queue->front)
+	{
+		queue->rear = NULL;
+	}
+
+	free(node);
+	return item;
+}

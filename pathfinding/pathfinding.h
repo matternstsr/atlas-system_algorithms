@@ -64,6 +64,12 @@ typedef struct queue_s
 	void *rear;
 } queue_t;
 
+typedef struct queue_node_s
+{
+	void *item;
+	struct queue_node_s *next;
+} queue_node_t;
+
 /**
 * backtracking_array - Searches for the first path from a starting point to
 *                      a target point within a 2D array using backtracking.
@@ -105,5 +111,11 @@ queue_t *backtracking_graph(graph_t *graph,
 */
 queue_t *dijkstra_graph(graph_t *graph,
 						vertex_t const *start, vertex_t const *target);
+
+
+
+queue_t *create_queue(void);   /* Creates and returns a new queue */
+void enqueue(queue_t *queue, void *item);  /* Adds an item to the queue */
+void *dequeue(queue_t *queue); /* Removes and returns an item from the queue */
 
 #endif /* PATHFINDING_H */
