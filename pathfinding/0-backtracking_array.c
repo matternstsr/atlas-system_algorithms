@@ -84,7 +84,7 @@ void enqueue(queue_t *queue, void *item)
 {
     if (!queue) return;
 
-    /* Create a new node */
+    // Create a new node
     queue_node_t *node = malloc(sizeof(queue_node_t));
     if (!node) return;
 
@@ -100,6 +100,9 @@ void enqueue(queue_t *queue, void *item)
     {
         queue->front = queue->rear = node;
     }
+
+    // Debugging print statement to track enqueue operations
+    printf("Enqueued item: [%d, %d]\n", ((point_t *)item)->x, ((point_t *)item)->y);
 }
 
 void *dequeue(queue_t *queue)
