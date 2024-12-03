@@ -101,7 +101,7 @@ static int explore_cell(char **map, int rows, int cols,
     }
 
     /* Debugging output to show current exploration */
-    printf("Checking coordinates [%d, %d]\n", current->x, current->y);
+    printf("Checking coordinates [%d, %d]\n", current->y, current->x);
 
     /* If the target is found */
     if (current->x == target->x && current->y == target->y) {
