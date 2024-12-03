@@ -44,21 +44,7 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 
     /* Start exploring the map */
     if (explore_cell(map, rows, cols, start, target, path, visited)) {
-        /* After pathfinding, reverse the order of the queue */
-        /* Create a temporary array to store the path in reverse order */
-        point_t *path_array[1000]; /* Arbitrary large size; adjust as necessary */
-        int path_len = 0;
-
-        /* Collect the points from the queue in reverse order */
-        while (path->front) {
-            path_array[path_len++] = dequeue(path);
-        }
-
-        /* Enqueue the points in the correct order */
-        for (int i = path_len - 1; i >= 0; i--) {
-            enqueue(path, path_array[i]);
-        }
-
+        /* No need to reverse the order of the path here, it’s in the correct order */
         /* Free visited memory */
         for (int i = 0; i < rows; i++) {
             free(visited[i]);
@@ -116,7 +102,6 @@ static int explore_cell(char **map, int rows, int cols,
         enqueue(path, new_point);
 
         /* Print the path found so far */
-        /* printf("Path found: [%d, %d]\n", current->x, current->y); */
         return 1;
     }
 
@@ -189,9 +174,6 @@ void enqueue(queue_t *queue, void *item)
     } else {
         queue->front = queue->rear = node;
     }
-
-    /* Debugging output to track enqueue operations */
-    /* printf("Enqueued item: [%d, %d]\n", ((point_t *)item)->x, ((point_t *)item)->y); */
 }
 
 /**
