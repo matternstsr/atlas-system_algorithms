@@ -10,15 +10,18 @@ queue_t *backtracking_array(char **map, int rows, int cols,
                             point_t const *start, point_t const *target)
 {
     queue_t *path = create_queue();
+    if (!path) {
+        printf("Failed to create queue\n");
+        return NULL;
+    }
 
-    if (!path)
-        return (NULL);
-
-    if (explore_cell(map, rows, cols, start, target, path))
-        return (path);
+    if (explore_cell(map, rows, cols, start, target, path)) {
+        return path;
+    }
 
     free(path);
-    return (NULL);
+    printf("Path not found\n");
+    return NULL;
 }
 
 static int explore_cell(char **map, int rows, int cols,
@@ -26,24 +29,24 @@ static int explore_cell(char **map, int rows, int cols,
                         queue_t *path)
 {
     if (current->x < 0 || current->x >= rows || current->y < 0 ||
-            current->y >= cols || map[current->x][current->y] == '1')
-        return (0);
+        current->y >= cols || map[current->x][current->y] == '1') {
+        return 0;
+    }
 
     printf("Checking coordinates [%d, %d]\n", current->x, current->y);  // Debugging print statement
 
-    if (current->x == target->x && current->y == target->y)
-    {
+    if (current->x == target->x && current->y == target->y) {
         point_t *new_point = malloc(sizeof(point_t));
-
-        if (!new_point)
-            return (0);
-
+        if (!new_point) {
+            printf("Failed to allocate memory for new_point\n");
+            return 0;
+        }
         *new_point = *current;
 
         enqueue(path, new_point);
         printf("Path found: [%d, %d]\n", current->x, current->y);  // Debugging print statement
 
-        return (1);
+        return 1;
     }
 
     map[current->x][current->y] = '1';  /* Mark as visited */
@@ -53,29 +56,30 @@ static int explore_cell(char **map, int rows, int cols,
         {current->x, current->y - 1},  /* Left */
         {current->x - 1, current->y}   /* Up */
     };
-    for (int i = 0; i < 4; i++)
-    {
-        if (explore_cell(map, rows, cols, &neighbors[i], target, path))
-        {
+
+    for (int i = 0; i < 4; i++) {
+        if (explore_cell(map, rows, cols, &neighbors[i], target, path)) {
             point_t *new_point = malloc(sizeof(point_t));
-
-            if (!new_point)
-                return (0);
-
+            if (!new_point) {
+                printf("Failed to allocate memory for new_point\n");
+                return 0;
+            }
             *new_point = *current;
 
             enqueue(path, new_point);
-            return (1);
+            return 1;
         }
     }
-    return (0);
+    return 0;
 }
 
 queue_t *create_queue(void)
 {
     queue_t *queue = malloc(sizeof(queue_t));
-    if (!queue)
+    if (!queue) {
+        printf("Failed to allocate memory for queue\n");
         return NULL;
+    }
     queue->front = queue->rear = NULL;
     return queue;
 }
@@ -86,18 +90,18 @@ void enqueue(queue_t *queue, void *item)
 
     // Create a new node
     queue_node_t *node = malloc(sizeof(queue_node_t));
-    if (!node) return;
+    if (!node) {
+        printf("Failed to allocate memory for queue node\n");
+        return;
+    }
 
     node->item = item;
     node->next = NULL;
 
-    if (queue->rear)
-    {
+    if (queue->rear) {
         queue->rear->next = node;
         queue->rear = node;
-    }
-    else
-    {
+    } else {
         queue->front = queue->rear = node;
     }
 
