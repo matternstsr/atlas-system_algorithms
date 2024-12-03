@@ -29,6 +29,8 @@ static int explore_cell(char **map, int rows, int cols,
             current->y >= cols || map[current->x][current->y] == '1')
         return (0);
 
+    printf("Checking coordinates [%d, %d]\n", current->x, current->y);  // Debugging print statement
+
     if (current->x == target->x && current->y == target->y)
     {
         point_t *new_point = malloc(sizeof(point_t));
@@ -39,9 +41,11 @@ static int explore_cell(char **map, int rows, int cols,
         *new_point = *current;
 
         enqueue(path, new_point);
+        printf("Path found: [%d, %d]\n", current->x, current->y);  // Debugging print statement
 
         return (1);
     }
+
     map[current->x][current->y] = '1';  /* Mark as visited */
     point_t neighbors[4] = {
         {current->x, current->y + 1},  /* Right */
