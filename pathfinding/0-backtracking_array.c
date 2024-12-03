@@ -50,7 +50,19 @@ queue_t *backtracking_array(char **map, int rows, int cols,
         }
         free(visited);
 
-        return path;
+        /* Reverse the path to print from start to target */
+        queue_t *reversed_path = create_queue();
+        if (!reversed_path) {
+            printf("Failed to create reversed queue\n");
+            return NULL;
+        }
+
+        /* Reverse the path from target to start */
+        while (path->front) {
+            enqueue(reversed_path, dequeue(path));
+        }
+
+        return reversed_path;
     }
 
     /* If no path is found, free memory and return NULL */
@@ -196,3 +208,4 @@ void *dequeue(queue_t *queue)
     free(node);
     return item;
 }
+
