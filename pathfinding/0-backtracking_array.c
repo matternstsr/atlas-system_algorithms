@@ -116,7 +116,7 @@ static int explore_cell(char **map, int rows, int cols,
         enqueue(path, new_point);
 
         /* Print the path found so far */
-        printf("Path found: [%d, %d]\n", current->x, current->y);
+        /* printf("Path found: [%d, %d]\n", current->x, current->y); */
         return 1;
     }
 
