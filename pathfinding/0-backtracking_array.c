@@ -115,10 +115,10 @@ int backtrack(char **map, char **visited, int rows, int cols,
         return 1;
     }
 
-    // Define neighbor exploration order: RIGHT, BOTTOM, LEFT, TOP
+    // Define neighbor exploration order: BOTTOM, RIGHT, LEFT, TOP
     point_t neighbors[4] = {
-        {x, y + 1},     // RIGHT
         {x + 1, y},     // BOTTOM
+        {x, y + 1},     // RIGHT
         {x, y - 1},     // LEFT
         {x - 1, y}      // TOP
     };
