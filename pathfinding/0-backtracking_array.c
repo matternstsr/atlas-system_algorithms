@@ -88,3 +88,52 @@ static int explore_cell(char **map, int rows, int cols,
     }
     return (0);
 }
+
+struct queue_node {
+    void *data;
+    struct queue_node *next;
+};
+
+struct queue_s {
+    struct queue_node *front;
+    struct queue_node *rear;
+};
+
+queue_t *create_queue(void) {
+    queue_t *queue = malloc(sizeof(queue_t));
+    if (!queue)
+        return NULL;
+    queue->front = NULL;
+    queue->rear = NULL;
+    return queue;
+}
+
+void enqueue(queue_t *queue, void *data) {
+    struct queue_node *new_node = malloc(sizeof(struct queue_node));
+    if (!new_node)
+        return;  // Return if memory allocation fails
+    new_node->data = data;
+    new_node->next = NULL;
+
+    if (queue->rear)
+        queue->rear->next = new_node;
+    queue->rear = new_node;
+
+    if (queue->front == NULL)  // If the queue was empty, new node is also the front
+        queue->front = new_node;
+}
+
+void *dequeue(queue_t *queue) {
+    if (!queue->front)  // Return NULL if the queue is empty
+        return NULL;
+
+    struct queue_node *temp_node = queue->front;
+    void *data = temp_node->data;
+    queue->front = temp_node->next;
+
+    if (queue->front == NULL)  // If the queue is now empty, set rear to NULL
+        queue->rear = NULL;
+
+    free(temp_node);  // Free the dequeued node
+    return data;
+}
