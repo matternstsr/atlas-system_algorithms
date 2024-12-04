@@ -3,6 +3,12 @@
 #include <stdlib.h>
 
 /**
+ * Function prototype for backtrack
+ */
+int backtrack(char **map, char **visited, int rows, int cols, 
+              int x, int y, point_t const *target, queue_t *path);
+
+/**
  * backtracking_array - Searches for the first path from a starting point 
  * to a target point within a 2D array using backtracking
  * @map: Read-only two-dimensional array
@@ -15,8 +21,6 @@
 queue_t *backtracking_array(char **map, int rows, int cols, 
                             point_t const *start, point_t const *target)
 {
-    // Removed the line: int backtrack;
-
     // Check for out of bounds
     if (start->x < 0 || start->x >= rows || start->y < 0 || start->y >= cols)
         return NULL;
@@ -70,6 +74,18 @@ queue_t *backtracking_array(char **map, int rows, int cols,
     return path;
 }
 
+/**
+ * backtrack - The backtracking function that searches for the path recursively
+ * @map: Read-only two-dimensional array representing the map
+ * @visited: 2D array keeping track of visited cells
+ * @rows: Number of rows in the map
+ * @cols: Number of columns in the map
+ * @x: Current X coordinate
+ * @y: Current Y coordinate
+ * @target: Target point coordinates
+ * @path: The queue to store the path
+ * Return: 1 if a path is found, 0 if no path is found
+ */
 int backtrack(char **map, char **visited, int rows, int cols, 
               int x, int y, point_t const *target, queue_t *path)
 {
@@ -124,4 +140,3 @@ int backtrack(char **map, char **visited, int rows, int cols,
 
     return 0;
 }
-
