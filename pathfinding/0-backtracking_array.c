@@ -143,6 +143,7 @@ int backtrack(char **map, char **visited, int rows, int cols,
 
 
 
+
 queue_t *create_queue(void)
 {
     queue_t *queue = malloc(sizeof(queue_t));
