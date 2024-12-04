@@ -15,6 +15,8 @@
 queue_t *backtracking_array(char **map, int rows, int cols, 
                             point_t const *start, point_t const *target)
 {
+    int backtrack;
+    
     // Check for out of bounds
     if (start->x < 0 || start->x >= rows || start->y < 0 || start->y >= cols)
         return NULL;
@@ -53,7 +55,7 @@ queue_t *backtracking_array(char **map, int rows, int cols,
     }
 
     // Recursive backtracking helper function
-    int backtrack(int x, int y, int depth)
+    backtrack(int x, int y, int depth)
     {
         // Print the current coordinates being checked
         printf("Checking coordinates [%d, %d]\n", x, y);
