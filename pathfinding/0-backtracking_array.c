@@ -92,7 +92,7 @@ int backtrack(char **map, char **visited, int rows, int cols,
     // Print the current coordinates being checked
     printf("Checking coordinates [%d, %d]\n", x, y);
 
-    // Check for out of bounds
+    // Check for out of bounds (we need to ensure x and y are within the grid)
     if (x < 0 || x >= rows || y < 0 || y >= cols)
         return 0;
 
@@ -115,15 +115,15 @@ int backtrack(char **map, char **visited, int rows, int cols,
         return 1;
     }
 
-    // Define neighbor exploration order: BOTTOM, RIGHT, LEFT, TOP
+    // Define neighbor exploration order: RIGHT, BOTTOM, LEFT, TOP
     point_t neighbors[4] = {
-        {x + 1, y},     // BOTTOM
         {x, y + 1},     // RIGHT
+        {x + 1, y},     // BOTTOM
         {x, y - 1},     // LEFT
         {x - 1, y}      // TOP
     };
 
-    // Try each neighbor
+    // Try each neighbor in the defined order
     for (int i = 0; i < 4; i++)
     {
         if (backtrack(map, visited, rows, cols, neighbors[i].x, neighbors[i].y, target, path))
