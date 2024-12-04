@@ -89,11 +89,6 @@ static int explore_cell(char **map, int rows, int cols,
     return (0);
 }
 
-struct queue_node {
-    void *data;
-    struct queue_node *next;
-};
-
 queue_t *create_queue(void) {
     queue_t *queue = malloc(sizeof(queue_t));
     if (!queue)

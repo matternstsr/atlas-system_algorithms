@@ -58,11 +58,16 @@ typedef struct graph_s
 * @front: Pointer to the front of the queue
 * @rear: Pointer to the rear of the queue
 */
-typedef struct queue_s
-{
-	void *front;
-	void *rear;
+typedef struct queue_s {
+    queue_node_t *front;
+    queue_node_t *rear;
 } queue_t;
+
+
+typedef struct queue_node {
+    void *data;
+    struct queue_node *next;
+} queue_node_t;
 
 /**
 * backtracking_array - Searches for the first path from a starting point to
