@@ -99,15 +99,15 @@ queue_t *create_queue(void) {
 }
 
 void enqueue(queue_t *queue, void *data) {
-    struct queue_node *new_node = malloc(sizeof(struct queue_node));
+    queue_node_t *new_node = malloc(sizeof(queue_node_t));
     if (!new_node)
         return;  // Return if memory allocation fails
     new_node->data = data;
     new_node->next = NULL;
 
     if (queue->rear)
-        queue->rear->next = new_node;
-    queue->rear = new_node;
+        queue->rear->next = new_node;  // Link new node to the last node
+    queue->rear = new_node;  // Move rear pointer to the new node
 
     if (queue->front == NULL)  // If the queue was empty, new node is also the front
         queue->front = new_node;
@@ -117,7 +117,7 @@ void *dequeue(queue_t *queue) {
     if (!queue->front)  // Return NULL if the queue is empty
         return NULL;
 
-    struct queue_node *temp_node = queue->front;
+    queue_node_t *temp_node = queue->front;
     void *data = temp_node->data;
     queue->front = temp_node->next;
 

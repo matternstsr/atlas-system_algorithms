@@ -53,8 +53,17 @@ typedef struct graph_s
 } graph_t;
 
 /**
-* struct queue_s - Structure for a queue
-*
+* struct queue_node - A node structure for the queue, storing data and the next pointer
+* @data: The data held in this node
+* @next: Pointer to the next node in the queue
+*/
+typedef struct queue_node_s {
+    void *data;
+    struct queue_node_s *next;
+} queue_node_t;
+
+/**
+* struct queue_s - A queue structure, with pointers to the front and rear nodes
 * @front: Pointer to the front of the queue
 * @rear: Pointer to the rear of the queue
 */
@@ -62,12 +71,6 @@ typedef struct queue_s {
     queue_node_t *front;
     queue_node_t *rear;
 } queue_t;
-
-
-typedef struct queue_node {
-    void *data;
-    struct queue_node *next;
-} queue_node_t;
 
 /**
 * backtracking_array - Searches for the first path from a starting point to
@@ -111,8 +114,6 @@ queue_t *backtracking_graph(graph_t *graph,
 queue_t *dijkstra_graph(graph_t *graph,
 						vertex_t const *start, vertex_t const *target);
 
-
-typedef struct queue_s queue_t;
 
 queue_t *create_queue(void);   // Declare create_queue()
 void enqueue(queue_t *queue, void *data);  // Declare enqueue()
