@@ -115,6 +115,13 @@ int backtrack(char **map, char **visited, int rows, int cols,
         return 1;
     }
 
+    // Add current point to path queue to ensure correct order (from start to target)
+    point_t *point = malloc(sizeof(point_t));
+    if (!point) return 0;  // Memory allocation failure
+    point->x = x;
+    point->y = y;
+    enqueue(path, point);  // Add the current position to the path
+
     // Define the neighbor exploration order: RIGHT, BOTTOM, LEFT, TOP
     point_t neighbors[4] = {
         {x, y + 1},  // RIGHT
@@ -128,18 +135,16 @@ int backtrack(char **map, char **visited, int rows, int cols,
     {
         if (backtrack(map, visited, rows, cols, neighbors[i].x, neighbors[i].y, target, path))
         {
-            // Create a new point and add it to the path
-            point_t *point = malloc(sizeof(point_t));
-            if (!point) return 0;  // Memory allocation failure
-            point->x = x;
-            point->y = y;
-            enqueue(path, point);  // Add the current position to the path
-            return 1;
+            return 1;  // Path has been found, no need to continue
         }
     }
 
+    // If no valid path is found, remove the current point from the path
+    free(dequeue(path));  // Remove the last added point
+
     return 0;  // No path found from this position
 }
+
 
 
 
