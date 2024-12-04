@@ -94,11 +94,6 @@ struct queue_node {
     struct queue_node *next;
 };
 
-struct queue_s {
-    struct queue_node *front;
-    struct queue_node *rear;
-};
-
 queue_t *create_queue(void) {
     queue_t *queue = malloc(sizeof(queue_t));
     if (!queue)
