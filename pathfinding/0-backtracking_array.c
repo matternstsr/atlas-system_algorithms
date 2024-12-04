@@ -15,7 +15,7 @@
 queue_t *backtracking_array(char **map, int rows, int cols, 
                             point_t const *start, point_t const *target)
 {
-    int backtrack;
+    // Removed the line: int backtrack;
 
     // Check for out of bounds
     if (start->x < 0 || start->x >= rows || start->y < 0 || start->y >= cols)
@@ -124,3 +124,4 @@ int backtrack(char **map, char **visited, int rows, int cols,
 
     return 0;
 }
+
