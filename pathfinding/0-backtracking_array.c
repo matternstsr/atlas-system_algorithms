@@ -1,3 +1,6 @@
+#include "queues.h"  // For queue_t
+#include "graphs.h"  // For point_t
+
 /**
  * reverse_queue - Reverses the order of the items in the queue.
  * @path: The queue to reverse.
