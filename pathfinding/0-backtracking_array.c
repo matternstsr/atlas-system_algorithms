@@ -4,7 +4,7 @@
 
 static int explore_cell(char **map, int rows, int cols,
                         point_t const *current, point_t const *target,
-                        queue_t *path);
+                        queue_t *path, int depth);  // Pass recursion depth
 
 /**
  * backtracking_array - Find a path from start to target using
@@ -28,7 +28,7 @@ queue_t *backtracking_array(char **map, int rows, int cols,
         return (NULL);
     }
 
-    if (explore_cell(map, rows, cols, start, target, path))
+    if (explore_cell(map, rows, cols, start, target, path, 0))
         return (path);
 
     free(path);
@@ -43,15 +43,23 @@ queue_t *backtracking_array(char **map, int rows, int cols,
  * @current: The current point to explore.
  * @target: The target point to reach.
  * @path: The queue to store the path.
+ * @depth: The recursion depth (used to avoid excessive recursion)
  *
  * Return: 1 if a path is found, otherwise 0.
  */
 static int explore_cell(char **map, int rows, int cols,
                         point_t const *current, point_t const *target,
-                        queue_t *path)
+                        queue_t *path, int depth)
 {
+    // Preventing too deep recursion (stack overflow)
+    if (depth > (rows * cols))
+    {
+        printf("Recursion depth too deep, aborting.\n");
+        return 0;
+    }
+
     // Debugging line to see the state of the current cell
-    printf("Checking coordinates [%d, %d]\n", current->x, current->y);  
+    printf("Checking coordinates [%d, %d] at depth %d\n", current->x, current->y, depth);
 
     if (current->x < 0 || current->x >= rows || current->y < 0 || current->y >= cols)
     {
@@ -93,7 +101,7 @@ static int explore_cell(char **map, int rows, int cols,
 
     for (int i = 0; i < 4; i++)
     {
-        if (explore_cell(map, rows, cols, &neighbors[i], target, path))
+        if (explore_cell(map, rows, cols, &neighbors[i], target, path, depth + 1))
         {
             point_t *new_point = malloc(sizeof(point_t));
             if (!new_point)
