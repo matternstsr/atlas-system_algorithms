@@ -16,7 +16,7 @@ queue_t *backtracking_array(char **map, int rows, int cols,
                             point_t const *start, point_t const *target)
 {
     int backtrack;
-    
+
     // Check for out of bounds
     if (start->x < 0 || start->x >= rows || start->y < 0 || start->y >= cols)
         return NULL;
@@ -54,63 +54,8 @@ queue_t *backtracking_array(char **map, int rows, int cols,
         return NULL;
     }
 
-    // Recursive backtracking helper function
-    backtrack(int x, int y, int depth)
-    {
-        // Print the current coordinates being checked
-        printf("Checking coordinates [%d, %d]\n", x, y);
-
-        // Check for out of bounds
-        if (x < 0 || x >= rows || y < 0 || y >= cols)
-            return 0;
-
-        // Check for blocked or already visited cells
-        if (visited[x][y] == '1')
-            return 0;
-
-        // Mark current cell as visited
-        visited[x][y] = '1';
-
-        // Check if target is reached
-        if (x == target->x && y == target->y)
-        {
-            // Create point and add to path
-            point_t *point = malloc(sizeof(point_t));
-            if (!point) return 0;
-            point->x = x;
-            point->y = y;
-            enqueue(path, point);
-            return 1;
-        }
-
-        // Define neighbor exploration order: RIGHT, BOTTOM, LEFT, TOP
-        point_t neighbors[4] = {
-            {x, y + 1},     // RIGHT
-            {x + 1, y},     // BOTTOM
-            {x, y - 1},     // LEFT
-            {x - 1, y}      // TOP
-        };
-
-        // Try each neighbor
-        for (int i = 0; i < 4; i++)
-        {
-            if (backtrack(neighbors[i].x, neighbors[i].y, depth + 1))
-            {
-                // Create point and add to path
-                point_t *point = malloc(sizeof(point_t));
-                if (!point) return 0;
-                point->x = x;
-                point->y = y;
-                enqueue(path, point);
-                return 1;
-            }
-        }
-
-        return 0;
-    }
-
     // Call the backtracking function
-    if (backtrack(start->x, start->y, 0) == 0)
+    if (backtrack(map, visited, rows, cols, start->x, start->y, target, path) == 0)
     {
         // No path found
         free(path);
@@ -123,4 +68,59 @@ queue_t *backtracking_array(char **map, int rows, int cols,
     free(visited);
 
     return path;
+}
+
+int backtrack(char **map, char **visited, int rows, int cols, 
+              int x, int y, point_t const *target, queue_t *path)
+{
+    // Print the current coordinates being checked
+    printf("Checking coordinates [%d, %d]\n", x, y);
+
+    // Check for out of bounds
+    if (x < 0 || x >= rows || y < 0 || y >= cols)
+        return 0;
+
+    // Check for blocked or already visited cells
+    if (visited[x][y] == '1')
+        return 0;
+
+    // Mark current cell as visited
+    visited[x][y] = '1';
+
+    // Check if target is reached
+    if (x == target->x && y == target->y)
+    {
+        // Create point and add to path
+        point_t *point = malloc(sizeof(point_t));
+        if (!point) return 0;
+        point->x = x;
+        point->y = y;
+        enqueue(path, point);
+        return 1;
+    }
+
+    // Define neighbor exploration order: RIGHT, BOTTOM, LEFT, TOP
+    point_t neighbors[4] = {
+        {x, y + 1},     // RIGHT
+        {x + 1, y},     // BOTTOM
+        {x, y - 1},     // LEFT
+        {x - 1, y}      // TOP
+    };
+
+    // Try each neighbor
+    for (int i = 0; i < 4; i++)
+    {
+        if (backtrack(map, visited, rows, cols, neighbors[i].x, neighbors[i].y, target, path))
+        {
+            // Create point and add to path
+            point_t *point = malloc(sizeof(point_t));
+            if (!point) return 0;
+            point->x = x;
+            point->y = y;
+            enqueue(path, point);
+            return 1;
+        }
+    }
+
+    return 0;
 }
