@@ -122,16 +122,14 @@ int backtrack(char **map, char **visited, int rows, int cols,
     point->y = y;
     enqueue(path, point);  // Add the current position to the path
 
-    // Define the neighbor exploration order: RIGHT, BOTTOM, LEFT, TOP
-    point_t neighbors[4] = {
-        {x, y + 1},  // RIGHT
-        {x + 1, y},  // BOTTOM
-        {x, y - 1},  // LEFT
-        {x - 1, y}   // TOP
+    // Define the neighbor exploration order: BOTTOM, RIGHT
+    point_t neighbors[2] = {
+        {x + 1, y},  // BOTTOM (move down)
+        {x, y + 1}   // RIGHT (move right)
     };
 
     // Explore each neighbor recursively
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 2; i++)
     {
         if (backtrack(map, visited, rows, cols, neighbors[i].x, neighbors[i].y, target, path))
         {
