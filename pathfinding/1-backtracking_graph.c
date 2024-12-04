@@ -82,4 +82,3 @@ static int explore_vertex(graph_t *graph, vertex_t const *current,
 	dequeue(path);
 	return (0);
 }
-

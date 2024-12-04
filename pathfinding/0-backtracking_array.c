@@ -179,3 +179,8 @@ void *dequeue(queue_t *queue)
     free(node);
     return data;
 }
+
+
+
+
+/*complies but bad data */
