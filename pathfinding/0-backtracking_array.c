@@ -31,7 +31,7 @@ queue_t *backtracking_array(char **map, int rows, int cols,
     if (explore_cell(map, rows, cols, start, target, path, 0))
         return (path);
 
-    free(path);
+    free(path); // Free the queue if no path is found
     return (NULL);
 }
 
