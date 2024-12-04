@@ -1,87 +1,109 @@
 #ifndef PATHFINDING_H
 #define PATHFINDING_H
 
+#include <stddef.h>
+
 /**
- * struct point_s - Structure storing coordinates
- *
- * @x: X coordinate
- * @y: Y coordinate
- */
+* struct point_s - Structure storing coordinates
+*
+* @x: X coordinate
+* @y: Y coordinate
+*/
 typedef struct point_s
 {
-    int x;
-    int y;
+	int x;
+	int y;
 } point_t;
 
 /**
- * struct queue_node_s - Represents a node in the queue.
- * @point: A point in the path.
- * @next: Pointer to the next node in the queue.
- */
-typedef struct queue_node_s
+* struct vertex_s - Structure storing a vertex in the graph
+*
+* @name: Name of the vertex
+* @edges: List of edges connected to this vertex
+*/
+typedef struct vertex_s
 {
-    point_t *point;          /* The point associated with this node */
-    struct queue_node_s *next; /* Pointer to the next node in the queue */
-} queue_node_t;
+	char *name;
+	struct edge_s *edges;
+	size_t num_edges;
+} vertex_t;
 
 /**
- * struct queue_s - Represents a queue.
- * @front: Pointer to the front of the queue.
- * @rear: Pointer to the rear of the queue.
- */
+* struct edge_s - Structure for an edge in the graph
+*
+* @vertex: The vertex the edge connects to
+* @weight: The weight of the edge (distance or cost)
+*/
+typedef struct edge_s
+{
+	vertex_t *vertex;
+	int weight;
+} edge_t;
+
+/**
+* struct graph_s - Structure representing the graph
+*
+* @vertices: List of vertices in the graph
+* @num_vertices: Number of vertices in the graph
+*/
+typedef struct graph_s
+{
+	vertex_t **vertices;
+	size_t num_vertices;
+} graph_t;
+
+/**
+* struct queue_s - Structure for a queue
+*
+* @front: Pointer to the front of the queue
+* @rear: Pointer to the rear of the queue
+*/
 typedef struct queue_s
 {
-    queue_node_t *front; /* Front of the queue */
-    queue_node_t *rear;  /* Rear of the queue */
+	void *front;
+	void *rear;
 } queue_t;
 
-/* Function declarations */
+/**
+* backtracking_array - Searches for the first path from a starting point to
+*                      a target point within a 2D array using backtracking.
+*
+* @map: The map (2D array) representing the grid
+* @rows: The number of rows in the grid
+* @cols: The number of columns in the grid
+* @start: The starting point
+* @target: The target point
+*
+* Return: A queue containing the path, or NULL if no path is found
+*/
+queue_t *backtracking_array(char **map, int rows, int cols,
+							point_t const *start,
+							point_t const *target);
 
 /**
- * create_queue - Creates and initializes a new queue.
- *
- * Return: A pointer to the new queue, or NULL on failure.
- */
-queue_t *create_queue(void);
+* backtracking_graph - Searches for the first path from a starting vertex to
+*                      a target vertex in a graph using backtracking.
+*
+* @graph: The graph to search through
+* @start: The starting vertex
+* @target: The target vertex
+*
+* Return: A queue containing the path, or NULL if no path is found
+*/
+queue_t *backtracking_graph(graph_t *graph,
+							vertex_t const *start, vertex_t const *target);
 
 /**
- * enqueue - Adds a point to the queue.
- * 
- * @queue: The queue to which the point will be added.
- * @point: The point to add to the queue.
- *
- * Return: 1 on success, or 0 on failure.
- */
-int enqueue(queue_t *queue, point_t *point);
-
-/**
- * dequeue - Removes and returns the point at the front of the queue.
- *
- * @queue: The queue from which to dequeue a point.
- *
- * Return: A pointer to the dequeued point, or NULL if the queue is empty.
- */
-point_t *dequeue(queue_t *queue);
-
-/**
- * free_queue - Frees all memory associated with the queue.
- *
- * @queue: The queue to free.
- */
-void free_queue(queue_t *queue);
-
-/**
- * backtracking_array - Searches for the first path from the start point to the target point
- *                      within a two-dimensional array using backtracking.
- *
- * @map: Pointer to a read-only two-dimensional array representing the maze.
- * @rows: The number of rows in the array.
- * @cols: The number of columns in the array.
- * @start: A pointer to the starting coordinates.
- * @target: A pointer to the target coordinates.
- *
- * Return: A queue containing the path from start to target, or NULL if no path is found.
- */
-queue_t *backtracking_array(char **map, int rows, int cols, point_t const *start, point_t const *target);
+* dijkstra_graph - Searches for the shortest path from a starting vertex to
+*                  a target vertex in a graph using Dijkstra's algorithm.
+*
+* @graph: The graph to search through
+* @start: The starting vertex
+* @target: The target vertex
+*
+* Return: A queue containing the path, or NULL if no path is found
+*/
+queue_t *dijkstra_graph(graph_t *graph,
+						vertex_t const *start, vertex_t const *target);
 
 #endif /* PATHFINDING_H */

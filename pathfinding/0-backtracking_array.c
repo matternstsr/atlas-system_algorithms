@@ -1,138 +1,93 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include "pathfinding.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+static int explore_cell(char **map, int rows, int cols,
+						point_t const *current, point_t const *target,
+						queue_t *path);
 
 /**
- * is_valid_move - Checks if a move is within bounds and on a walkable cell.
- * 
- * @map: The maze (2D array).
- * @rows: The number of rows in the map.
- * @cols: The number of columns in the map.
- * @x: The x-coordinate to check.
- * @y: The y-coordinate to check.
- *
- * Return: 1 if the move is valid, 0 otherwise.
- */
-static int is_valid_move(char **map, int rows, int cols, int x, int y)
+* backtracking_array - Find a path from start to target using
+*                      recursive bacpathktracking on a 2D array.
+* @map: The 2D array representing the map.
+* @rows: Number of rows in the map.
+* @cols: Number of columns in the map.
+* @start: The starting point.
+* @target: The target point.
+*
+* Return: A queue that has path from start to target, NULL if no path found.
+*/
+queue_t *backtracking_array(char **map, int rows, int cols,
+							point_t const *start, point_t const *target)
 {
-    return (x >= 0 && x < rows && y >= 0 && y < cols && map[x][y] == '0');
+	queue_t *path = create_queue();
+
+	if (!path)
+		return (NULL);
+
+	if (explore_cell(map, rows, cols, start, target, path))
+		return (path);
+
+	free(path);
+	return (NULL);
 }
 
 /**
- * backtrack - Helper function that performs backtracking to find a path.
- *
- * @map: The maze (2D array).
- * @rows: The number of rows in the map.
- * @cols: The number of columns in the map.
- * @start: The starting point coordinates.
- * @target: The target point coordinates.
- * @path: The queue to store the path.
- * @visited: 2D array to track visited cells.
- *
- * Return: 1 if a path is found, 0 otherwise.
- */
-static int backtrack(char **map, int rows, int cols, point_t const *start, point_t const *target, queue_t *path, int **visited)
+* explore_cell - Recursively explores next cells in the array to find a path.
+* @map: The 2D array representing the map.
+* @rows: Number of rows in the map.
+* @cols: Number of columns in the map.
+* @current: The current point to explore.
+* @target: The target point to reach.
+* @path: The queue to store the path.
+*
+* Return: 1 if a path is found, otherwise 0.
+*/
+static int explore_cell(char **map, int rows, int cols,
+						point_t const *current, point_t const *target,
+						queue_t *path)
 {
-    int x = start->x;
-    int y = start->y;
+	if (current->x < 0 || current->x >= rows || current->y < 0 ||
+			current->y >= cols || map[current->x][current->y] == '1')
+		return (0);
 
-    // Check if we've reached the target
-    if (x == target->x && y == target->y)
-    {
-        point_t *point = malloc(sizeof(point_t));
-        if (!point)
-            return 0;
+	if (current->x == target->x && current->y == target->y)
+	{
+		point_t *new_point = malloc(sizeof(point_t));
 
-        point->x = x;
-        point->y = y;
-        enqueue(path, point);
-        return 1;
-    }
+		if (!new_point)
+			return (0);
 
-    // Mark the current cell as visited
-    visited[x][y] = 1;
+		*new_point = *current;
 
-    // Check the four possible directions: RIGHT, BOTTOM, LEFT, TOP
-    int directions[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-    for (int i = 0; i < 4; i++)
-    {
-        int new_x = x + directions[i][0];
-        int new_y = y + directions[i][1];
+		enqueue(path, new_point);
 
-        if (is_valid_move(map, rows, cols, new_x, new_y) && !visited[new_x][new_y])
-        {
-            point_t next = {new_x, new_y};
+		return (1);
+	}
+	map[current->x][current->y] = '1';  /* Mark as visited */
+	point_t neighbors[4] = {
+		{current->x, current->y + 1},  /* Right */
+		{current->x + 1, current->y},  /* Down */
+		{current->x, current->y - 1},  /* Left */
+		{current->x - 1, current->y}   /* Up */
+	};
+	for (int i = 0; i < 4; i++)
+	{
+		if (explore_cell(map, rows, cols, &neighbors[i], target, path))
+		{
+			point_t *new_point = malloc(sizeof(point_t));
 
-            // Recursively explore the next cell
-            if (backtrack(map, rows, cols, &next, target, path, visited))
-            {
-                point_t *point = malloc(sizeof(point_t));
-                if (!point)
-                    return 0;
+			if (!new_point)
+				return (0);
 
-                point->x = x;
-                point->y = y;
-                enqueue(path, point);
-                return 1;
-            }
-        }
-    }
+			*new_point = *current;
 
-    return 0;  // No path found
+			enqueue(path, new_point);
+			return (1);
+		}
+	}
+	return (0);
 }
 
-/**
- * backtracking_array - Searches for the first path from start to target using backtracking.
- *
- * @map: The maze (2D array).
- * @rows: The number of rows in the map.
- * @cols: The number of columns in the map.
- * @start: The starting point coordinates.
- * @target: The target point coordinates.
- *
- * Return: A queue containing the path from start to target, or NULL if no path is found.
- */
-queue_t *backtracking_array(char **map, int rows, int cols, point_t const *start, point_t const *target)
-{
-    queue_t *path = create_queue();  // Create an empty queue for the path
-    if (!path)
-        return NULL;
 
-    // Initialize a 2D visited array
-    int **visited = malloc(rows * sizeof(int *));
-    if (!visited)
-    {
-        free(path);
-        return NULL;
-    }
-    for (int i = 0; i < rows; i++)
-    {
-        visited[i] = calloc(cols, sizeof(int));
-        if (!visited[i])
-        {
-            for (int j = 0; j < i; j++)
-                free(visited[j]);
-            free(visited);
-            free(path);
-            return NULL;
-        }
-    }
 
-    // Start backtracking from the starting point
-    if (!backtrack(map, rows, cols, start, target, path, visited))
-    {
-        // No path found
-        for (int i = 0; i < rows; i++)
-            free(visited[i]);
-        free(visited);
-        free(path);
-        return NULL;
-    }
-
-    // Free the visited array
-    for (int i = 0; i < rows; i++)
-        free(visited[i]);
-    free(visited);
-
-    return path;
-}
