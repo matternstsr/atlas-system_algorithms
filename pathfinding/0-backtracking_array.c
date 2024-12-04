@@ -92,7 +92,7 @@ stack_t* create_stack(void) {
     }
     stack->top = NULL;
     return stack;
-}
+}backtrace
 
 void push(stack_t* stack, point_t point, int depth) {
     stack_node_t* new_node = malloc(sizeof(stack_node_t));
@@ -173,4 +173,64 @@ void *dequeue(queue_t *queue) {
 
     free(front_node);
     return data;
+}
+
+static int explore_cell(char **map, int rows, int cols,
+                        point_t const *current, point_t const *target,
+                        queue_t *path, int depth)
+{
+    if (depth > (rows * cols)) {   // Prevent too deep recursion
+        printf("Recursion depth too deep, aborting.\n");
+        return 0;
+    }
+
+    // Ensure we're not accessing out-of-bounds
+    if (current->x < 0 || current->x >= rows || current->y < 0 || current->y >= cols) {
+        printf("Out of bounds: [%d, %d]\n", current->x, current->y);  // Debugging line
+        return 0;
+    }
+
+    // Check if the cell is blocked
+    if (map[current->x][current->y] == '1') {
+        printf("Blocked cell: [%d, %d]\n", current->x, current->y);  // Debugging line
+        return 0;
+    }
+
+    // Check if we reached the target
+    if (current->x == target->x && current->y == target->y) {
+        point_t *new_point = malloc(sizeof(point_t));
+        if (!new_point) {
+            printf("Memory allocation failure for new point.\n");
+            return 0;
+        }
+        *new_point = *current;
+        enqueue(path, new_point);
+        printf("Path found: [%d, %d]\n", current->x, current->y);  // Debugging line
+        return 1;
+    }
+
+    map[current->x][current->y] = '1';  // Mark as visited
+
+    // Explore neighbors (Right, Down, Left, Up)
+    point_t neighbors[4] = {
+        {current->x, current->y + 1},  // Right
+        {current->x + 1, current->y},  // Down
+        {current->x, current->y - 1},  // Left
+        {current->x - 1, current->y}   // Up
+    };
+
+    for (int i = 0; i < 4; i++) {
+        if (explore_cell(map, rows, cols, &neighbors[i], target, path, depth + 1)) {
+            point_t *new_point = malloc(sizeof(point_t));
+            if (!new_point) {
+                printf("Memory allocation failure for new point.\n");
+                return 0;
+            }
+            *new_point = *current;
+            enqueue(path, new_point);
+            return 1;
+        }
+    }
+
+    return 0;  // No path found
 }
