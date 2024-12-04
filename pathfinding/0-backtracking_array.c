@@ -54,7 +54,7 @@ static int explore_cell(char **map, int rows, int cols,
     // Preventing too deep recursion (stack overflow)
     if (depth > (rows * cols))
     {
-        printf("Recursion depth too deep, aborting.\n");
+        printf("Recursion depth exceeded, aborting.\n");
         return 0;
     }
 
