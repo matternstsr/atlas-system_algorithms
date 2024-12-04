@@ -92,54 +92,55 @@ int backtrack(char **map, char **visited, int rows, int cols,
     // Print the current coordinates being checked
     printf("Checking coordinates [%d, %d]\n", x, y);
 
-    // Check for out of bounds (we need to ensure x and y are within the grid)
+    // Check for out-of-bounds coordinates (valid range: 0 <= x < rows, 0 <= y < cols)
     if (x < 0 || x >= rows || y < 0 || y >= cols)
         return 0;
 
-    // Check for blocked or already visited cells
+    // Check if the current cell is already visited or blocked (assuming '1' means visited)
     if (visited[x][y] == '1')
         return 0;
 
     // Mark current cell as visited
     visited[x][y] = '1';
 
-    // Check if target is reached
+    // Check if the target has been reached
     if (x == target->x && y == target->y)
     {
-        // Create point and add to path
+        // Create a new point and add to the path queue
         point_t *point = malloc(sizeof(point_t));
-        if (!point) return 0;
+        if (!point) return 0;  // Memory allocation failure
         point->x = x;
         point->y = y;
-        enqueue(path, point);
+        enqueue(path, point);  // Add the target to the path
         return 1;
     }
 
-    // Define neighbor exploration order: RIGHT, BOTTOM, LEFT, TOP
+    // Define the neighbor exploration order: RIGHT, BOTTOM, LEFT, TOP
     point_t neighbors[4] = {
-        {x, y + 1},     // RIGHT
-        {x + 1, y},     // BOTTOM
-        {x, y - 1},     // LEFT
-        {x - 1, y}      // TOP
+        {x, y + 1},  // RIGHT
+        {x + 1, y},  // BOTTOM
+        {x, y - 1},  // LEFT
+        {x - 1, y}   // TOP
     };
 
-    // Try each neighbor in the defined order
+    // Explore each neighbor recursively
     for (int i = 0; i < 4; i++)
     {
         if (backtrack(map, visited, rows, cols, neighbors[i].x, neighbors[i].y, target, path))
         {
-            // Create point and add to path
+            // Create a new point and add it to the path
             point_t *point = malloc(sizeof(point_t));
-            if (!point) return 0;
+            if (!point) return 0;  // Memory allocation failure
             point->x = x;
             point->y = y;
-            enqueue(path, point);
+            enqueue(path, point);  // Add the current position to the path
             return 1;
         }
     }
 
-    return 0;
+    return 0;  // No path found from this position
 }
+
 
 
 queue_t *create_queue(void)
