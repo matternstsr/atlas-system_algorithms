@@ -23,7 +23,10 @@ queue_t *backtracking_array(char **map, int rows, int cols,
     queue_t *path = create_queue();
 
     if (!path)
+    {
+        printf("Failed to create queue.\n"); // Debugging line
         return (NULL);
+    }
 
     if (explore_cell(map, rows, cols, start, target, path))
         return (path);
@@ -47,19 +50,29 @@ static int explore_cell(char **map, int rows, int cols,
                         point_t const *current, point_t const *target,
                         queue_t *path)
 {
-    printf("Checking coordinates [%d, %d]\n", current->x, current->y);  // Debugging line
+    // Debugging line to see the state of the current cell
+    printf("Checking coordinates [%d, %d]\n", current->x, current->y);  
 
     if (current->x < 0 || current->x >= rows || current->y < 0 || current->y >= cols)
-        return 0;  // Out of bounds check
+    {
+        printf("Out of bounds: [%d, %d]\n", current->x, current->y);  // Debugging line
+        return 0;
+    }
 
     if (map[current->x][current->y] == '1')  // Blocked cell check
+    {
+        printf("Blocked cell: [%d, %d]\n", current->x, current->y);  // Debugging line
         return 0;
+    }
 
     if (current->x == target->x && current->y == target->y)
     {
         point_t *new_point = malloc(sizeof(point_t));
         if (!new_point)
+        {
+            printf("Memory allocation failure for new point.\n");  // Debugging line
             return 0;  // Check malloc failure
+        }
 
         *new_point = *current;
         enqueue(path, new_point);
@@ -84,7 +97,10 @@ static int explore_cell(char **map, int rows, int cols,
         {
             point_t *new_point = malloc(sizeof(point_t));
             if (!new_point)
+            {
+                printf("Memory allocation failure for new point.\n");  // Debugging line
                 return 0;  // Check malloc failure
+            }
 
             *new_point = *current;
             enqueue(path, new_point);
@@ -98,7 +114,10 @@ static int explore_cell(char **map, int rows, int cols,
 queue_t *create_queue(void) {
     queue_t *queue = malloc(sizeof(queue_t));
     if (!queue)
+    {
+        printf("Memory allocation failure for queue.\n");  // Debugging line
         return NULL;
+    }
     queue->front = NULL;
     queue->rear = NULL;
     return queue;
@@ -107,7 +126,10 @@ queue_t *create_queue(void) {
 void enqueue(queue_t *queue, void *data) {
     queue_node_t *new_node = malloc(sizeof(queue_node_t));
     if (!new_node)
+    {
+        printf("Memory allocation failure for queue node.\n");  // Debugging line
         return;  // Return if memory allocation fails
+    }
     new_node->data = data;
     new_node->next = NULL;
 
@@ -117,11 +139,17 @@ void enqueue(queue_t *queue, void *data) {
 
     if (queue->front == NULL)  // If the queue was empty, new node is also the front
         queue->front = new_node;
+
+    // Debugging line to show the enqueue action
+    printf("Enqueued point: [%d, %d]\n", ((point_t *)data)->x, ((point_t *)data)->y);
 }
 
 void *dequeue(queue_t *queue) {
     if (!queue->front)  // Return NULL if the queue is empty
+    {
+        printf("Queue is empty, cannot dequeue.\n");  // Debugging line
         return NULL;
+    }
 
     queue_node_t *temp_node = queue->front;
     void *data = temp_node->data;
