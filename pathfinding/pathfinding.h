@@ -1,8 +1,6 @@
 #ifndef PATHFINDING_H
 #define PATHFINDING_H
 
-#include "queues.h"  // Include the queues.h file for queue_t
-
 /**
  * struct point_s - Structure storing coordinates
  *
@@ -90,5 +88,7 @@ point_t *dequeue(queue_t *queue);
  * @queue: The queue to free.
  */
 void free_queue(queue_t *queue);
+
+
 
 #endif /* PATHFINDING_H */
