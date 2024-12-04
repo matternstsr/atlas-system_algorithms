@@ -1,7 +1,7 @@
 #include "queues.h"  // For queue_t
 #include "graphs.h"  // For point_t
 #include "pathfinding.h"
-
+#include "graphs.h"
 
 /**
  * reverse_queue - Reverses the order of the items in the queue.
