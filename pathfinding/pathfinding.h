@@ -1,8 +1,6 @@
 #ifndef PATHFINDING_H
 #define PATHFINDING_H
 
-#include "queue.h"  // Now it correctly includes queue.h after point_t is defined
-
 /**
  * struct point_s - Structure storing coordinates
  *
