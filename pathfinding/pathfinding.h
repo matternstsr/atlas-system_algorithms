@@ -14,25 +14,6 @@ typedef struct point_s
 } point_t;
 
 /**
- * backtracking_array - Searches for the first path from the start point to the target point
- *                      within a two-dimensional array using backtracking.
- *
- * @map: Pointer to a read-only two-dimensional array representing the maze.
- * @rows: The number of rows in the array.
- * @cols: The number of columns in the array.
- * @start: A pointer to the starting coordinates.
- * @target: A pointer to the target coordinates.
- *
- * Return: A queue containing the path from start to target, or NULL if no path is found.
- */
-queue_t *backtracking_array(char **map, int rows, int cols, point_t const *start, point_t const *target);
-
-#include <stdlib.h>
-
-// Forward declaration of point_t (defined in pathfinding.h)
-typedef struct point_s point_t;
-
-/**
  * struct queue_node_s - Represents a node in the queue.
  * @point: A point in the path.
  * @next: Pointer to the next node in the queue.
@@ -89,6 +70,18 @@ point_t *dequeue(queue_t *queue);
  */
 void free_queue(queue_t *queue);
 
-
+/**
+ * backtracking_array - Searches for the first path from the start point to the target point
+ *                      within a two-dimensional array using backtracking.
+ *
+ * @map: Pointer to a read-only two-dimensional array representing the maze.
+ * @rows: The number of rows in the array.
+ * @cols: The number of columns in the array.
+ * @start: A pointer to the starting coordinates.
+ * @target: A pointer to the target coordinates.
+ *
+ * Return: A queue containing the path from start to target, or NULL if no path is found.
+ */
+queue_t *backtracking_array(char **map, int rows, int cols, point_t const *start, point_t const *target);
 
 #endif /* PATHFINDING_H */
