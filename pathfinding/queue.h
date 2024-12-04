@@ -2,10 +2,9 @@
 #define QUEUE_H
 
 #include <stdlib.h>
-#include "pathfinding.h"  // Ensure this includes pathfinding.h for point_t
 
-// Forward declaration of point_t (no need to redefine the full struct)
-typedef struct point_s point_t; 
+// Forward declaration of point_t (defined in pathfinding.h)
+typedef struct point_s point_t;
 
 /**
  * struct queue_node_s - Represents a node in the queue.
