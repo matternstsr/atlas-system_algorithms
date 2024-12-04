@@ -47,46 +47,52 @@ static int explore_cell(char **map, int rows, int cols,
                         point_t const *current, point_t const *target,
                         queue_t *path)
 {
-    if (current->x < 0 || current->x >= rows || current->y < 0 ||
-        current->y >= cols || map[current->x][current->y] == '1')
-        return (0);
+    printf("Checking coordinates [%d, %d]\n", current->x, current->y);  // Debugging line
+
+    if (current->x < 0 || current->x >= rows || current->y < 0 || current->y >= cols)
+        return 0;  // Out of bounds check
+
+    if (map[current->x][current->y] == '1')  // Blocked cell check
+        return 0;
 
     if (current->x == target->x && current->y == target->y)
     {
         point_t *new_point = malloc(sizeof(point_t));
-
         if (!new_point)
-            return (0);
+            return 0;  // Check malloc failure
 
         *new_point = *current;
-
         enqueue(path, new_point);
 
-        return (1);
+        printf("Path found: [%d, %d]\n", current->x, current->y);  // Debugging line
+        return 1;  // Found path
     }
-    map[current->x][current->y] = '1';  /* Mark as visited */
+
+    map[current->x][current->y] = '1';  // Mark as visited
+
+    // Directions to explore (Right, Down, Left, Up)
     point_t neighbors[4] = {
-        {current->x, current->y + 1},  /* Right */
-        {current->x + 1, current->y},  /* Down */
-        {current->x, current->y - 1},  /* Left */
-        {current->x - 1, current->y}   /* Up */
+        {current->x, current->y + 1},  // Right
+        {current->x + 1, current->y},  // Down
+        {current->x, current->y - 1},  // Left
+        {current->x - 1, current->y}   // Up
     };
+
     for (int i = 0; i < 4; i++)
     {
         if (explore_cell(map, rows, cols, &neighbors[i], target, path))
         {
             point_t *new_point = malloc(sizeof(point_t));
-
             if (!new_point)
-                return (0);
+                return 0;  // Check malloc failure
 
             *new_point = *current;
-
             enqueue(path, new_point);
-            return (1);
+            return 1;
         }
     }
-    return (0);
+
+    return 0;  // No path found
 }
 
 queue_t *create_queue(void) {
@@ -106,8 +112,8 @@ void enqueue(queue_t *queue, void *data) {
     new_node->next = NULL;
 
     if (queue->rear)
-        queue->rear->next = new_node;  // Link new node to the last node
-    queue->rear = new_node;  // Move rear pointer to the new node
+        queue->rear->next = new_node;
+    queue->rear = new_node;
 
     if (queue->front == NULL)  // If the queue was empty, new node is also the front
         queue->front = new_node;
@@ -121,10 +127,9 @@ void *dequeue(queue_t *queue) {
     void *data = temp_node->data;
     queue->front = temp_node->next;
 
-    if (queue->front == NULL)  // If the queue is now empty, set rear to NULL
+    if (queue->front == NULL)  // If the queue becomes empty, set rear to NULL
         queue->rear = NULL;
 
-    free(temp_node);  // Free the dequeued node
+    free(temp_node);
     return data;
 }
-
