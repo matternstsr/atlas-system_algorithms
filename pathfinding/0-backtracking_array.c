@@ -126,3 +126,51 @@ void free_stack(stack_t* stack) {
     }
     free(stack);
 }
+
+
+queue_t *create_queue(void) {
+    queue_t *queue = malloc(sizeof(queue_t));
+    if (!queue) {
+        printf("Memory allocation failure for queue.\n");
+        return NULL;
+    }
+    queue->front = NULL;
+    queue->rear = NULL;
+    return queue;
+}
+
+void enqueue(queue_t *queue, void *data) {
+    queue_node_t *new_node = malloc(sizeof(queue_node_t));
+    if (!new_node) {
+        printf("Memory allocation failure for queue node.\n");
+        return;
+    }
+    new_node->data = data;
+    new_node->next = NULL;
+
+    if (queue->rear) {
+        queue->rear->next = new_node;
+    }
+    queue->rear = new_node;
+
+    if (!queue->front) {
+        queue->front = new_node;
+    }
+}
+
+void *dequeue(queue_t *queue) {
+    if (!queue || !queue->front) {
+        return NULL;
+    }
+
+    queue_node_t *front_node = queue->front;
+    void *data = front_node->data;
+    queue->front = front_node->next;
+
+    if (!queue->front) {
+        queue->rear = NULL;
+    }
+
+    free(front_node);
+    return data;
+}
