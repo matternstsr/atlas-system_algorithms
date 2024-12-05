@@ -14,5 +14,6 @@
 queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 								vertex_t const *target)
 {
-	return (NULL);
+    queue_t *queue = create_queue();  // Initialize queue to store path
+    return queue;
 }
