@@ -82,7 +82,7 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 
 	while (current != NULL)
 	{
-		queue_push_front(path, current->content);
+		/* queue_push_front(path, current->content); */
 		current = previous[current->index];
 	}
 	free(distances);  /* Clean up */
