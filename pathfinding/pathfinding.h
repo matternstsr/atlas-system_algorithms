@@ -124,12 +124,12 @@ queue_t *dijkstra_graph(graph_t *graph,
 * @queue: The queue to which the data will be added.
 * @data: A pointer to the data to be added to the queue.
 */
-void enqueue(queue_t *queue, void *data);  /* Declare enqueue() */
+/* void enqueue(queue_t *queue, void *data);  */ /* Declare enqueue() */
 /**
 * dequeue - Removes and returns the element from the front of the queue.
 * @queue: The queue from which the data will be removed.
 * Return: A ptr to data removed from front of queue or NULL if queue is empty.
 */
-void *dequeue(queue_t *queue);  /* Declare dequeue() */
+/* void *dequeue(queue_t *queue);  Declare dequeue() */
 
 #endif /* PATHFINDING_H */

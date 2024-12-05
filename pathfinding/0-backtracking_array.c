@@ -32,7 +32,7 @@ queue_t *backtrack(char **map, int rows, int cols,
 queue_t *backtracking_array(char **map, int rows, int cols,
 							point_t const *start, point_t const *target)
 {
-	queue_t *que = NULL;
+	queue_t *que = NULL;/* If the queue was empty, update the rear as well */
 	int *visit, x = start->x, y = start->y;
 
 	if (!map || !rows || !cols || !start || !target)
@@ -92,7 +92,7 @@ queue_t *backtrack(char **map, int rows, int cols,
 			return (NULL);
 		point->x = x;
 		point->y = y;
-		enqueue(que, (void *)point);
+		queue_push_front(que, (void *)point); /* Add curr pos to the path */
 		return (que);  /* Path found, no need to explore further */
 	} /* Explore the four directions (right, down, left, up) */
 	point_t directions[4] = {
@@ -111,7 +111,7 @@ queue_t *backtrack(char **map, int rows, int cols,
 				return (NULL);
 			point->x = x;
 			point->y = y;
-			enqueue(que, (void *)point); /* Add curr pos to the path */
+			queue_push_front(que, (void *)point); /* Add curr pos to the path */
 			return (que);  /* Path found */
 		}
 		} /* If no path found from this position, unmark as visited and return */
@@ -142,7 +142,7 @@ queue_t *backtrack(char **map, int rows, int cols,
 * @queue: The queue to add the data to.
 * @data: The data to add to the queue.
 */
-void enqueue(queue_t *queue, void *data)
+/* void enqueue(queue_t *queue, void *data)
 {
 	if (!queue)
 		return;
@@ -156,15 +156,15 @@ void enqueue(queue_t *queue, void *data)
 	new_node->next = queue->front;
 	queue->front = new_node;
 
-	if (!queue->rear) /* If the queue was empty, update the rear as well */
+	if (!queue->rear) 
 		queue->rear = new_node;
-}
+} */
 /**
 * dequeue - Removes and returns data from the front of the queue.
 * @queue: The queue to remove data from.
 * Return: The data removed from front of queue, or NULL if queue is empty.
 */
-void *dequeue(queue_t *queue)
+/* void *dequeue(queue_t *queue)
 {
 	if (!queue || !queue->front)
 		return (NULL);
@@ -179,4 +179,4 @@ void *dequeue(queue_t *queue)
 	free(node);
 	return (data);
 }
-
+ */
