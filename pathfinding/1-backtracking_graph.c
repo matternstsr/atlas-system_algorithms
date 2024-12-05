@@ -18,7 +18,7 @@ static int explore_vertex(graph_t *graph, vertex_t const *current,
 queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 								vertex_t const *target)
 {
-	queue_t *path = create_queue();
+	queue_t *path = NULL;
 
 	if (!path)
 		return (NULL);
