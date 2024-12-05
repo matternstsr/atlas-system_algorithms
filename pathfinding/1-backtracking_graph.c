@@ -24,7 +24,7 @@ queue_t *backtracking_graph(graph_t *graph,
 
 	if (!path)
 		return (NULL);
-	printf("Checking %s\n", vert->content);
+
 	int *visited = calloc(graph->nb_vertices, sizeof(int));
 
 	if (!visited)
@@ -60,6 +60,8 @@ queue_t *explore_vertex(vertex_t const *vert, vertex_t const *target,
 
 	if (!vert || visited[vert->index])
 		return (NULL);
+
+	printf("Checking %s\n", vert->content);
 
 	visited[vert->index] = 1;
 
