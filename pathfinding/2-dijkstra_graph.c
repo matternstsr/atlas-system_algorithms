@@ -72,10 +72,10 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 	}
 	if (distances[target_index] == INT_MAX) /* If target vertex is unreachable, return NULL */
 	{
-		free(distances);
-		free(previous);
-		free(visited);
-		free(queue);
+		/* free(distances); */
+		/* free(previous); */
+		/* free(visited); */
+		/* free(queue); */
 		return (NULL);
 	}
 	const vertex_t *current = target; /* Reconstruct path from target vertex to start vertex */
@@ -85,9 +85,10 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 		queue_push_front(path, current->content);
 		current = previous[current->index];
 	}
-	free(distances);  /* Clean up */
-	free(previous);  /* Clean up */
-	free(visited);  /* Clean up */
-	free(queue);  /* Clean up */
+	/* free(distances);  /* Clean up */ */
+	/* free(previous);  /* Clean up */ */
+	/* free(visited);  /* Clean up */ */
+	/* free(queue);  /* Clean up */ */
 	return (path);
 }
+
