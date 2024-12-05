@@ -1,6 +1,4 @@
 #include "pathfinding.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 /**
 * backtrack - Searches for a path from the starting point to the target point

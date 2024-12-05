@@ -1,8 +1,4 @@
 #include "pathfinding.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
-#include <stdbool.h>
 
 
 /*  Dijkstra's algorithm to find the shortest path in a graph */
@@ -85,7 +81,8 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 		queue_push_front(path, current->content);
 		current = previous[current->index];
 	}
-	/* free(distances); */
+	/* free(distances); */#include <stdio.h>
+#include <stdlib.h>
 	/* free(previous); */
 	/* free(visited); */
 	/* free(queue); */

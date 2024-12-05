@@ -1,7 +1,4 @@
 #include "pathfinding.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 
 queue_t *explore_vertex(vertex_t const *vert, vertex_t const *target,
