@@ -56,6 +56,8 @@ queue_t *backtracking_graph(graph_t *graph,
 queue_t explore_vertex(vertex_t const *vert, vertex_t const *target,
 					queue_t *path, int *visited)
 {
+	edge_t *this_edge = vert->edges;
+
 	if (!vert || visited[vert->index])
 		return (NULL);
 
@@ -71,14 +73,14 @@ queue_t explore_vertex(vertex_t const *vert, vertex_t const *target,
 	}
 	queue_push_front(path, strdup(vert->content));
 
-	for (size_t i = 0; i < graph->nb_vertices; i++)
-	{
-		if (graph_is_edge(graph, vert, &graph->vertices[i]))
-		{
-			if (explore_vertex(graph, &graph->vertices[i], target, path, visited))
-				return (path);
-		}
-	}
-	queue_push_front(path);
+	while (this_edge)
+    {
+        if (explore_vertex(this_edge->dest, target, path, visited))
+        {
+            if (queue_push_front(path, strdup(vert->content)))
+                return (path);
+        }
+        this_edge = this_edge->next;
+    }
 	return (NULL);
 }
