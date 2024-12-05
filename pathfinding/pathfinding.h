@@ -29,6 +29,7 @@ typedef struct vertex_s
 	char *name;
 	struct edge_s *edges;
 	size_t num_edges;
+	int x, y;    // Position or additional data
 } vertex_t;
 
 /**
