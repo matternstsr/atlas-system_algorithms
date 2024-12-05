@@ -39,7 +39,7 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 		return (NULL);
 
 	/* Initialize queue for path */
-	que = create_queue();
+	que = queue_create();
 	if (!que)
 		return (NULL);
 
@@ -127,7 +127,7 @@ queue_t *backtrack(char **map, int rows, int cols,
 * create_queue - Creates a new empty queue.
 * Return: A pointer to the newly created queue, or NULL if allocation fails.
 */
-queue_t *create_queue(void)
+/* queue_t *create_queue(void)
 {
 	queue_t *queue = malloc(sizeof(queue_t));
 
@@ -136,7 +136,7 @@ queue_t *create_queue(void)
 
 	queue->front = queue->rear = NULL;
 	return (queue);
-}
+} */
 /**
 * enqueue - Adds data to the rear of the queue.
 * @queue: The queue to add the data to.

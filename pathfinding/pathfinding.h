@@ -115,7 +115,7 @@ queue_t *dijkstra_graph(graph_t *graph,
 * create_queue - Creates and initializes an empty queue.
 * Return: A ptr to newly created queue, or NULL if memory allocation fails.
 */
-queue_t *create_queue(void);   /* Declare create_queue() */
+/* queue_t *create_queue(void);  */  /* Declare create_queue() */
 
 /**
 * enqueue - Adds a new element to the rear of the queue.
