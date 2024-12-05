@@ -80,7 +80,7 @@ queue_t *backtrack(char **map, int rows, int cols,
 	point_t *point = NULL;
 
 	/* Base case: Check if out of bounds or blocked or already visited */
-	if (x < 0 || x >= cols || y < 0 || y >= rows ||
+	if (x < 0 || x > cols -1 || y < 0 || y > rows -1||
 			map[y][x] == '1' || visit[y * cols + x])
 		return (NULL);
 	visit[y * cols + x] = 1; /* Mark current position as visited */
