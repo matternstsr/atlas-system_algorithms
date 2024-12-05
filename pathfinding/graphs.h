@@ -48,11 +48,11 @@ void graph_delete(graph_t *graph);
 * @vertex: The vertex that the edge points to.
 * @weight: The weight of the edge (e.g., cost or distance).
 */
-struct edge_s
+/* struct edge_s
 {
 	vertex_t *vertex;
 	int weight;
-};
+}; */
 
 /**
 * struct vertex_s - Represents a vertex in the graph.
@@ -60,22 +60,22 @@ struct edge_s
 * @edges: A list of edges connected to this vertex.
 * @num_edges: The number of edges connected to the vertex.
 */
-struct vertex_s
+/* struct vertex_s
 {
 	char *name;
 	edge_t *edges;
 	size_t num_edges;
 };
-
+ */
 /**
 * struct graph_s - Represents the entire graph.
 * @vertices: A list of vertices in the graph.
 * @num_vertices: The number of vertices in the graph.
 */
-struct graph_s
+/* struct graph_s
 {
 	vertex_t **vertices;
 	size_t num_vertices;
-};
+}; */
 
 #endif /* GRAPH_H */
