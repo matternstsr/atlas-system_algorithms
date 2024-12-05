@@ -4,7 +4,7 @@
 #include <string.h>
 
 
-queue_t explore_vertex(vertex_t const *vert, vertex_t const *target,
+queue_t *explore_vertex(vertex_t const *vert, vertex_t const *target,
 					queue_t *path, int *visited);
 
 /**
@@ -53,7 +53,7 @@ queue_t *backtracking_graph(graph_t *graph,
 *
 * Return: 1 if a path is found, otherwise 0.
 */
-queue_t explore_vertex(vertex_t const *vert, vertex_t const *target,
+queue_t *explore_vertex(vertex_t const *vert, vertex_t const *target,
 					queue_t *path, int *visited)
 {
 	edge_t *this_edge = vert->edges;
