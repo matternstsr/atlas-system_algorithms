@@ -65,4 +65,8 @@ queue_t *dijkstra_graph(graph_t *graph,
 bool find_dist(vertex_t const *start, vertex_t const *target, graph_t *graph,
 				int *visit, int *dist, vertex_t **prev);
 
+void initialize_dijkstra(vertex_t const *start, graph_t *graph, int *visit,
+							int *dist, vertex_t **prev);
+
+
 #endif /* PATHFINDING_H */

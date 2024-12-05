@@ -52,72 +52,75 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 bool find_dist(vertex_t const *start, vertex_t const *target, graph_t *graph,
 			int *visit, int *dist, vertex_t **prev)
 {
-	size_t i;
-	size_t num_vertices = graph->nb_vertices;
-
-	/* Initialize distances */
-	dist[start->index] = 0;  /* Start vertex distance is 0 */
-	for (i = 0; i < num_vertices; i++)
-	{
-		if (i != start->index)
-			dist[i] = INT_MAX;  /* All other distances are set to infinity */
-		prev[i] = NULL;  /* Previous vertex is initially NULL for all */
-		visit[i] = 0;     /* Mark all vertices as unvisited */
-	}
-
-	/* Create a priority queue to manage vertices (min-heap or sorted list) */
-	/* Using a simple array as a queue for simplicity */
-	vertex_t **queue = (vertex_t **)malloc(num_vertices * sizeof(vertex_t *));
+	size_t i, queue_size = 0, num_vertices = graph->nb_vertices;
+	vertex_t **queue = malloc(num_vertices * sizeof(vertex_t *));
 
 	if (!queue)
-		return (true); /* Return true on error (memory allocation failure) */
+	return (true);
 
-	size_t queue_size = 0;
-
-	/* Add start vertex to queue */
+	initialize_dijkstra(start, graph, visit, dist, prev);
 	queue[queue_size++] = (vertex_t *)start;
 
 	while (queue_size > 0)
 	{
-		/* Extract vertex with smallest distance */
 		vertex_t *current = queue[0];
 
-		/* Move first element to end of queue and reduce size */
 		for (i = 0; i < queue_size - 1; i++)
 			queue[i] = queue[i + 1];
 		queue_size--;
 
-		/* If we've already visited this vertex, skip it */
-		if (visit[current->index])
-			continue;
+		if (process_vertex(current, target, visit))
+		break;
 
-		visit[current->index] = 1;  /* Mark as visited */
-
-		/* If we reach target vertex, we can stop early (optional optimization) */
-		if (current == target)
-			break;
-
-		/* Process each of neighbors of current vertex */
-		edge_t *edge = current->edges;
-
-		while (edge)
-		{
-			vertex_t *neighbor = edge->dest;
-			int weight = edge->weight;
-
-			/* Relax edge (update distance if a shorter path is found) */
-			if (dist[current->index] + weight < dist[neighbor->index])
-			{
-				dist[neighbor->index] = dist[current->index] + weight;
-				prev[neighbor->index] = current;
-
-				/* Add neighbor to queue (could optimize queue with a priority queue) */
-				queue[queue_size++] = neighbor;
-			}
-			edge = edge->next;
-		}
+		relax_edges(current->edges, current, dist, prev, queue, &queue_size);
 	}
-	free(queue);  /* Clean up queue */
-	/* If target vertex has not been visited, return true (indicating failure) */
+
+	free(queue);
 	return (dist[target->index] == INT_MAX);
 }
+
+
+bool process_vertex(vertex_t *current, vertex_t const *target, int *visit)
+{
+	if (visit[current->index])
+	return (false);
+	visit[current->index] = 1;
+
+	if (current == target)
+	return (true);
+
+	return (false);
+}
+
+void relax_edges(edge_t *edge, vertex_t *current, int *dist, vertex_t **prev,
+				vertex_t **queue, size_t *queue_size)
+{
+	while (edge)
+	{
+		vertex_t *neighbor = edge->dest;
+		int weight = edge->weight;
+
+		if (dist[current->index] + weight < dist[neighbor->index])
+		{
+			dist[neighbor->index] = dist[current->index] + weight;
+			prev[neighbor->index] = current;
+			queue[(*queue_size)++] = neighbor;
+		}
+
+		edge = edge->next;
+	}
+}
+
+void initialize_dijkstra(vertex_t const *start, graph_t *graph, int *visit,
+						int *dist, vertex_t **prev)
+{
+	size_t i, num_vertices = graph->nb_vertices;
+
+	for (i = 0; i < num_vertices; i++)
+	{
+		dist[i] = (i == start->index) ? 0 : INT_MAX;
+		prev[i] = NULL;
+		visit[i] = 0;
+	}
+}
+
