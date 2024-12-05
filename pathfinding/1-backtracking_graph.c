@@ -1,7 +1,7 @@
 #include "pathfinding.h"
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "graphs.h"
 /**
 * backtracking_graph - Find a path start to target using recursive
 *                      backtracking on a graph.
