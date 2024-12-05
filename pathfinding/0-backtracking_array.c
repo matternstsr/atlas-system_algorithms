@@ -84,9 +84,7 @@ queue_t *backtrack(char **map, int rows, int cols,
 			map[y][x] == '1' || visit[y * cols + x])
 		return (NULL);
 	visit[y * cols + x] = 1; /* Mark current position as visited */
-	if (DEBUG) {
-        printf("Checking coordinates [%d, %d]\n", x, y);
-    }	
+	printf("Checking coordinates [%d, %d]\n", x, y); /* curr coord checked */
 	if (x == target->x && y == target->y)
 	{ /* If target is found, add to path and return */
 		point = malloc(sizeof(point_t));
