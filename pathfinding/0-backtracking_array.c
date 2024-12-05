@@ -64,7 +64,6 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 	} /* Call the backtracking function */
 	if (backtrack(map, isV, rows, cols, start->x, start->y, target, path) == 0)
 	{
-		No path found
 		free(path);
 		path = (NULL);
 	}	/* Free isV map memory */
