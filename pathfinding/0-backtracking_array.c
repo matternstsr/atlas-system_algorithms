@@ -39,7 +39,7 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 		return (NULL);
 
 	/* Initialize queue for path */
-	que = queue_create();
+	que = create_queue();
 	if (!que)
 		return (NULL);
 
@@ -92,7 +92,7 @@ queue_t *backtrack(char **map, int rows, int cols,
 			return (NULL);
 		point->x = x;
 		point->y = y;
-		queue_push_front(que, (void *)point);
+		enqueue(que, (void *)point);
 		return (que);  /* Path found, no need to explore further */
 	} /* Explore the four directions (right, down, left, up) */
 	point_t directions[4] = {
@@ -111,7 +111,7 @@ queue_t *backtrack(char **map, int rows, int cols,
 				return (NULL);
 			point->x = x;
 			point->y = y;
-			queue_push_front(que, (void *)point); /* Add curr pos to the path */
+			enqueue(que, (void *)point); /* Add curr pos to the path */
 			return (que);  /* Path found */
 		}
 		} /* If no path found from this position, unmark as visited and return */
@@ -129,12 +129,12 @@ queue_t *backtrack(char **map, int rows, int cols,
 */
 queue_t *create_queue(void)
 {
-	queue_t *queue = malloc(sizeof(queue_t));
-
-	if (!queue)
-		return (NULL);
-	queue->front = queue->rear = NULL;
-	return (queue);
+    queue_t *queue = malloc(sizeof(queue_t));
+    if (!queue)
+        return NULL;
+    
+    queue->front = queue->rear = NULL;
+    return queue;
 }
 /**
 * enqueue - Adds data to the rear of the queue.
@@ -143,20 +143,19 @@ queue_t *create_queue(void)
 */
 void enqueue(queue_t *queue, void *data)
 {
-	if (!queue)
-		return;
-	queue_node_t *new_node = malloc(sizeof(queue_node_t));
+    if (!queue)
+        return;
 
-	if (!new_node)
-		return;
-	new_node->data = data;
-	new_node->next = NULL;
+    queue_node_t *new_node = malloc(sizeof(queue_node_t));
+    if (!new_node)
+        return;
+    
+    new_node->data = data;
+    new_node->next = queue->front;
+    queue->front = new_node;
 
-	if (queue->rear)
-		queue->rear->next = new_node;
-	else
-		queue->front = new_node;
-	queue->rear = new_node;
+    if (!queue->rear)  // If the queue was empty, update the rear as well
+        queue->rear = new_node;
 }
 /**
 * dequeue - Removes and returns data from the front of the queue.
@@ -179,4 +178,3 @@ void *dequeue(queue_t *queue)
 	return (data);
 }
 
-/*complies but bad data */
