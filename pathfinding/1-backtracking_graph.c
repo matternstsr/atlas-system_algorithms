@@ -14,7 +14,14 @@
 queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 								vertex_t const *target)
 {
-	queue_t *queue = create_queue();  /* Initialize queue to store path */
+    queue_t *queue = create_queue();  Initialize queue to store the path
 
-	return (queue);
+    /* Start the recursive backtracking process */
+    if (!backtrack(graph, start, target, queue))
+	{
+        /* If no path is found, clean up */
+        free(queue);
+        return NULL;
+    }
+    return queue;  /* Return the queue containing the path */
 }
