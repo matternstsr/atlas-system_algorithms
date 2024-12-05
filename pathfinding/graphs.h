@@ -50,24 +50,7 @@ typedef struct edge_s
  *   This pointer points to another vertex in the graph, but it
  *   doesn't stand for an edge between the two vertices
  */
-struct vertex_s#include "pathfinding.h"
-#include <stdio.h>
-#include <stdlib.h>
-
-/**
-* dijkstra_graph - Find shortest path using Dijkstra's algorithm in a graph.
-* @graph: The graph to explore.
-* @start: The starting vertex.
-* @target: The target vertex.
-*
-* Return: A queue that has shortest path start to target, NULL no path found.
-*/
-queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
-						vertex_t const *target)
-{
-	return (graph);
-}
-
+struct vertex_s
 {
 	size_t		index;
 	char		*content;
@@ -101,24 +84,7 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
  *
  * @vertices
  *     |
- * ------------       ----------    #include "pathfinding.h"
-#include <stdio.h>
-#include <stdlib.h>
-
-/**
-* dijkstra_graph - Find shortest path using Dijkstra's algorithm in a graph.
-* @graph: The graph to explore.
-* @start: The starting vertex.
-* @target: The target vertex.
-*
-* Return: A queue that has shortest path start to target, NULL no path found.
-*/
-queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
-						vertex_t const *target)
-{
-	return (graph);
-}
-  ----------
+ * ------------       ----------      ----------
  * | vertex_t |->edges| edge_t |->next| edge_t |->...
  * ------------       ----------      ----------
  *     |
@@ -196,20 +162,3 @@ void graph_delete(graph_t *graph);
 void graph_display(graph_t const *graph);
 
 #endif /* !_GRAPHS_H_ */
-#include "pathfinding.h"
-#include <stdio.h>
-#include <stdlib.h>
-
-/**
-* dijkstra_graph - Find shortest path using Dijkstra's algorithm in a graph.
-* @graph: The graph to explore.
-* @start: The starting vertex.
-* @target: The target vertex.
-*
-* Return: A queue that has shortest path start to target, NULL no path found.
-*/
-queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
-						vertex_t const *target)
-{
-	return (graph);
-}
