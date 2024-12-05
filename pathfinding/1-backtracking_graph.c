@@ -1,6 +1,7 @@
 #include "pathfinding.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 static int explore_vertex(graph_t *graph, vertex_t const *current,
 							vertex_t const *target, queue_t *path,
