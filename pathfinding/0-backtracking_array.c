@@ -3,19 +3,19 @@
 #include <stdlib.h>
 
 /**
- * backtrack - Searches for a path from the starting point to the target point
- * using backtracking.
- * @map: Read-only two-dimensional array representing the map, where '1'
- *       indicates a blocked cell and '0' indicates an open cell.
- * @visit: 1-dimen array tracking visited cells, where '1' marks visited cell.
- * @rows: Number of rows in the map.
- * @cols: Number of columns in the map.
- * @x: Current X-coordinate of the cell being checked.
- * @y: Current Y-coordinate of the cell being checked.
- * @target: The target point coordinates (point_t structure with x and y).
- * @que: Queue to store the path from start to target if a path is found.
- * Return: 1 if a path is found, 0 if no path is found.
- */
+* backtrack - Searches for a path from the starting point to the target point
+* using backtracking.
+* @map: Read-only two-dimensional array representing the map, where '1'
+*       indicates a blocked cell and '0' indicates an open cell.
+* @visit: 1-dimen array tracking visited cells, where '1' marks visited cell.
+* @rows: Number of rows in the map.
+* @cols: Number of columns in the map.
+* @x: Current X-coordinate of the cell being checked.
+* @y: Current Y-coordinate of the cell being checked.
+* @target: The target point coordinates (point_t structure with x and y).
+* @que: Queue to store the path from start to target if a path is found.
+* Return: 1 if a path is found, 0 if no path is found.
+*/
 queue_t *backtrack(char **map, int rows, int cols,
 					int x, int y, point_t const *target,
 					queue_t *que, int *visit);
@@ -129,12 +129,13 @@ queue_t *backtrack(char **map, int rows, int cols,
 */
 queue_t *create_queue(void)
 {
-    queue_t *queue = malloc(sizeof(queue_t));
-    if (!queue)
-        return NULL;
-    
-    queue->front = queue->rear = NULL;
-    return queue;
+	queue_t *queue = malloc(sizeof(queue_t));
+
+	if (!queue)
+		return (NULL);
+
+	queue->front = queue->rear = NULL;
+	return (queue);
 }
 /**
 * enqueue - Adds data to the rear of the queue.
@@ -143,19 +144,20 @@ queue_t *create_queue(void)
 */
 void enqueue(queue_t *queue, void *data)
 {
-    if (!queue)
-        return;
+	if (!queue)
+		return;
 
-    queue_node_t *new_node = malloc(sizeof(queue_node_t));
-    if (!new_node)
-        return;
-    
-    new_node->data = data;
-    new_node->next = queue->front;
-    queue->front = new_node;
+	queue_node_t *new_node = malloc(sizeof(queue_node_t));
 
-    if (!queue->rear)  // If the queue was empty, update the rear as well
-        queue->rear = new_node;
+	if (!new_node)
+		return;
+
+	new_node->data = data;
+	new_node->next = queue->front;
+	queue->front = new_node;
+
+	if (!queue->rear) /* If the queue was empty, update the rear as well */
+		queue->rear = new_node;
 }
 /**
 * dequeue - Removes and returns data from the front of the queue.
