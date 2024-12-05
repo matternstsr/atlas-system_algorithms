@@ -2,7 +2,7 @@
 #define PATHFINDING_H
 
 #include <stddef.h>
-#include "grpahs.h"
+#include "graphs.h"
 #include "queues.h"
 
 /* Edge types (e.g., bidirectional) */
