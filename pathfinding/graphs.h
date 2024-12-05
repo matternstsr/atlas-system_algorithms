@@ -3,9 +3,7 @@
 
 #include <stddef.h>
 
-typedef struct vertex_s vertex_t;
-typedef struct edge_s edge_t;
-typedef struct graph_s graph_t;
+
 
 /**
 * graph_create - Creates a new empty graph.
