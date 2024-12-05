@@ -63,7 +63,7 @@ queue_t explore_vertex(vertex_t const *vert, vertex_t const *target,
 
 	visited[vert->index] = 1;
 
-	if (vert == target)
+	if (!strcmp(vert->content, target->content))
 	{
 		char *city_name = strdup(vert->content);
 
