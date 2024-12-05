@@ -20,6 +20,7 @@ queue_t *backtracking_graph(graph_t *graph,
 							vertex_t const *start, vertex_t const *target)
 {
 	queue_t *path = NULL;
+
 	path = calloc(1, sizeof(queue_t));
 
 	if (!path)
