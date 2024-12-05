@@ -29,7 +29,6 @@ typedef struct vertex_s
 	char *name;
 	struct edge_s *edges;
 	size_t num_edges;
-	int x, y;    // Position or additional data
 } vertex_t;
 
 /**
@@ -113,22 +112,22 @@ queue_t *dijkstra_graph(graph_t *graph,
 						vertex_t const *start, vertex_t const *target);
 
 /**
- * create_queue - Creates and initializes an empty queue.
- * Return: A ptr to newly created queue, or NULL if memory allocation fails.
- */
+* create_queue - Creates and initializes an empty queue.
+* Return: A ptr to newly created queue, or NULL if memory allocation fails.
+*/
 queue_t *create_queue(void);   /* Declare create_queue() */
 
 /**
- * enqueue - Adds a new element to the rear of the queue.
- * @queue: The queue to which the data will be added.
- * @data: A pointer to the data to be added to the queue.
- */
+* enqueue - Adds a new element to the rear of the queue.
+* @queue: The queue to which the data will be added.
+* @data: A pointer to the data to be added to the queue.
+*/
 void enqueue(queue_t *queue, void *data);  /* Declare enqueue() */
 /**
- * dequeue - Removes and returns the element from the front of the queue.
- * @queue: The queue from which the data will be removed.
- * Return: A ptr to data removed from front of queue or NULL if queue is empty.
- */
+* dequeue - Removes and returns the element from the front of the queue.
+* @queue: The queue from which the data will be removed.
+* Return: A ptr to data removed from front of queue or NULL if queue is empty.
+*/
 void *dequeue(queue_t *queue);  /* Declare dequeue() */
 
 #endif /* PATHFINDING_H */
