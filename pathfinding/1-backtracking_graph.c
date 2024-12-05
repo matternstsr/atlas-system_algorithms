@@ -69,9 +69,6 @@ queue_t explore_vertex(vertex_t const *vert, vertex_t const *target,
 
 		return (1);
 	}
-1-backtracking_graph.c:36:6: error: used struct type value where scalar is required
-   36 |  if (explore_vertex(start, target, path, visited))
-      |      ^~~~~~~~~~~~~~
 	queue_push_front(path, strdup(vert->content));
 
 	for (size_t i = 0; i < graph->nb_vertices; i++)
