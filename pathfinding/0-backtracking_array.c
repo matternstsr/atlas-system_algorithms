@@ -79,15 +79,19 @@ int backtrack(char **map, char **isV, int rows, int cols,
 	/* Print the current coordinates being checked */
 	printf("Checking coordinates [%d, %d]\n", x, y);
 
+	/* Ensure x and y are within valid bounds */
 	if (x < 0 || x >= rows || y < 0 || y >= cols)
-		return (0); /* Check OOB coords (valid range:0<=x<rows,0<=y< cols) */
+		return (0); /* Out-of-bounds check (valid range: 0 <= x < rows, 0 <= y < cols) */
+	/* Check if the cell is blocked or already visited */
 	if (isV[x][y] == '1')
-		return (0); /* Check if cell is visit or blocked ('1' means visited) */
-	isV[x][y] = '1'; /* Mark current cell as visited */
+		return (0); /* Check if cell is visited or blocked ('1' means visited) */
+	/* Mark the current cell as visited */
+	isV[x][y] = '1';
 
+	/* If the target is reached, add it to the path and return */
 	if (x == target->x && y == target->y)
-	{ /* If target reached, add pt to path & return */
-		point_t *point = malloc(sizeof(point_t)); /* allow memory for point */
+	{
+		point_t *point = malloc(sizeof(point_t)); /* Allocate memory for point */
 
 		if (!point)
 			return (0); /* Memory allocation failure */
@@ -96,7 +100,8 @@ int backtrack(char **map, char **isV, int rows, int cols,
 		enqueue(path, point);  /* Add the target to the path */
 		return (1);
 	}
-	point_t *point = malloc(sizeof(point_t)); /* Add current point to path */
+	/* Add the current point to the path */
+	point_t *point = malloc(sizeof(point_t));
 
 	if (!point)
 		return (0);  /* Memory allocation failure */
@@ -104,19 +109,25 @@ int backtrack(char **map, char **isV, int rows, int cols,
 	point->y = y;
 	enqueue(path, point);  /* Add the current position to the path */
 
-	point_t nbrs[2] = { /* Define neighbor exploration order: RIGHT, BOTTOM */
+	/* Define the neighbor exploration order: RIGHT, BOTTOM */
+	point_t nbrs[2] = {
 		{x, y + 1},  /* RIGHT (move right) */
 		{x + 1, y}   /* BOTTOM (move down) */
 	};
 	for (int i = 0; i < 2; i++) /* Explore each neighbor recursively */
 	{
-		if (backtrack(map, isV, rows, cols, nbrs[i].x, nbrs[i].y, target, path))
-			return (1);  /* Path found, stop exploring further */
+		/* Ensure the neighbor is within bounds before exploring */
+		if (nbrs[i].x >= 0 && nbrs[i].x < rows && nbrs[i].y >= 0 && nbrs[i].y < cols)
+		{
+			if (backtrack(map, isV, rows, cols, nbrs[i].x, nbrs[i].y, target, path))
+				return (1);  /* Path found, stop exploring further */
+		}
 	}
 	/* If no valid path is found, remove the current point from the path */
 	free(dequeue(path));  /* Remove the last added point */
 	return (0);  /* No path found from this position */
 }
+
 
 
 
