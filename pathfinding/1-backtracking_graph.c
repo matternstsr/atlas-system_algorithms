@@ -46,7 +46,7 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 /**
 * explore_vertex - Recursively explores neighboring vertices to find a path.
 * @graph: The graph to explore.
-* @current: The current vertex.
+* @vert: The vert vertex.
 * @target: The target vertex.
 * @path: The queue to store the path.
 * @visited: Array to track visited vertices.
@@ -56,25 +56,25 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 queue_t explore_vertex(vertex_t const *vert, vertex_t const *target,
 					queue_t *path, int *visited)
 {
-	if (!current || visited[current->index])
+	if (!vert || visited[vert->index])
 		return (0);
 
-	visited[current->index] = 1;
+	visited[vert->index] = 1;
 
-	if (current == target)
+	if (vert == target)
 	{
-		char *city_name = strdup(current->content);
+		char *city_name = strdup(vert->content);
 
 		queue_push_front(path, city_name);
 
 		return (1);
 	}
 
-	queue_push_front(path, strdup(current->content));
+	queue_push_front(path, strdup(vert->content));
 
 	for (size_t i = 0; i < graph->nb_vertices; i++)
 	{
-		if (graph_is_edge(graph, current, &graph->vertices[i]))
+		if (graph_is_edge(graph, vert, &graph->vertices[i]))
 		{
 			if (explore_vertex(graph, &graph->vertices[i], target, path, visited))
 				return (1);
