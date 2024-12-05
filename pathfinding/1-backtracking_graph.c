@@ -15,8 +15,7 @@ queue_t explore_vertex(vertex_t const *vert, vertex_t const *target,
 * @target: The target vertex.
 *
 * Return: A queue that has path from start to target, NULL if no path found.
-*/queue_t explore_vertex(vertex_t const *vert, vertex_t const *target,
-					queue_t *path, int *visit);
+*/
 queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 								vertex_t const *target)
 {
@@ -28,7 +27,7 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 
 	int *visited = calloc(graph->nb_vertices, sizeof(int));
 
-	if (!visited));
+	if (!visited);
 	{
 		free(path);
 		return (NULL);
