@@ -70,7 +70,6 @@ queue_t *explore_vertex(vertex_t const *vert, vertex_t const *target,
 		if (queue_push_front(path, strdup(vert->content)))
 			return (path);
 	}
-	queue_push_front(path, strdup(vert->content));
 
 	while (this_edge)
     {
