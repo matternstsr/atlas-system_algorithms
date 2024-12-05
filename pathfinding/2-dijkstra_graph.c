@@ -65,7 +65,6 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 			{
 				distances[neighbor->index] = distances[current->index] + weight;
 				previous[neighbor->index] = current;
-
 				queue[queue_size++] = neighbor; /* Add neighbor to the queue */
 			}
 			edge = edge->next;
@@ -76,7 +75,7 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 		free(distances);
 		free(previous);
 		free(visited);
-		/* free(queue);   Clean up */
+		free(queue);
 		return (NULL);
 	}
 	const vertex_t *current = target; /* Reconstruct path from target vertex to start vertex */
@@ -89,6 +88,6 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 	free(distances);  /* Clean up */
 	free(previous);  /* Clean up */
 	free(visited);  /* Clean up */
-	/* free(queue);   Clean up */
+	free(queue);  /* Clean up */
 	return (path);
 }
