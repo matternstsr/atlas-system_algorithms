@@ -85,7 +85,12 @@ queue_t *backtrack(char **map, int rows, int cols,
 		return (NULL);
 	visit[y * rows + x] = 1; /* Mark current position as visited */
 	printf("Checking coordinates [%d, %d]\n", x, y); /* curr coord checked */
-	if (x == target->x && y == target->y)
+	/* if (x == target->x && y == target->y) */
+	if ((x == target->x && y == target->y) ||
+		backtrack(map, rows, cols, x + 1, y, target, que, visit) ||
+		backtrack(map, rows, cols, x, y + 1, target, que, visit) ||
+		backtrack(map, rows, cols, x - 1, y, target, que, visit) ||
+		backtrack(map, rows, cols, x, y - 1, target, que, visit))
 	{ /* If target is found, add to path and return */
 		point = malloc(sizeof(point_t));
 		if (!point)
@@ -95,27 +100,6 @@ queue_t *backtrack(char **map, int rows, int cols,
 		queue_push_front(que, (void *)point); /* Add curr pos to the path */
 		return (que);  /* Path found, no need to explore further */
 	} /* Explore the four directions (right, down, left, up) */
-	point_t directions[4] = {
-		{x + 1, y},  /* Move right */
-		{x, y + 1},  /* Move down */
-		{x - 1, y},  /* Move left */
-		{x, y - 1}   /* Move up */
-		};
-		for (int i = 0; i < 4; i++) /* Explore each neighbor */
-		{ /* Recursively check each direction */
-		if (backtrack(map, rows, cols, directions[i].x, directions[i].y,
-		target, que, visit))
-		{
-			point = malloc(sizeof(point_t));
-			if (!point)
-				return (NULL);
-			point->x = x;
-			point->y = y;
-			queue_push_front(que, (void *)point); /* Add curr pos to the path */
-			return (que);  /* Path found */
-		}
-		} /* If no path found from this position, unmark as visited and return */
-	visit[y * rows + x] = 0;  /* Unmark as visited */
 	return (NULL);  /* No path found from this position */
 }
 
