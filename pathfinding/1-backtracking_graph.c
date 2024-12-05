@@ -65,11 +65,8 @@ queue_t *explore_vertex(vertex_t const *vert, vertex_t const *target,
 
 	if (!strcmp(vert->content, target->content))
 	{
-		char *city_name = strdup(vert->content);
-
-		queue_push_front(path, city_name);
-
-		return (path);
+		if (queue_push_front(path, strdup(vert->content)))
+			return (path);
 	}
 	queue_push_front(path, strdup(vert->content));
 
