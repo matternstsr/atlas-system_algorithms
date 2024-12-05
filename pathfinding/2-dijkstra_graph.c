@@ -4,55 +4,100 @@
 #include <limits.h>
 #include <stdbool.h>
 
-
-/*  Dijkstra's algorithm to find the shortest path in a graph */
 queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
-						vertex_t const *target)
+					vertex_t const *target)
 {
-	/* Initialize distances and previous pointers */
-	size_t num_vertices = graph->nb_vertices;
-	int *distances = (int *)calloc(num_vertices, sizeof(int));
-	vertex_t **previous = (vertex_t **)calloc(num_vertices, sizeof(vertex_t *));
-	bool *visited = (bool *)calloc(num_vertices, sizeof(bool));
-	queue_t *path = queue_create();
+	int *dist, *visit;
+	vertex_t **prev, *vert = NULL;
+	size_t i = 0;
+	queue_t *path = NULL;
 
-	if (!distances || !previous || !visited || !path)
-		return (NULL); /* Set all distances to infinity and previous vertices to NULL */
-	for (size_t i = 0; i < num_vertices; i++)
+	if (!graph || !start || !target)
+		return (NULL);
+	/* Allocate memory for path, visit array, and previous array */
+	path = calloc(1, sizeof(queue_t));
+	if (!path)
+		return (NULL);
+	visit = calloc(graph->nb_vertices, sizeof(int));
+	if (!visit)
+		return (NULL);
+	prev = calloc(graph->nb_vertices, sizeof(vertex_t *));
+	if (!prev)
+		return (NULL);
+	/* Initialize distances */
+	dist = calloc(graph->nb_vertices, sizeof(int));
+	if (!dist)
+		return (NULL);
+	for (i = 0; i < graph->nb_vertices; i++)
+		dist[i] = INT_MAX;
+	/* Run Dijkstra's algorithm to find shortest path */
+	if (find_dist(start, target, graph, visit, dist, prev))
 	{
-		distances[i] = INT_MAX;
-		previous[i] = NULL;
-		visited[i] = false;
-	} /* Find index of start and target vertices */
-	size_t start_index = start->index;
-	size_t target_index = target->index;
+		free(prev), free(dist), free(visit), free(path);
+		prev = NULL, dist = NULL, visit = NULL, path = NULL;
+		return (NULL);
+	}
+	/* Reconstruct path from target to start using 'prev' array */
+	for (vert = prev[target->index]; vert != NULL; vert = prev[vert->index])
+		queue_push_front(path, strdup(vert->content));
+	queue_push_front(path, strdup(start->content)); /* Add start vertex */
+	queue_push_front(path, strdup(target->content)); /* Add target vertex */
 
-	distances[start_index] = 0; /* Set distance of start vertex to 0 */
+	/* Clean up dynamically allocated memory */
+	free(prev), free(dist), free(visit);
+	prev = NULL, dist = NULL, visit = NULL;
+	return (path);
+}
 
-	/* Create a queue to hold vertices (sorted by distance) */
+bool find_dist(vertex_t const *start, vertex_t const *target, graph_t *graph,
+			int *visit, int *dist, vertex_t **prev)
+{
+	size_t i;
+	size_t num_vertices = graph->nb_vertices;
+
+	/* Initialize distances */
+	dist[start->index] = 0;  /* Start vertex distance is 0 */
+	for (i = 0; i < num_vertices; i++)
+	{
+		if (i != start->index)
+			dist[i] = INT_MAX;  /* All other distances are set to infinity */
+		prev[i] = NULL;  /* Previous vertex is initially NULL for all */
+		visit[i] = 0;     /* Mark all vertices as unvisited */
+	}
+
+	/* Create a priority queue to manage vertices (min-heap or sorted list) */
+	/* Using a simple array as a queue for simplicity */
 	vertex_t **queue = (vertex_t **)malloc(num_vertices * sizeof(vertex_t *));
+
+	if (!queue)
+		return (true); /* Return true on error (memory allocation failure) */
+
 	size_t queue_size = 0;
 
-	queue[queue_size++] = (vertex_t *)start; /* Add start vertex to queue */
+	/* Add start vertex to queue */
+	queue[queue_size++] = (vertex_t *)start;
 
 	while (queue_size > 0)
 	{
-		vertex_t *current = queue[0]; /* Extract vertex with minimum distance */
+		/* Extract vertex with smallest distance */
+		vertex_t *current = queue[0];
 
-		/* Remove the first element (since it's the one with the minimum distance) */
-		for (size_t i = 0; i < queue_size - 1; i++)
+		/* Move first element to end of queue and reduce size */
+		for (i = 0; i < queue_size - 1; i++)
 			queue[i] = queue[i + 1];
 		queue_size--;
 
-		if (visited[current->index]) /* If we have already visited this vertex, continue */
+		/* If we've already visited this vertex, skip it */
+		if (visit[current->index])
 			continue;
 
-		visited[current->index] = true; /* Mark vertex as visited */
+		visit[current->index] = 1;  /* Mark as visited */
 
-		if (current->index == target_index) /* If we have reached target vertex, stop processing */
+		/* If we reach target vertex, we can stop early (optional optimization) */
+		if (current == target)
 			break;
 
-		/* Process each of the neighbors of the current vertex */
+		/* Process each of neighbors of current vertex */
 		edge_t *edge = current->edges;
 
 		while (edge)
@@ -61,34 +106,18 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 			int weight = edge->weight;
 
 			/* Relax edge (update distance if a shorter path is found) */
-			if (distances[current->index] + weight < distances[neighbor->index])
+			if (dist[current->index] + weight < dist[neighbor->index])
 			{
-				distances[neighbor->index] = distances[current->index] + weight;
-				previous[neighbor->index] = current;
-				queue[queue_size++] = neighbor; /* Add neighbor to the queue */
+				dist[neighbor->index] = dist[current->index] + weight;
+				prev[neighbor->index] = current;
+
+				/* Add neighbor to queue (could optimize queue with a priority queue) */
+				queue[queue_size++] = neighbor;
 			}
 			edge = edge->next;
 		}
 	}
-	if (distances[target_index] == INT_MAX) /* If target vertex is unreachable, return NULL */
-	{
-		free(distances);
-		free(previous);
-		free(visited);
-		free(queue);
-		return (NULL);
-	}
-	const vertex_t *current = target; /* Reconstruct path from target vertex to start vertex */
-
-	while (current != NULL)
-	{
-		queue_push_front(path, current->content);
-		current = previous[current->index];
-	}
-	free(distances);  /* Clean up */
-	free(previous);  /* Clean up */
-	free(visited);  /* Clean up */
-	free(queue);  /* Clean up */
-	return (path);
+	free(queue);  /* Clean up queue */
+	/* If target vertex has not been visited, return true (indicating failure) */
+	return (dist[target->index] == INT_MAX);
 }
-
