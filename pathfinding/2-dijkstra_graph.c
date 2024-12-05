@@ -85,10 +85,10 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 		queue_push_front(path, current->content);
 		current = previous[current->index];
 	}
-	/* free(distances);  /* Clean up */ */
-	/* free(previous);  /* Clean up */ */
-	/* free(visited);  /* Clean up */ */
-	/* free(queue);  /* Clean up */ */
+	/* free(distances); */
+	/* free(previous); */
+	/* free(visited); */
+	/* free(queue); */
 	return (path);
 }
 
