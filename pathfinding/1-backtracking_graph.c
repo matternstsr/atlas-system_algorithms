@@ -72,13 +72,13 @@ queue_t *explore_vertex(vertex_t const *vert, vertex_t const *target,
 	}
 
 	while (this_edge)
-    {
-        if (explore_vertex(this_edge->dest, target, path, visited))
-        {
-            if (queue_push_front(path, strdup(vert->content)))
-                return (path);
-        }
-        this_edge = this_edge->next;
-    }
+	{
+		if (explore_vertex(this_edge->dest, target, path, visited))
+		{
+			if (queue_push_front(path, strdup(vert->content)))
+				return (path);
+		}
+		this_edge = this_edge->next;
+	}
 	return (NULL);
 }
