@@ -42,8 +42,8 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 * @target: The target vertex
 * Return: A queue containing the path, or NULL if no path is found
 */
-queue_t *backtracking_graph(vertex_t *graph, vertex_t const *start,
-								vertex_t const *target);
+queue_t *backtracking_graph(graph_t *graph,
+							vertex_t const *start, vertex_t const *target);
 
 /**
 * dijkstra_graph - Searches for the shortest path from a starting vertex to
