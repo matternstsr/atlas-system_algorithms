@@ -3,9 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-static int explore_vertex(graph_t *graph, vertex_t const *current,
-							vertex_t const *target, queue_t *path,
-							int *visited);
+
+queue_t explore_vertex(vertex_t const *vert, vertex_t const *target,
+					queue_t *path, int *visit);
 
 /**
 * backtracking_graph - Find a path start to target using recursive
@@ -15,7 +15,8 @@ static int explore_vertex(graph_t *graph, vertex_t const *current,
 * @target: The target vertex.
 *
 * Return: A queue that has path from start to target, NULL if no path found.
-*/
+*/queue_t explore_vertex(vertex_t const *vert, vertex_t const *target,
+					queue_t *path, int *visit);
 queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 								vertex_t const *target)
 {
@@ -27,7 +28,7 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 
 	int *visited = calloc(graph->nb_vertices, sizeof(int));
 
-	if (!visited)
+	if (!visited));
 	{
 		free(path);
 		return (NULL);
@@ -53,8 +54,8 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 *
 * Return: 1 if a path is found, otherwise 0.
 */
-static int explore_vertex(graph_t *graph, vertex_t const *current,
-							vertex_t const *target, queue_t *path, int *visited)
+queue_t explore_vertex(vertex_t const *vert, vertex_t const *target,
+					queue_t *path, int *visit)
 {
 	if (!current || visited[current->index])
 		return (0);
