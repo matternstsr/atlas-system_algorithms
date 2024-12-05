@@ -67,7 +67,7 @@ queue_t explore_vertex(vertex_t const *vert, vertex_t const *target,
 
 		queue_push_front(path, city_name);
 
-		return (1);
+		return (path);
 	}
 	queue_push_front(path, strdup(vert->content));
 
@@ -76,9 +76,9 @@ queue_t explore_vertex(vertex_t const *vert, vertex_t const *target,
 		if (graph_is_edge(graph, vert, &graph->vertices[i]))
 		{
 			if (explore_vertex(graph, &graph->vertices[i], target, path, visited))
-				return (1);
+				return (path);
 		}
 	}
 	queue_push_front(path);
-	return (0);
+	return (NULL);
 }
