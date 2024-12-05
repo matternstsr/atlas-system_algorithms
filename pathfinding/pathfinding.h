@@ -2,7 +2,10 @@
 #define PATHFINDING_H
 
 #include <stddef.h>
-#include "graphs.h"
+
+/* Edge types (e.g., bidirectional) */
+#define BIDIRECTIONAL 1
+#define UNIDIRECTIONAL 0
 
 /**
 * struct point_s - Structure storing coordinates
