@@ -12,7 +12,7 @@
 * @cols: Number of columns in the map.
 * @x: Current X-coordinate of the cell being checked.
 * @y: Current Y-coordinate of the cell being checked.
-* @target: The target point coordinates (point_t structure with x and y).
+* @target: The target point coordinaCreatetes (point_t structure with x and y).
 * @que: Queue to store the path from start to target if a path is found.
 * Return: 1 if a path is found, 0 if no path is found.
 */

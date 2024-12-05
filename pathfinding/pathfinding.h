@@ -2,6 +2,8 @@
 #define PATHFINDING_H
 
 #include <stddef.h>
+#include "grpahs.h"
+#include "queues.h"
 
 /* Edge types (e.g., bidirectional) */
 #define BIDIRECTIONAL 1
@@ -87,9 +89,7 @@ typedef struct queue_s
 */
 queue_t *backtracking_array(char **map, int rows, int cols,
 							point_t const *start,
-							point_t const *target);
-
-/**
+							poin#include "pathfinding.h"
 * backtracking_graph - Searches for the first path from a starting vertex to
 *                      a target vertex in a graph using backtracking.
 * @graph: The graph to search through
