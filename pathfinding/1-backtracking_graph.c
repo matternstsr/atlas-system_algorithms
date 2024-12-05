@@ -23,7 +23,7 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 	if (!path)
 		return (NULL);
 
-	int *visited = calloc(graph->vertex_count, sizeof(int));
+	int *visited = calloc(graph->nb_vertices, sizeof(int));
 
 	if (!visited)
 	{
@@ -62,16 +62,16 @@ static int explore_vertex(graph_t *graph, vertex_t const *current,
 
 	if (current == target)
 	{
-		char *city_name = strdup(current->name);
+		char *city_name = strdup(current->content);
 
 		enqueue(path, city_name);
 
 		return (1);
 	}
 
-	enqueue(path, strdup(current->name));
+	enqueue(path, strdup(current->content));
 
-	for (size_t i = 0; i < graph->vertex_count; i++)
+	for (size_t i = 0; i < graph->nb_vertices; i++)
 	{
 		if (graph_is_edge(graph, current, &graph->vertices[i]))
 		{
