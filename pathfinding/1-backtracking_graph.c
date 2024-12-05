@@ -36,8 +36,9 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 		free(visited);
 		return (path);
 	}
-
-	free(visited);current->content
+	free(visited);
+	free(path);
+	return (NULL);
 }
 
 /**
