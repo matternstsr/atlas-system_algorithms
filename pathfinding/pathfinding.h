@@ -89,7 +89,9 @@ typedef struct queue_s
 */
 queue_t *backtracking_array(char **map, int rows, int cols,
 							point_t const *start,
-							poin#include "pathfinding.h"
+							point_t const *target);
+
+/**
 * backtracking_graph - Searches for the first path from a starting vertex to
 *                      a target vertex in a graph using backtracking.
 * @graph: The graph to search through
