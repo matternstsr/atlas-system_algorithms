@@ -26,56 +26,56 @@ typedef struct point_s
 * @edges: List of edges connected to this vertex
 * @num_edges: List of edges connected to this vertex
 */
-typedef struct vertex_s
+/* typedef struct vertex_s
 {
 	char *name;
 	struct edge_s *edges;
 	size_t num_edges;
-} vertex_t;
+} vertex_t; */
 
 /**
 * struct edge_s - Structure for an edge in the graph
 * @vertex: The vertex the edge connects to
 * @weight: The weight of the edge (distance or cost)
 */
-typedef struct edge_s
+/* typedef struct edge_s
 {
 	vertex_t *vertex;
 	int weight;
-} edge_t;
+} edge_t; */
 
 /**
 * struct graph_s - Structure representing the graph
 * @vertices: List of vertices in the graph
 * @num_vertices: Number of vertices in the graph
 */
-typedef struct graph_s
+/* typedef struct graph_s
 {
 	vertex_t **vertices;
 	size_t num_vertices;
 } graph_t;
-
+ */
 /**
 * struct queue_node - Node in the queue structure
 * @data: Data stored in the node
 * @next: Pointer to the next node
 */
-typedef struct queue_node
+/* typedef struct queue_node
 {
 	void *data;
 	struct queue_node *next;
-} queue_node_t;
+} queue_node_t; */
 
 /**
 * struct queue_s - Structure for a queue
 * @front: Pointer to the front of the queue
 * @rear: Pointer to the rear of the queue
 */
-typedef struct queue_s
+/* typedef struct queue_s
 {
 	queue_node_t *front;
 	queue_node_t *rear;
-} queue_t;
+} queue_t; */
 
 /**
 * backtracking_array - Searches for the first path from a starting point to
