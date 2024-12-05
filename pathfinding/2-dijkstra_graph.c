@@ -78,11 +78,11 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 		free(queue);
 		return (NULL);
 	}
-	const vertex_t *current = target; /* Reconstruct path from target vertex to start vertex */
+	vertex_t *current = target; /* Reconstruct path from target vertex to start vertex */
 
 	while (current != NULL)
 	{
-		/* queue_push_front(path, current->content); */
+		queue_push_front(path, current->content);
 		current = previous[current->index];
 	}
 	free(distances);  /* Clean up */
