@@ -27,7 +27,7 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 
 	int *visited = calloc(graph->nb_vertices, sizeof(int));
 
-	if (!visited);
+	if (!visited)
 	{
 		free(path);
 		return (NULL);
