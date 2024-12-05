@@ -46,7 +46,6 @@ queue_t *backtracking_graph(graph_t *graph,
 
 /**
 * explore_vertex - Recursively explores neighboring vertices to find a path.
-* @graph: The graph to explore.
 * @vert: The vert vertex.
 * @target: The target vertex.
 * @path: The queue to store the path.
