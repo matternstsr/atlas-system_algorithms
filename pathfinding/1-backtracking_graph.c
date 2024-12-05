@@ -57,7 +57,7 @@ queue_t explore_vertex(vertex_t const *vert, vertex_t const *target,
 					queue_t *path, int *visited)
 {
 	if (!vert || visited[vert->index])
-		return (0);
+		return (NULL);
 
 	visited[vert->index] = 1;
 
