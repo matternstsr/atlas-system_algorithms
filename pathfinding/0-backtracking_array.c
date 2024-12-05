@@ -74,18 +74,6 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 	return (path);
 }
 
-/**
-* backtrack - The backtracking function that searches for the path recursively
-* @map: Read-only two-dimensional array representing the map
-* @isV: 2D array keeping track of isV cells
-* @rows: Number of rows in the map
-* @cols: Number of columns in the map
-* @x: Current X coordinate
-* @y: Current Y coordinate
-* @target: Target point coordinates
-* @path: The queue to store the path
-* Return: 1 if a path is found, 0 if no path is found
-*/
 int backtrack(char **map, char **isV, int rows, int cols,
 			int x, int y, point_t const *target, queue_t *path)
 {
@@ -93,39 +81,40 @@ int backtrack(char **map, char **isV, int rows, int cols,
 	printf("Checking coordinates [%d, %d]\n", x, y);
 
 	if (x < 0 || x >= rows || y < 0 || y >= cols)
-		return (0); /* Check oob coord (valid range:0<=x<rows,0<=y<cols) */
+		return (0); /* Check OOB coords (valid range:0<=x<rows,0<=y< cols) */
 	if (isV[x][y] == '1')
-		return (0); /* Check if cell isV or blocked ('1' means isV) */
-	isV[x][y] = '1';/* Mark current cell as isV */
-	if (x == target->x && y == target->y)/* Check if the target has reached */
-	{
-		point_t *point = malloc(sizeof(point_t)); /* make pt, add path queue */
+		return (0); /* Check if cell is visit or blocked ('1' means visited) */
+	isV[x][y] = '1'; /* Mark current cell as visited */
+
+	if (x == target->x && y == target->y)
+	{ /* If target reached, add pt to path & return */
+		point_t *point = malloc(sizeof(point_t)); /* allow memory for point */
 
 		if (!point)
-		return (0);  /* Memory allocation failure */
+			return (0); /* Memory allocation failure */
 		point->x = x;
 		point->y = y;
 		enqueue(path, point);  /* Add the target to the path */
 		return (1);
 	}
-	/* Add current pt to path queue for good order (from start to target) */
-	point_t *point = malloc(sizeof(point_t));
+	point_t *point = malloc(sizeof(point_t)); /* Add current point to path */
 
 	if (!point)
-	return (0);  /* Memory allocation failure */
+		return (0);  /* Memory allocation failure */
 	point->x = x;
 	point->y = y;
 	enqueue(path, point);  /* Add the current position to the path */
-	/* Define the neighbor exploration order: BOTTOM, RIGHT */
-	point_t nbrs[2] = {
-		{x + 1, y},  /* BOTTOM (move down) */
-		{x, y + 1}   /* RIGHT (move right) */
+
+	point_t nbrs[2] = { /* Define neighbor exploration order: RIGHT, BOTTOM */
+		{x, y + 1},  /* RIGHT (move right) */
+		{x + 1, y}   /* BOTTOM (move down) */
 	};
 	for (int i = 0; i < 2; i++) /* Explore each neighbor recursively */
 	{
 		if (backtrack(map, isV, rows, cols, nbrs[i].x, nbrs[i].y, target, path))
-			return (1);  /* Path has been found, no need to continue */
-	} /* If no valid path is found, remove the current point from the path */
+			return (1);  /* Path found, stop exploring further */
+	}
+	/* If no valid path is found, remove the current point from the path */
 	free(dequeue(path));  /* Remove the last added point */
 	return (0);  /* No path found from this position */
 }
