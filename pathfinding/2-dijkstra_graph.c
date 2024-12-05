@@ -11,9 +11,9 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 {
 	/* Initialize distances and previous pointers */
 	size_t num_vertices = graph->nb_vertices;
-	int *distances = (int *)malloc(num_vertices * sizeof(int));
-	vertex_t **previous = (vertex_t **)malloc(num_vertices * sizeof(vertex_t *));
-	bool *visited = (bool *)malloc(num_vertices * sizeof(bool));
+	int *distances = (int *)calloc(num_vertices * sizeof(int));
+	vertex_t **previous = (vertex_t **)calloc(num_vertices * sizeof(vertex_t *));
+	bool *visited = (bool *)calloc(num_vertices * sizeof(bool));
 	queue_t *path = queue_create();
 
 	if (!distances || !previous || !visited || !path)
