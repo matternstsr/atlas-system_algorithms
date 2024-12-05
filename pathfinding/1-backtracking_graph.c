@@ -33,14 +33,14 @@ queue_t *backtracking_graph(graph_t *graph,
 		return (NULL);
 	}
 
-	if (!explore_vertex(start, target, path, visited))
+	if (explore_vertex(start, target, path, visited))
 	{
 		free(visited);
-		free(path);
-		return (NULL);		
+		return (path);		
 	}
 	free(visited);
-	return (path);
+	free(path);
+	return (NULL);
 }
 
 /**
