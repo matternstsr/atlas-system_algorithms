@@ -5,7 +5,7 @@
 
 
 queue_t explore_vertex(vertex_t const *vert, vertex_t const *target,
-					queue_t *path, int *visit);
+					queue_t *path, int *visited);
 
 /**
 * backtracking_graph - Find a path start to target using recursive
@@ -54,7 +54,7 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 * Return: 1 if a path is found, otherwise 0.
 */
 queue_t explore_vertex(vertex_t const *vert, vertex_t const *target,
-					queue_t *path, int *visit)
+					queue_t *path, int *visited)
 {
 	if (!current || visited[current->index])
 		return (0);
