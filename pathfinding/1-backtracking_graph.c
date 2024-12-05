@@ -65,12 +65,12 @@ static int explore_vertex(graph_t *graph, vertex_t const *current,
 	{
 		char *city_name = strdup(current->content);
 
-		enqueue(path, city_name);
+		queue_push_front(path, city_name);
 
 		return (1);
 	}
 
-	enqueue(path, strdup(current->content));
+	queue_push_front(path, strdup(current->content));
 
 	for (size_t i = 0; i < graph->nb_vertices; i++)
 	{
@@ -80,6 +80,6 @@ static int explore_vertex(graph_t *graph, vertex_t const *current,
 				return (1);
 		}
 	}
-	dequeue(path);
+	queue_push_front(path);
 	return (0);
 }
