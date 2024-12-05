@@ -7,7 +7,7 @@
 
 /*  Dijkstra's algorithm to find the shortest path in a graph */
 queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
-						vertex_t *target)
+						vertex_t const *target)
 {
 	/* Initialize distances and previous pointers */
 	size_t num_vertices = graph->nb_vertices;
@@ -78,7 +78,7 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 		free(queue);
 		return (NULL);
 	}
-	vertex_t *current = target; /* Reconstruct path from target vertex to start vertex */
+	const vertex_t *current = target; /* Reconstruct path from target vertex to start vertex */
 
 	while (current != NULL)
 	{
