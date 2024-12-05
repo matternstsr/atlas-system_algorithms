@@ -16,8 +16,8 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 	bool *visited = (bool *)malloc(num_vertices * sizeof(bool));
 	queue_t *path = queue_create();
 
-	if (!distances || !pre
-	/* Create a priority vious || !visited || !path)
+	if (!distances || !previous || !visited || !path)
+	/* Create a priority */
 		return (NULL);
 
 	/* Set all distances to infinity and previous vertices to NULL */
