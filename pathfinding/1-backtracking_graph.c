@@ -14,7 +14,10 @@
 queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 								vertex_t const *target)
 {
-	queue_t *queue = create_queue();  Initialize queue to store the path
+	(void)graph;
+	(void)start;
+	(void)target;
+	queue_t *queue = create_queue();  /* Initialize queue to store the path */
 
 	/* Start the recursive backtracking process */
 	if (!backtrack(graph, start, target, queue))
