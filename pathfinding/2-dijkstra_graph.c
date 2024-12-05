@@ -72,7 +72,7 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 		/* free(previous); */
 		/* free(visited); */
 		/* free(queue); */
-		free(num_vertices)
+		free(num_vertices);
 		return (NULL);
 	}
 	const vertex_t *current = target; /* Reconstruct path from target vertex to start vertex */
@@ -87,7 +87,7 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 	/* free(previous); */
 	/* free(visited); */
 	/* free(queue); */
-	free(num_vertices)
+	free(num_vertices);
 	return (path);
 }
 
