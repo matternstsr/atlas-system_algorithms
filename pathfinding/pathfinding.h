@@ -2,6 +2,7 @@
 #define PATHFINDING_H
 
 #include <stddef.h>
+#include "graphs.h"
 
 /**
 * struct point_s - Structure storing coordinates
