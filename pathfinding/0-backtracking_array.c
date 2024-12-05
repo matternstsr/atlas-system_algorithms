@@ -81,9 +81,9 @@ queue_t *backtrack(char **map, int rows, int cols,
 
 	/* Base case: Check if out of bounds or blocked or already visited */
 	if (x < 0 || x >= cols || y < 0 || y >= rows ||
-			map[y][x] == '1' || visit[y * cols + x])
+			map[y][x] == '1' || visit[y * rows + x])
 		return (NULL);
-	visit[y * cols + x] = 1; /* Mark current position as visited */
+	visit[y * rows + x] = 1; /* Mark current position as visited */
 	printf("Checking coordinates [%d, %d]\n", x, y); /* curr coord checked */
 	if (x == target->x && y == target->y)
 	{ /* If target is found, add to path and return */
@@ -115,7 +115,7 @@ queue_t *backtrack(char **map, int rows, int cols,
 			return (que);  /* Path found */
 		}
 		} /* If no path found from this position, unmark as visited and return */
-	visit[y * cols + x] = 0;  /* Unmark as visited */
+	visit[y * rows + x] = 0;  /* Unmark as visited */
 	return (NULL);  /* No path found from this position */
 }
 
