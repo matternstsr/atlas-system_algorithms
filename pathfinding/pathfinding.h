@@ -60,15 +60,8 @@ queue_t *backtracking_graph(graph_t *graph,
 * Return: A queue containing the path, or NULL if no path is found
 */
 queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
-					vertex_t const *target);
-
-bool find_dist(vertex_t const *start, vertex_t const *target, graph_t *graph,
-			int *visit, int *dist, vertex_t **prev);
-
-bool process_vertex(vertex_t *current, vertex_t const *target, int *visit);
-void relax_edges(edge_t *edge, vertex_t *current, int *dist, vertex_t **prev,
-				vertex_t **queue, size_t *queue_size);
-void initialize_dijkstra(vertex_t const *start, graph_t *graph, int *visit,
-						int *dist, vertex_t **prev);
+                        vertex_t const *target);
+int find_dist(vertex_t const *start, vertex_t const *target, graph_t *graph,
+              int *this_visit, int *this_dist, vertex_t **prev);
 
 #endif /* PATHFINDING_H */
