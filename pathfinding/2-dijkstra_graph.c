@@ -5,59 +5,48 @@
 #include <stdbool.h>
 
 queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
-                        vertex_t const *target)
+					vertex_t const *target)
 {
-    int *dist, *visit;
-    vertex_t **prev, *vert = NULL;
-    size_t i = 0;
-    queue_t *path = NULL;
+	int *dist, *visit;
+	vertex_t **prev, *vert = NULL;
+	size_t i = 0;
+	queue_t *path = NULL;
 
-    /* Check if graph, start, or target are NULL */
-    if (!graph || !start || !target)
-        return (NULL);
+	if (!graph || !start || !target)
+		return (NULL);
+	/* Allocate memory for path, visit array, and previous array */
+	path = calloc(1, sizeof(queue_t));
+	if (!path)
+		return (NULL);
+	visit = calloc(graph->nb_vertices, sizeof(int));
+	if (!visit)
+		return (NULL);
+	prev = calloc(graph->nb_vertices, sizeof(vertex_t *));
+	if (!prev)
+		return (NULL);
+	/* Initialize distances */
+	dist = calloc(graph->nb_vertices, sizeof(int));
+	if (!dist)
+		return (NULL);
+	for (i = 0; i < graph->nb_vertices; i++)
+		dist[i] = INT_MAX;
+	/* Run Dijkstra's algorithm to find shortest path */
+	if (find_dist(start, target, graph, visit, dist, prev))
+	{
+		free(prev), free(dist), free(visit), free(path);
+		prev = NULL, dist = NULL, visit = NULL, path = NULL;
+		return (NULL);
+	}
+	/* Reconstruct path from target to start using 'prev' array */
+	for (vert = prev[target->index]; vert != NULL; vert = prev[vert->index])
+		queue_push_front(path, strdup(vert->content));
+	queue_push_front(path, strdup(start->content)); /* Add start vertex */
+	queue_push_front(path, strdup(target->content)); /* Add target vertex */
 
-    /* Allocate memory for path, visit array, and previous array */
-    path = calloc(1, sizeof(queue_t));
-    if (!path)
-        return (NULL);
-    visit = calloc(graph->nb_vertices, sizeof(int));
-    if (!visit)
-        return (NULL);
-    prev = calloc(graph->nb_vertices, sizeof(vertex_t *));
-    if (!prev)
-        return (NULL);
-    dist = calloc(graph->nb_vertices, sizeof(int));
-    if (!dist)
-        return (NULL);
-
-    /* Initialize distances to maximum integer value */
-    for (i = 0; i < graph->nb_vertices; i++)
-        dist[i] = INT_MAX;
-
-    /* Run Dijkstra's algorithm to find the shortest path */
-    if (find_dist(start, target, graph, visit, dist, prev))
-    {
-        free(prev), free(dist), free(visit), free(path);
-        prev = NULL, dist = NULL, visit = NULL, path = NULL;
-        return (NULL);
-    }
-
-    /* Reconstruct the path from target to start using the 'prev' array */
-    for (vert = prev[target->index]; vert != NULL; vert = prev[vert->index])
-        queue_push_front(path, strdup(vert->content));
-
-    /* Add the start and target vertices to the path if they are not already added */
-    if (path->size == 0 || strcmp(start->content, queue_peek(path)) != 0)
-        queue_push_front(path, strdup(start->content));
-    if (strcmp(target->content, queue_peek(path)) != 0)
-        queue_push_front(path, strdup(target->content));
-
-    /* Clean up dynamically allocated memory */
-    free(prev), free(dist), free(visit);
-    prev = NULL, dist = NULL, visit = NULL;
-
-    /* Return the reconstructed path */
-    return (path);
+	/* Clean up dynamically allocated memory */
+	free(prev), free(dist), free(visit);
+	prev = NULL, dist = NULL, visit = NULL;
+	return (path);
 }
 
 bool find_dist(vertex_t const *start, vertex_t const *target, graph_t *graph,
