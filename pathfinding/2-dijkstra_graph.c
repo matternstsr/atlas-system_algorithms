@@ -43,8 +43,9 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
     
     /* Debug: print the distance to each vertex */
     for (i = 0; i < graph->nb_vertices; i++) {
-        printf("Checking %s, distance from %s is %d\n", graph->vertices[i]->content, start->content, dist[i]);
-    }
+		printf("Checking %s, distance from %s is %d\n", graph->vertices[i]->content, start->content, dist[i]);
+	}
+
 
     /* Reconstruct path from target to start using 'prev' array */
     for (vert = prev[target->index]; vert != NULL; vert = prev[vert->index])
