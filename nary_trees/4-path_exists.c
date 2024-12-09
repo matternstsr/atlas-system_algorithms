@@ -8,7 +8,7 @@
 * Return: 1 if the path exists, otherwise 0
 */
 int path_exists_helper(nary_tree_t const *node,
-						char const * const *path, size_t index);
+						char const * const *path, size_t index)
 {
 	if (path[index] == NULL) /* If we've reached the end of the path */
 		return (1); /* Path exists successfully */
