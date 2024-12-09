@@ -23,5 +23,5 @@ typedef struct nary_tree_s
 
 /* Function prototype */
 nary_tree_t *nary_tree_insert(nary_tree_t *parent, char const *str);
-
+void nary_tree_delete(nary_tree_t *tree);
 #endif /* NARY_TREES_H */
