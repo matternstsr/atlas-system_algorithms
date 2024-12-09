@@ -13,7 +13,6 @@
 * @next: Pointer to the next child in the parent's children linked list
 */
 typedef struct nary_tree_s
-typedef struct nary_tree_s
 {
 	char            *content;
 	struct nary_tree_s  *parent;
