@@ -1,4 +1,3 @@
-the #include <stdlib.h>
 #include "nary_trees.h"
 
 /**

@@ -2,6 +2,8 @@
 #define NARY_TREES_H
 
 #include <stddef.h>  /* For size_t */
+#include <stdlib.h>
+
 
 /**
 * struct nary_tree_s - N-ary tree node structure
