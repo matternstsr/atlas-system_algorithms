@@ -45,5 +45,5 @@ size_t nary_tree_diameter(nary_tree_t const *root)
 
 	/* Call the helper function to calculate the height and diameter */
 	helper_diameter(root, &diameter);
-	return (diameter + 1);
+	return (diameter + 1); /* finally!!! added the  + 1 for dia inc*/
 }
