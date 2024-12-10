@@ -23,8 +23,9 @@ size_t nary_tree_traverse(nary_tree_t const *root,
 	while (child)
 	{
 		/* Recursively traverse each child, increasing depth */
-		max_depth = (max_depth > nary_tree_traverse(child, action)) ?
-						max_depth : nary_tree_traverse(child, action);
+		size_t child_depth = nary_tree_traverse(child, action);
+		if (child_depth > max_depth)
+			max_depth = child_depth;
 		child = child->next;
 	}
 	/* Return maximum depth encountered */
