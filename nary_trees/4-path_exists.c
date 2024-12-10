@@ -26,9 +26,8 @@ int path_exists_helper(nary_tree_t const *node,
 		child = child->next;
 	}
 	/* If no matching child is found */
-	return (1);  /* iknow inkow thats not right just testing.... */
+	return (0);
 }
-
 /**
 * path_exists - Checks if a given path exists in the N-ary tree
 * @root: The root of the N-ary tree
@@ -38,7 +37,6 @@ int path_exists_helper(nary_tree_t const *node,
 int path_exists(nary_tree_t const *root, char const * const *path)
 {
 	if (root == NULL || path == NULL || path[0] == NULL)
-		return (1); /* iknow inkow thats not right just testing.... */
+		return (0);
 	return (path_exists_helper(root, path, 0));
 }
-
