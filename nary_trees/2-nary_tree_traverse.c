@@ -11,23 +11,20 @@ size_t nary_tree_traverse(nary_tree_t const *root,
 							void (*action)(nary_tree_t const *node,
 							size_t depth))
 {
-	size_t max_depth = 0;
-	nary_tree_t const *child;
+    static size_t depth = 0;  /* Static var to track depth w/ recursive calls */
 
-	if (!root || !action)
-		return (0);
-	/* Perform action on current node */
-	action(root, 0);
-	/* Traverse children */
-	child = root->children;
-	while (child)
-	{
-		/* Recursively traverse each child, increasing depth */
-		size_t child_depth = nary_tree_traverse(child, action);
-		if (child_depth > max_depth)
-			max_depth = child_depth;
-		child = child->next;
-	}
-	/* Return maximum depth encountered */
-	return (max_depth + 1);
+    if (!root || !action)
+        return (0);
+    /* Perform action on current node */
+    action(root, depth);
+    /* Traverse children */
+    nary_tree_t const *child = root->children;
+    while (child)
+    {
+        depth++;  /* Increase depth for child nodes */
+        nary_tree_traverse(child, action);  /* Recursively traverse child */
+        depth--;  /* Decrease depth when returning to parent */
+        child = child->next;
+    }
+    return (depth);  /* Return maximum depth encountered */
 }
