@@ -1,4 +1,5 @@
 #include "nary_trees.h"
+#include <stdio.h>
 
 /**
 * helper_diameter - A helper function to calculate the height and diameter
