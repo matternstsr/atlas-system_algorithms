@@ -1,8 +1,8 @@
+#include <stdlib.h>
+#include <stdio.h>
+
 #include "nary_trees.h"
 
-/**
- * main - Test the tree structure and diameter
- */
 int main(void)
 {
     nary_tree_t *root, *tmp, *var, *opt, *betty, *home, *alex;
@@ -34,16 +34,6 @@ int main(void)
     nary_tree_insert(alex, "Movies");
     nary_tree_insert(alex, "Documents");
     nary_tree_insert(alex, "Applications");
-
-    // Print tree structure (if possible, print some verification here)
-    printf("Tree structure:\n");
-    printf("Root node: %s\n", root->content);
-    printf("Children of root:\n");
-    nary_tree_t *child = root->children;
-    while (child) {
-        printf("  %s\n", child->content);
-        child = child->next;
-    }
 
     diameter = nary_tree_diameter(root);
     printf("Diameter = %lu\n", diameter);
