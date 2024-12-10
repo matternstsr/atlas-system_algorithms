@@ -17,6 +17,10 @@ size_t helper_diameter(nary_tree_t const *root, size_t *diameter)
 
 	printf("Visiting node: %s\n", root->content);
 
+	if (child == NULL) {
+		printf("Node %s has no children\n", root->content);
+	}
+
 	/* Traverse the children and calculate their heights */
 	while (child)
 	{
@@ -44,6 +48,7 @@ size_t helper_diameter(nary_tree_t const *root, size_t *diameter)
 	/* Return the height of the current node */
 	return (max_height1 + 1);
 }
+
 /**
 * nary_tree_diameter - Computes the diameter of the N-ary tree
 * @root: The root of the N-ary tree
