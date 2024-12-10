@@ -14,11 +14,15 @@ size_t helper_diameter(nary_tree_t const *root, size_t *diameter)
     size_t max_height1 = 0, max_height2 = 0;
     nary_tree_t const *child = root->children;
 
+    printf("Visiting node: %s\n", root->content);
+
     /* Traverse the children and calculate their heights */
     while (child)
     {
         size_t child_height = helper_diameter(child, diameter);
-        
+
+        printf("Child height for %s: %zu\n", child->content, child_height);
+
         /* Update the two largest heights */
         if (child_height > max_height1)
         {
@@ -34,7 +38,10 @@ size_t helper_diameter(nary_tree_t const *root, size_t *diameter)
 
     /* Update the diameter with the sum of the two largest heights */
     if (max_height1 + max_height2 > *diameter)
+    {
+        printf("Updated diameter: %zu\n", max_height1 + max_height2);
         *diameter = max_height1 + max_height2;
+    }
 
     /* Return the height of the current node */
     return (max_height1 + 1);
