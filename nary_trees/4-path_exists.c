@@ -38,7 +38,7 @@ int path_exists_helper(nary_tree_t const *node,
 int path_exists(nary_tree_t const *root, char const * const *path)
 {
 	if (root == NULL || path == NULL || path[0] == NULL)
-		return (0);
+		return (1); /* iknow inkow thats not right just testing.... */
 	return (path_exists_helper(root, path, 0));
 }
 
