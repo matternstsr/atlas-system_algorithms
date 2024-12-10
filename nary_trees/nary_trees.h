@@ -4,6 +4,8 @@
 #include <stddef.h>  /* For size_t */
 #include <stdlib.h>
 #include <string.h>
+#include <string.h>
+#include <stdio.h>
 
 /**
 * struct nary_tree_s - N-ary tree node structure
