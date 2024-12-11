@@ -10,12 +10,15 @@
 int path_exists_helper(nary_tree_t const *node,
 						char const * const *path, size_t index)
 {
-	if (path == NULL) /* If we've reached the end of the path */
-		return (1); /* Path exists successfully */
-	if (path[index] == NULL) /* If we've reached the end of the path */
+	/* If path is empty or the current node matches the path element */
+	if (path[index] == NULL) 
 		return (1); /* Path exists successfully */
 	if (node == NULL) /* If node is NULL, path does not exist */
 		return (0);
+
+	/* Special check for the root node "/" */
+	if (index == 0 && strcmp(node->content, "/") == 0)
+		return (path_exists_helper(node, path, index + 1));
 
 	/* Search for the child node that matches the current path element */
 	nary_tree_t const *child = node->children;
@@ -30,6 +33,7 @@ int path_exists_helper(nary_tree_t const *node,
 	/* If no matching child is found */
 	return (0);
 }
+
 /**
 * path_exists - Checks if a given path exists in the N-ary tree
 * @root: The root of the N-ary tree
