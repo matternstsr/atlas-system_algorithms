@@ -23,6 +23,9 @@ int path_exists_helper(nary_tree_t const *node,
 	/* Search for the child node that matches the current path element */
 	nary_tree_t const *child = node->children;
 
+	/* Search for the child node that matches the current path element */
+	nary_tree_t const *child = node->children;
+	
 	while (child)
 	{
 		if (strcmp(child->content, path[index]) == 0)
