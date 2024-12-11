@@ -7,35 +7,46 @@
 * @index: The current index in the path
 * Return: 1 if the path exists, otherwise 0
 */
+#include "nary_trees.h"
+
+/**
+* path_exists_helper - Recursive helper function to check if a path exists
+* @node: The current node to check
+* @path: The array of strings representing the path
+* @index: The current index in the path
+* Return: 1 if the path exists, otherwise 0
+*/
 int path_exists_helper(nary_tree_t const *node,
 						char const * const *path, size_t index)
 {
-	/* If path is empty or the current node matches the path element */
-	if (path[index] == NULL) 
-		return (1); /* Path exists successfully */
-	if (node == NULL) /* If node is NULL, path does not exist */
+	/* If we've reached the end of the path, return 1 (success) */
+	if (path[index] == NULL)
+		return (1);
+
+	/* If node is NULL or path doesn't match, return 0 */
+	if (node == NULL)
 		return (0);
 
-	/* Special check for the root node "/" */
-	if (index == 0 && strcmp(node->content, "/") == 0)
-		return (path_exists_helper(node, path, index + 1));
-
-	/* Search for the child node that matches the current path element */
-	nary_tree_t const *child = node->children;
-
-	/* Search for the child node that matches the current path element */
-	nary_tree_t const *child = node->children;
-	
-	while (child)
+	/* If the current node matches the first element of the path, continue recursion */
+	if (strcmp(node->content, path[index]) == 0)
 	{
-		if (strcmp(child->content, path[index]) == 0)
-			/* If found, continue with the next node in the path */
-			return (path_exists_helper(child, path, index + 1));
-		child = child->next;
+		/* If we've reached the last element in the path, check if it exists */
+		if (path[index + 1] == NULL)
+			return (1);
+		/* Otherwise, recurse on children */
+		nary_tree_t const *child = node->children;
+		while (child)
+		{
+			/* Recur for the next node in the path */
+			if (path_exists_helper(child, path, index + 1))
+				return (1);
+			child = child->next;
+		}
 	}
-	/* If no matching child is found */
+	/* If we did not find a match for the current node, return 0 */
 	return (0);
 }
+
 
 
 /**
