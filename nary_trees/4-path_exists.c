@@ -2,24 +2,15 @@
 
 /**
 * path_exists_helper - Recursive helper function to check if a path exists
-* @node: The current node to check
-* @path: The array of strings representing the path
-* @index: The current index in the path
-* Return: 1 if the path exists, otherwise 0
-*/
-#include "nary_trees.h"
-
-/**
-* path_exists_helper - Recursive helper function to check if a path exists
-* @node: The current node to check
-* @path: The array of strings representing the path
-* @index: The current index in the path
-* Return: 1 if the path exists, otherwise 0
+* @node: current node to check
+* @path: array of strings representing path
+* @index: current index in path
+* Return: 1 if path exists, otherwise 0
 */
 int path_exists_helper(nary_tree_t const *node,
 						char const * const *path, size_t index)
 {
-	/* If we've reached the end of the path, return 1 (success) */
+	/* If we've reached end of path, return 1 (success) */
 	if (path[index] == NULL)
 		return (1);
 
@@ -27,33 +18,34 @@ int path_exists_helper(nary_tree_t const *node,
 	if (node == NULL)
 		return (0);
 
-	/* If the current node matches the first element of the path, continue recursion */
+	/* If current node matches first element of path, continue recursion */
 	if (strcmp(node->content, path[index]) == 0)
 	{
-		/* If we've reached the last element in the path, check if it exists */
+		/* If we've reached last element in path, check if it exists */
 		if (path[index + 1] == NULL)
 			return (1);
 		/* Otherwise, recurse on children */
 		nary_tree_t const *child = node->children;
+
 		while (child)
 		{
-			/* Recur for the next node in the path */
+			/* Recur for next node in path */
 			if (path_exists_helper(child, path, index + 1))
 				return (1);
 			child = child->next;
 		}
 	}
-	/* If we did not find a match for the current node, return 0 */
+	/* If we did not find a match for current node, return 0 */
 	return (0);
 }
 
 
 
 /**
-* path_exists - Checks if a given path exists in the N-ary tree
-* @root: The root of the N-ary tree
-* @path: The NULL-terminated array of strings representing the path
-* Return: 1 if the path exists, otherwise 0
+* path_exists - Checks if a given path exists in N-ary tree
+* @root: root of N-ary tree
+* @path: NULL-terminated array of strings representing path
+* Return: 1 if path exists, otherwise 0
 */
 int path_exists(nary_tree_t const *root, char const * const *path)
 {
