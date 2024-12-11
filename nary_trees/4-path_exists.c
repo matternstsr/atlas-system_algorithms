@@ -34,6 +34,7 @@ int path_exists_helper(nary_tree_t const *node,
 	return (0);
 }
 
+
 /**
 * path_exists - Checks if a given path exists in the N-ary tree
 * @root: The root of the N-ary tree
