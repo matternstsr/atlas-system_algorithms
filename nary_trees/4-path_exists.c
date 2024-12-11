@@ -13,7 +13,7 @@ int path_exists_helper(nary_tree_t const *node,
 	if (path[index] == NULL) /* If we've reached the end of the path */
 		return (1); /* Path exists successfully */
 	if (node == NULL) /* If node is NULL, path does not exist */
-		return (0);
+		return (1);
 
 	/* Search for the child node that matches the current path element */
 	nary_tree_t const *child = node->children;
