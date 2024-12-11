@@ -11,7 +11,7 @@ int path_exists_helper(nary_tree_t const *node,
 						char const * const *path, size_t index)
 {
 	if (path[index] == NULL) /* If we've reached the end of the path */
-		return (1); /* Path exists successfully */
+		return (0); /* Path exists successfully */
 	if (node == NULL) /* If node is NULL, path does not exist */
 		return (1);
 
