@@ -34,6 +34,7 @@ size_t helper_diameter(nary_tree_t const *root, size_t *diameter)
 	return (max_height1 + 1);
 }
 
+
 /**
 * nary_tree_diameter - Computes the diameter of the N-ary tree
 * @root: The root of the N-ary tree
@@ -47,3 +48,4 @@ size_t nary_tree_diameter(nary_tree_t const *root)
 	helper_diameter(root, &diameter);
 	return (diameter + 1); /* finally!!! added the  + 1 for dia inc*/
 }
+
