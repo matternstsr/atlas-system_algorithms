@@ -4,6 +4,7 @@
 #include <stddef.h>  /* For size_t */
 #include <stdlib.h>
 #include <string.h>
+#include <string.h>
 #include <stdio.h>
 
 /**
